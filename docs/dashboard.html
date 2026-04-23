@@ -57,7 +57,7 @@
     <span class="muted">GSE-One Dashboard &mdash; web &mdash; full mode</span>
   </div>
   <div class="header-right">
-    <div>Updated: 2026-04-23 14:10:54</div>
+    <div>Updated: 2026-04-23 14:19:45</div>
     <button class="refresh-btn" onclick="location.reload()">Refresh</button>
     <div class="muted" style="margin-top:4px">Auto-refresh every 30s</div>
   </div>
@@ -70,7 +70,7 @@
     <div class="card-title">Project State</div>
     <div class="metric"><span class="metric-label">Sprint</span><span class="metric-value">1</span></div>
     <div class="metric"><span class="metric-label">Phase</span><span class="metric-value">LC01</span></div>
-    <div class="metric"><span class="metric-label">Last Activity</span><span class="metric-value">tests</span></div>
+    <div class="metric"><span class="metric-label">Last Activity</span><span class="metric-value">review</span></div>
     <div class="metric"><span class="metric-label">User</span><span class="metric-value">ABE INFO (beginner)</span></div>
     <div class="metric"><span class="metric-label">Decisions</span><span class="metric-value">collaborative</span></div>
   </div>
@@ -80,13 +80,13 @@
     <div class="card-title">Tasks (16 total)</div>
     <div class="kanban">
       <div class="kanban-col" style="background:#2c3e50">
-        <div class="kanban-count">2</div><div class="kanban-label">Planned</div>
+        <div class="kanban-count">0</div><div class="kanban-label">Planned</div>
       </div>
       <div class="kanban-col" style="background:#2980b9">
         <div class="kanban-count">0</div><div class="kanban-label">In Progress</div>
       </div>
       <div class="kanban-col" style="background:#f39c12">
-        <div class="kanban-count">0</div><div class="kanban-label">Review/Fix</div>
+        <div class="kanban-count">1</div><div class="kanban-label">Review/Fix</div>
       </div>
       <div class="kanban-col" style="background:#27ae60">
         <div class="kanban-count">0</div><div class="kanban-label">Done</div>
@@ -108,7 +108,7 @@
       <li class="done">Design</li>
       <li class="done">Test Strategy</li>
       <li class="pending">Production (0/16 tasks)</li>
-      <li class="pending">Review</li>
+      <li class="done">Review</li>
       <li class="pending">Capitalization (COMPOUND)</li>
     </ul>
   </div>
@@ -123,8 +123,9 @@
       <li class="done">design</li>
       <li class="done">preview</li>
       <li class="done">tests</li>
-      <li class="active">produce <span class="muted">(active)</span></li>
-      <li class="pending">review</li>
+      <li class="done">produce</li>
+      <li class="done">review</li>
+      <li class="active">fix <span class="muted">(active)</span></li>
       <li class="pending">deliver</li>
     </ul>
     <div class="metric"><span class="metric-label">Budget</span>
@@ -136,7 +137,39 @@
   <div class="card">
     <div class="card-title">Project Health</div>
     <div class="no-data">No health data yet (available after first review)</div>
-    
+    <div class="metric">
+          <span class="metric-label">Test Pass Rate</span>
+          <span class="metric-value" style="color:#2ecc71">10/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2ecc71"></div></div><div class="metric">
+          <span class="metric-label">Review Findings</span>
+          <span class="metric-value" style="color:#e74c3c">2/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:20%;background:#e74c3c"></div></div><div class="metric">
+          <span class="metric-label">Git Hygiene</span>
+          <span class="metric-value" style="color:#f39c12">6/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%;background:#f39c12"></div></div><div class="metric">
+          <span class="metric-label">Design Debt</span>
+          <span class="metric-value" style="color:#2ecc71">7/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:70%;background:#2ecc71"></div></div><div class="metric">
+          <span class="metric-label">Complexity Budget</span>
+          <span class="metric-value" style="color:#2ecc71">10/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2ecc71"></div></div><div class="metric">
+          <span class="metric-label">Requirements Coverage</span>
+          <span class="metric-value" style="color:#e74c3c">2/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:20%;background:#e74c3c"></div></div><div class="metric">
+          <span class="metric-label">Traceability</span>
+          <span class="metric-value" style="color:#e74c3c">3/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%;background:#e74c3c"></div></div><div class="metric">
+          <span class="metric-label">Ai Integrity</span>
+          <span class="metric-value" style="color:#2ecc71">10/10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2ecc71"></div></div>
   </div>
 
   <!-- Quality -->
@@ -152,7 +185,7 @@
   <div class="card">
     <div class="card-title">Version Control</div>
     <div class="metric"><span class="metric-label">Active Branches</span><span class="metric-value">1</span></div>
-    <div class="metric"><span class="metric-label">Last Commit</span><span class="metric-value" style="font-size:0.8em">d161ed8 feat(app): events pages with filters and t</span></div>
+    <div class="metric"><span class="metric-label">Last Commit</span><span class="metric-value" style="font-size:0.8em">196441e gse(review): review TASK-002</span></div>
     <div class="metric"><span class="metric-label">Tags</span><span class="metric-value">none</span></div>
     <div class="metric"><span class="metric-label">Sprint History</span><span class="metric-value">1 active, 0 archived</span></div>
   </div>

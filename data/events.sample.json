@@ -8,6 +8,7 @@
     "city": "Luxembourg City",
     "venue": "City Center",
     "shortDescription": "Local food stalls and tasting experiences.",
+    "longDescription": "Enjoy a friendly spring market with local producers.\nYou can discover small food stands, try seasonal specialties, and buy souvenirs.\nBest time to visit: late morning to early afternoon for the most activity.",
     "ticketProvider": {
       "name": "Luxembourg Ticket",
       "url": "https://www.luxembourg-ticket.lu/"
@@ -25,6 +26,7 @@
     "city": "Esch-sur-Alzette",
     "venue": "Cultural Hall",
     "shortDescription": "Evening jazz concert featuring local bands.",
+    "longDescription": "A relaxed evening concert with jazz classics and modern local bands.\nRecommended for music lovers and tourists who want a cultural night activity.\nArrive a bit early to find seating and enjoy the atmosphere.",
     "ticketProvider": {
       "name": "Luxembourg Ticket",
       "url": "https://www.luxembourg-ticket.lu/"
@@ -59,6 +61,7 @@
     "city": "Luxembourg City",
     "venue": "Old Town",
     "shortDescription": "Light installations and seasonal performances.",
+    "longDescription": "Walk through the Old Town to see light installations, small performances, and seasonal decorations.\nA great option for families and visitors during winter evenings.\nWear warm clothes and comfortable shoes for walking.",
     "ticketProvider": {
       "name": "Luxembourg Ticket",
       "url": "https://www.luxembourg-ticket.lu/"
@@ -76,6 +79,7 @@
     "city": "Luxembourg City",
     "venue": "Tourist Info Point",
     "shortDescription": "Weekly guided walking tour for visitors.",
+    "longDescription": "A weekly guided walk that introduces the main historic areas, viewpoints, and stories of Luxembourg City.\nGood for first-time visitors who want an easy overview.\nBring a small water bottle and be ready for stairs in some parts of the route.",
     "ticketProvider": {
       "name": "Luxembourg Ticket",
       "url": "https://www.luxembourg-ticket.lu/"

@@ -133,6 +133,7 @@ const I18N = {
     no_map_location_destination: "No map location for this destination.",
     kv_type: "Type",
     kv_season: "Season",
+    about: "More information",
   },
   fr: {
     nav_events: "Événements",
@@ -182,6 +183,7 @@ const I18N = {
     no_map_location_destination: "Pas de lieu de carte pour cette destination.",
     kv_type: "Type",
     kv_season: "Saison",
+    about: "Plus d’informations",
   },
   de: {
     nav_events: "Events",
@@ -231,12 +233,24 @@ const I18N = {
     no_map_location_destination: "Kein Kartenort für dieses Reiseziel.",
     kv_type: "Typ",
     kv_season: "Saison",
+    about: "Mehr Informationen",
   },
 };
 
 function t(key) {
   const lang = getLang();
   return I18N?.[lang]?.[key] ?? I18N.en[key] ?? key;
+}
+
+function renderLongText(text) {
+  const lines = String(text || "")
+    .split(/\r?\n/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (!lines.length) return "";
+  return lines
+    .map((line) => `<p style="margin:10px 0 0; line-height:1.5; color:rgba(230,233,242,.92)">${escapeHtml(line)}</p>`)
+    .join("");
 }
 
 // -----------------------------
@@ -592,6 +606,13 @@ async function renderEventDetails(mount, eventId) {
           <p style="margin-top:12px; line-height:1.5; color:rgba(230,233,242,.92)">${escapeHtml(
             e.shortDescription ?? ""
           )}</p>
+
+          ${
+            e.longDescription
+              ? `<h2 style="margin:14px 0 6px; font-size:16px">${escapeHtml(t("about"))}</h2>
+                 ${renderLongText(e.longDescription)}`
+              : ""
+          }
         </section>
 
         <aside class="detail__section">
@@ -851,6 +872,13 @@ async function renderDestinationDetails(mount, destinationId) {
           <p style="margin-top:12px; line-height:1.5; color:rgba(230,233,242,.92)">${escapeHtml(
             d.shortDescription ?? ""
           )}</p>
+
+          ${
+            d.longDescription
+              ? `<h2 style="margin:14px 0 6px; font-size:16px">${escapeHtml(t("about"))}</h2>
+                 ${renderLongText(d.longDescription)}`
+              : ""
+          }
         </section>
 
         <aside class="detail__section">

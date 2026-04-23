@@ -9,10 +9,10 @@
     "venue": "City Center",
     "shortDescription": "Local food stalls and tasting experiences.",
     "longDescription": "Enjoy a friendly spring market with local producers.\nYou can discover small food stands, try seasonal specialties, and buy souvenirs.\nBest time to visit: late morning to early afternoon for the most activity.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" },
+      { "name": "ATZ Ticket Office", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["market", "family-friendly"]
@@ -27,10 +27,9 @@
     "venue": "Cultural Hall",
     "shortDescription": "Evening jazz concert featuring local bands.",
     "longDescription": "A relaxed evening concert with jazz classics and modern local bands.\nRecommended for music lovers and tourists who want a cultural night activity.\nArrive a bit early to find seating and enjoy the atmosphere.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["music", "night"]
@@ -44,10 +43,10 @@
     "city": "Differdange",
     "venue": "Art Gallery",
     "shortDescription": "Seasonal art exhibition with guided tours.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "longDescription": "A seasonal exhibition where visitors can explore artworks from local and regional creators.\nIdeal for tourists who want an indoor cultural activity.\nGuided tours help you understand the story behind selected pieces.",
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["art", "exhibition"]
@@ -62,10 +61,10 @@
     "venue": "Old Town",
     "shortDescription": "Light installations and seasonal performances.",
     "longDescription": "Walk through the Old Town to see light installations, small performances, and seasonal decorations.\nA great option for families and visitors during winter evenings.\nWear warm clothes and comfortable shoes for walking.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" },
+      { "name": "Luxair (Travel)", "url": "https://www.luxair.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["festival", "winter"]
@@ -80,10 +79,9 @@
     "venue": "Tourist Info Point",
     "shortDescription": "Weekly guided walking tour for visitors.",
     "longDescription": "A weekly guided walk that introduces the main historic areas, viewpoints, and stories of Luxembourg City.\nGood for first-time visitors who want an easy overview.\nBring a small water bottle and be ready for stairs in some parts of the route.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["tour", "history"]
@@ -97,10 +95,10 @@
     "city": "Dudelange",
     "venue": "Open Air Park",
     "shortDescription": "Outdoor movie screenings across three evenings.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "longDescription": "Three evenings of outdoor movies in a park setting.\nGreat for families and groups of friends during summer.\nBring a light jacket for later hours and arrive early for a good spot.",
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["cinema", "family-friendly"]
@@ -114,10 +112,10 @@
     "city": "Remich",
     "venue": "Riverside Pavilion",
     "shortDescription": "Regional wines and local food pairings.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "longDescription": "A weekend event where visitors can taste wines and learn about local producers.\nRecommended for adults and tourists who want a calm cultural experience.\nConsider using public transport if you plan to taste multiple wines.",
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["wine", "weekend"]
@@ -131,10 +129,10 @@
     "city": "Luxembourg City",
     "venue": "Innovation Hub",
     "shortDescription": "Talks and networking for travel-tech enthusiasts.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "longDescription": "Short talks about travel technology and building useful travel apps.\nGood for students, developers, and entrepreneurs.\nStay for networking if you want to meet people working in tech in Luxembourg.",
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["tech", "networking"]
@@ -148,10 +146,10 @@
     "city": "Ettelbruck",
     "venue": "Town Square",
     "shortDescription": "Handmade crafts and souvenirs from local makers.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "longDescription": "A small fair where visitors can buy handmade items and local souvenirs.\nNice for tourists looking for gifts and unique crafts.\nTry visiting in the afternoon when most stalls are open.",
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["crafts", "souvenirs"]
@@ -165,10 +163,11 @@
     "city": "Luxembourg City",
     "venue": "Concert Hall",
     "shortDescription": "Year-end concert and countdown event.",
-    "ticketProvider": {
-      "name": "Luxembourg Ticket",
-      "url": "https://www.luxembourg-ticket.lu/"
-    },
+    "longDescription": "A festive concert to close the year, followed by a countdown celebration.\nPerfect for visitors who want a special night activity in Luxembourg City.\nBook early because New Year events often sell out quickly.",
+    "ticketProviders": [
+      { "name": "Luxembourg Ticket", "url": "https://www.luxembourg-ticket.lu/" },
+      { "name": "ATZ Ticket Office", "url": "https://www.luxembourg-ticket.lu/" }
+    ],
     "officialUrl": null,
     "imageUrl": null,
     "tags": ["new-year", "concert"]

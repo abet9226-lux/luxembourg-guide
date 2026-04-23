@@ -579,8 +579,17 @@ async function renderEventDetails(mount, eventId) {
   }
 
   const when = formatDateRange(e.startDate, e.endDate);
-  const providerUrl = safeExternalUrl(e.ticketProvider?.url) || null;
-  const providerName = e.ticketProvider?.name || "Tickets";
+  const providersRaw = Array.isArray(e.ticketProviders)
+    ? e.ticketProviders
+    : e.ticketProvider
+      ? [e.ticketProvider]
+      : [];
+  const providers = providersRaw
+    .map((p) => ({
+      name: String(p?.name || "").trim() || "Tickets",
+      url: safeExternalUrl(p?.url) || null,
+    }))
+    .filter((p) => p.url);
   const maps = buildMapLinks({ venue: e.venue, city: e.city });
 
   mount.innerHTML = `
@@ -620,12 +629,16 @@ async function renderEventDetails(mount, eventId) {
 
           <div class="btn-row">
             ${
-              providerUrl
-                ? `<a class="btn btn--primary" href="${escapeHtml(
-                    providerUrl
-                  )}" target="_blank" rel="noopener noreferrer">${escapeHtml(
-                    t("tickets_book")
-                  )} (${escapeHtml(providerName)})</a>`
+              providers.length
+                ? providers
+                    .map(
+                      (p) => `<a class="btn btn--primary" href="${escapeHtml(
+                        p.url
+                      )}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+                        t("tickets_book")
+                      )} (${escapeHtml(p.name)})</a>`
+                    )
+                    .join("")
                 : `<span class="muted">${escapeHtml(t("no_ticket_link"))}</span>`
             }
           </div>

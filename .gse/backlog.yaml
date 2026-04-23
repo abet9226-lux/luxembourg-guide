@@ -50,7 +50,7 @@ items:
       implements: []
       derives_from: [INT-001]
     acceptance_criteria: "A visitor can browse events, open an event detail page, and filter by date (today/this week/this month), city, and category (Music/Cultural festival/Seasonal event)."
-    status: planned
+    status: review
     requires_review: true
     delivered_at: null
     completed_at: null
@@ -58,20 +58,20 @@ items:
     origin_ref: INT-001
     git:
       branch: "gse/sprint-01/feat/events"
-      branch_status: planned
+      branch_status: active
       worktree: null
       worktree_status: null
-      last_commit: null
+      last_commit: "2026-04-23T12:00:00Z"
       uncommitted_changes: 0
     github_issue: null
     deliverable: true
     test_evidence:
-      status: absent
+      status: pass
       campaign_ref: null
-      timestamp: null
-      pass_rate: null
+      timestamp: "2026-04-23T12:00:00Z"
+      pass_rate: 100
       code_coverage: null
-      summary: null
+      summary: "Playwright E2E: 5 passed"
     created: "2026-04-23T00:00:00Z"
     updated: "2026-04-23T00:00:00Z"
 

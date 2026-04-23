@@ -1,7 +1,7 @@
 # GSE-One Project Status
 gse_version: ""
-current_sprint: 0
-current_phase: LC00
+current_sprint: 1
+current_phase: LC01
 
 session_paused: false
 pause_checkpoint: ""

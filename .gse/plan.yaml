@@ -1,0 +1,34 @@
+# GSE-One Sprint Plan
+version: 1
+id: "PLN-001"
+sprint: 1
+mode: full
+status: active
+goal: "Luxembourg guide app v1: events, destinations, and in-app bookings scope"
+
+tasks: []
+
+budget:
+  total: 10
+  consumed: 0
+  remaining: 10
+
+workflow:
+  expected: [collect, assess, plan, reqs, design, preview, tests, produce, review, deliver]
+  completed: []
+  active: collect
+  pending: [assess, plan, reqs, design, preview, tests, produce, review, deliver]
+  skipped: []
+
+coherence:
+  last_evaluated: "2026-04-23T00:00:00Z"
+  scope_changes: []
+  alerts: []
+
+risks:
+  - description: "In-app bookings may require accounts, payments, and strong security; scope may grow quickly."
+    likelihood: high
+    mitigation: "Start by defining booking scope clearly (redirect vs in-app), then pick minimal safe approach for v1."
+
+created: "2026-04-23T00:00:00Z"
+updated: "2026-04-23T00:00:00Z"

@@ -4,7 +4,7 @@ project:
   domain: "web"
 
 lifecycle:
-  mode: ""  # set by /gse:go after complexity assessment
+  mode: full
   stale_sprint_sessions: 3
   phases:
     LC02:

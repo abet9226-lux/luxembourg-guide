@@ -38,8 +38,14 @@ Public users: tourists and locals (no specific role yet).
 - **OQ-001** — Where will event + destination data come from (manual entry, public APIs, scraped sources)?
   - resolves_in: ASSESS
   - impact: architectural
-  - status: pending
+  - status: resolved
   - raised_at: INT-001
+  - resolved_at: "2026-04-23"
+  - resolved_in: assess
+  - answer: "Start with a small sample dataset (10 events + 10 destinations) in JSON files in the project, then replace later with real sources."
+  - answered_by: user
+  - confidence: Verified
+  - traces: []
 
 - **OQ-002** — What “bookings/tickets” means here: link out to official sites, or book inside the app?
   - resolves_in: REQS

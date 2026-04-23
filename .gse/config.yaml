@@ -3,6 +3,17 @@ project:
   name: ""
   domain: "web"
 
+# High-level goals for ASSESS/PLAN (derived from INT-001)
+goals:
+  - id: G1
+    title: "Events browsing (events-first home)"
+  - id: G2
+    title: "Destinations browsing"
+  - id: G3
+    title: "Filtering (date range, city, category)"
+  - id: G4
+    title: "Ticket booking links (redirect to provider)"
+
 lifecycle:
   mode: full
   stale_sprint_sessions: 3

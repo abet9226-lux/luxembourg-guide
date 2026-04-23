@@ -67,6 +67,8 @@ function safeExternalUrl(urlString) {
 // -----------------------------
 const KEY_VIEW = "luxguide.view";
 const KEY_LANG = "luxguide.lang";
+const KEY_TOUR_EVENTS = "luxguide.tour.events.v1";
+const KEY_TOUR_DESTINATIONS = "luxguide.tour.destinations.v1";
 function getViewMode() {
   const v = localStorage.getItem(KEY_VIEW);
   return v === "list" ? "list" : "cards";
@@ -134,6 +136,41 @@ const I18N = {
     kv_type: "Type",
     kv_season: "Season",
     about: "More information",
+
+    tour_replay: "Tour",
+    tour_welcome_title: "Welcome to Luxembourg Guide",
+    tour_welcome_body:
+      "This quick tour shows how to browse what’s on (events) and where to go (destinations). Skip anytime — your choice is remembered on this device.",
+    tour_nav_title: "Events and destinations",
+    tour_nav_body:
+      "Open Events for concerts, festivals, and seasonal happenings. Destinations highlights visiting points and tour-style places around Luxembourg.",
+    tour_lang_title: "Language",
+    tour_lang_body:
+      "Pick English, French, or German for buttons and labels. Descriptions in the list come from the sample data language.",
+    tour_view_title: "Cards or list",
+    tour_view_body: "Switch between card tiles and a compact table — the same filters apply.",
+    tour_filters_title: "Search and filters",
+    tour_filters_body:
+      "Search by keyword, narrow dates (today / this week / this month), city, and category. Results update as you change filters.",
+    tour_results_title: "Pick an event",
+    tour_results_body:
+      "Open an event for full details, map links to get there, and a button that sends you to the official ticket site.",
+    tour_footer_title: "Official tickets",
+    tour_footer_body:
+      "Purchases happen on the provider website (for example Luxembourg Ticket). This app only links you out safely.",
+    tour_next: "Next",
+    tour_skip: "Skip tour",
+    tour_done: "Done",
+
+    tour_dst_welcome_title: "Destinations tour",
+    tour_dst_welcome_body:
+      "Destinations are visiting points and seasonal places around Luxembourg. This quick tour shows how to find the right place for your trip.",
+    tour_dst_filters_title: "Destination filters",
+    tour_dst_filters_body:
+      "Search by keyword, then narrow by city, type (museum, park, …), and season (spring/summer/autumn/winter).",
+    tour_dst_results_title: "Open a place",
+    tour_dst_results_body:
+      "Open a destination for details, map links, and an official website when available.",
   },
   fr: {
     nav_events: "Événements",
@@ -184,6 +221,41 @@ const I18N = {
     kv_type: "Type",
     kv_season: "Saison",
     about: "Plus d’informations",
+
+    tour_replay: "Visite",
+    tour_welcome_title: "Bienvenue dans Luxembourg Guide",
+    tour_welcome_body:
+      "Cette visite rapide explique comment parcourir les événements et les destinations. Vous pouvez l’interrompre — votre choix est mémorisé sur cet appareil.",
+    tour_nav_title: "Événements et destinations",
+    tour_nav_body:
+      "Événements : concerts, festivals et dates à venir. Destinations : lieux à visiter et idées de parcours saisonniers au Luxembourg.",
+    tour_lang_title: "Langue",
+    tour_lang_body:
+      "Choisissez EN / FR / DE pour l’interface. Les textes des fiches suivent la langue des données d’exemple.",
+    tour_view_title: "Cartes ou liste",
+    tour_view_body: "Basculez entre une vue en cartes et un tableau compact — les mêmes filtres s’appliquent.",
+    tour_filters_title: "Recherche et filtres",
+    tour_filters_body:
+      "Mot-clé, plage de dates (aujourd’hui / cette semaine / ce mois), ville et catégorie. La liste se met à jour tout de suite.",
+    tour_results_title: "Choisir un événement",
+    tour_results_body:
+      "Ouvrez une fiche pour les détails, les liens carte, et un bouton vers le site officiel de billetterie.",
+    tour_footer_title: "Billets officiels",
+    tour_footer_body:
+      "L’achat se fait sur le site du fournisseur (par ex. Luxembourg Ticket). Cette application se contente de vous rediriger.",
+    tour_next: "Suivant",
+    tour_skip: "Passer la visite",
+    tour_done: "Terminé",
+
+    tour_dst_welcome_title: "Visite des destinations",
+    tour_dst_welcome_body:
+      "Les destinations sont des lieux à visiter et des idées saisonnières au Luxembourg. Cette courte visite montre comment trouver un endroit adapté à votre voyage.",
+    tour_dst_filters_title: "Filtres (destination)",
+    tour_dst_filters_body:
+      "Recherchez par mot-clé, puis filtrez par ville, type (musée, parc, …) et saison (printemps/été/automne/hiver).",
+    tour_dst_results_title: "Ouvrir un lieu",
+    tour_dst_results_body:
+      "Ouvrez une destination pour les détails, les liens carte et un site officiel si disponible.",
   },
   de: {
     nav_events: "Events",
@@ -234,6 +306,41 @@ const I18N = {
     kv_type: "Typ",
     kv_season: "Saison",
     about: "Mehr Informationen",
+
+    tour_replay: "Tour",
+    tour_welcome_title: "Willkommen beim Luxembourg Guide",
+    tour_welcome_body:
+      "Diese kurze Tour zeigt, wie Sie Veranstaltungen und Reiseziele erkunden. Sie können jederzeit abbrechen — Ihre Auswahl wird auf diesem Gerät gespeichert.",
+    tour_nav_title: "Events und Reiseziele",
+    tour_nav_body:
+      "Unter Events finden Sie Konzerte, Festivals und Termine. Reiseziele zeigt sehenswerte Orte und saisonale Ideen in Luxemburg.",
+    tour_lang_title: "Sprache",
+    tour_lang_body:
+      "Wählen Sie EN, FR oder DE für die Oberfläche. Beschreibungen in den Karten folgen der Sprache der Beispieldaten.",
+    tour_view_title: "Karten oder Liste",
+    tour_view_body: "Wechseln Sie zwischen Kartenkacheln und einer kompakten Tabelle — dieselben Filter gelten.",
+    tour_filters_title: "Suche und Filter",
+    tour_filters_body:
+      "Stichwort, Zeitraum (heute / diese Woche / dieser Monat), Stadt und Kategorie. Die Trefferliste aktualisiert sich sofort.",
+    tour_results_title: "Event auswählen",
+    tour_results_body:
+      "Öffnen Sie ein Event für Details, Kartenlinks und einen Button zur offiziellen Ticket-Website.",
+    tour_footer_title: "Offizielle Tickets",
+    tour_footer_body:
+      "Der Kauf erfolgt beim Anbieter (z. B. Luxembourg Ticket). Diese App verlinkt Sie nur nach außen.",
+    tour_next: "Weiter",
+    tour_skip: "Tour überspringen",
+    tour_done: "Fertig",
+
+    tour_dst_welcome_title: "Tour: Reiseziele",
+    tour_dst_welcome_body:
+      "Reiseziele sind sehenswerte Orte und saisonale Ideen in Luxemburg. Diese kurze Tour zeigt, wie Sie den passenden Ort finden.",
+    tour_dst_filters_title: "Filter (Reiseziele)",
+    tour_dst_filters_body:
+      "Suche per Stichwort, danach nach Stadt, Typ (Museum, Park, …) und Saison (Frühling/Sommer/Herbst/Winter) filtern.",
+    tour_dst_results_title: "Ort öffnen",
+    tour_dst_results_body:
+      "Öffnen Sie ein Reiseziel für Details, Kartenlinks und – falls vorhanden – die offizielle Webseite.",
   },
 };
 
@@ -476,7 +583,7 @@ function renderFilters({ container, state, cityOptions }) {
         <div class="muted">${escapeHtml(t("events_supports_view"))}</div>
       </div>
 
-      <div class="filters" role="search">
+      <div class="filters" role="search" data-tour="events-filters">
         <input class="input" id="searchInput" type="search" aria-label="${escapeHtml(
           t("search_events_aria")
         )}" placeholder="${escapeHtml(t("search_events_ph"))}" value="${escapeHtml(
@@ -555,6 +662,7 @@ async function renderEventsList(mount) {
 
   setDateFilter(state.dateFilter);
   rerenderResults();
+  requestAnimationFrame(() => requestAnimationFrame(() => maybeOfferEventsTour()));
 }
 
 function buildMapLinks({ venue, city }) {
@@ -735,7 +843,7 @@ function renderDestinationsFilters({ container, state, cityOptions, typeOptions,
         <div class="muted">${escapeHtml(t("events_supports_view"))}</div>
       </div>
 
-      <div class="filters" role="search">
+      <div class="filters" role="search" data-tour="destinations-filters">
         <input class="input" id="dstSearchInput" type="search" aria-label="${escapeHtml(
           t("search_destinations_aria")
         )}" placeholder="${escapeHtml(t("search_destinations_ph"))}" value="${escapeHtml(
@@ -845,6 +953,7 @@ async function renderDestinationsList(mount) {
   });
 
   rerender();
+  requestAnimationFrame(() => requestAnimationFrame(() => maybeOfferDestinationsTour()));
 }
 
 async function renderDestinationDetails(mount, destinationId) {
@@ -928,6 +1037,317 @@ async function renderDestinationDetails(mount, destinationId) {
       </div>
     </div>
   `;
+}
+
+// -----------------------------
+// First-run information tour (events home)
+// -----------------------------
+let _tourCleanup = null;
+
+function tourEventsPreferenceSet() {
+  const v = localStorage.getItem(KEY_TOUR_EVENTS);
+  return v === "done" || v === "skipped";
+}
+
+function tourDestinationsPreferenceSet() {
+  const v = localStorage.getItem(KEY_TOUR_DESTINATIONS);
+  return v === "done" || v === "skipped";
+}
+
+function destroyEventsTour() {
+  if (typeof _tourCleanup === "function") {
+    _tourCleanup();
+    _tourCleanup = null;
+  }
+}
+
+function maybeOfferEventsTour() {
+  if (tourEventsPreferenceSet()) return;
+  if (parseRoute().name !== "events") return;
+  const root = document.getElementById("app");
+  if (!root?.querySelector("#results")) return;
+  requestAnimationFrame(() => requestAnimationFrame(() => startEventsInformationTour()));
+}
+
+function maybeOfferDestinationsTour() {
+  if (tourDestinationsPreferenceSet()) return;
+  if (parseRoute().name !== "destinations") return;
+  const root = document.getElementById("app");
+  if (!root?.querySelector("#dstResults")) return;
+  requestAnimationFrame(() => requestAnimationFrame(() => startDestinationsInformationTour()));
+}
+
+const EVENTS_TOUR_STEPS = [
+  { target: null, titleKey: "tour_welcome_title", bodyKey: "tour_welcome_body" },
+  { target: '[data-tour="main-nav"]', titleKey: "tour_nav_title", bodyKey: "tour_nav_body" },
+  { target: '[data-tour="lang"]', titleKey: "tour_lang_title", bodyKey: "tour_lang_body" },
+  { target: '[data-tour="view-toggle"]', titleKey: "tour_view_title", bodyKey: "tour_view_body" },
+  { target: '[data-tour="events-filters"]', titleKey: "tour_filters_title", bodyKey: "tour_filters_body" },
+  { target: "#results", titleKey: "tour_results_title", bodyKey: "tour_results_body" },
+  { target: '[data-tour="ticket-info"]', titleKey: "tour_footer_title", bodyKey: "tour_footer_body" },
+];
+
+const DESTINATIONS_TOUR_STEPS = [
+  { target: null, titleKey: "tour_dst_welcome_title", bodyKey: "tour_dst_welcome_body" },
+  { target: '[data-tour="main-nav"]', titleKey: "tour_nav_title", bodyKey: "tour_nav_body" },
+  { target: '[data-tour="lang"]', titleKey: "tour_lang_title", bodyKey: "tour_lang_body" },
+  { target: '[data-tour="view-toggle"]', titleKey: "tour_view_title", bodyKey: "tour_view_body" },
+  {
+    target: '[data-tour="destinations-filters"]',
+    titleKey: "tour_dst_filters_title",
+    bodyKey: "tour_dst_filters_body",
+  },
+  { target: "#dstResults", titleKey: "tour_dst_results_title", bodyKey: "tour_dst_results_body" },
+];
+
+function startEventsInformationTour() {
+  destroyEventsTour();
+  let idx = 0;
+
+  const layer = document.createElement("div");
+  layer.className = "tour-layer";
+  const spotlight = document.createElement("div");
+  spotlight.className = "tour-spotlight";
+  spotlight.setAttribute("aria-hidden", "true");
+  const wrap = document.createElement("div");
+  wrap.className = "tour-dialog-wrap";
+  const dialog = document.createElement("div");
+  dialog.className = "tour-dialog";
+  dialog.setAttribute("role", "dialog");
+  dialog.setAttribute("aria-modal", "true");
+  const titleId = "tourDialogTitle";
+  const liveId = "tourDialogLive";
+  dialog.setAttribute("aria-labelledby", titleId);
+  dialog.setAttribute("aria-describedby", liveId);
+
+  layer.append(spotlight, wrap);
+  wrap.appendChild(dialog);
+  document.body.appendChild(layer);
+  document.body.classList.add("tour-open");
+
+  function queryTarget(sel) {
+    if (!sel) return null;
+    return document.querySelector(sel);
+  }
+
+  function layoutStep() {
+    const step = EVENTS_TOUR_STEPS[idx];
+    const el = queryTarget(step.target);
+    const isWelcome = !step.target;
+    const useCenterDialog = isWelcome || !el;
+
+    layer.classList.toggle("tour-layer--welcome", isWelcome || !el);
+
+    if (useCenterDialog) {
+      spotlight.classList.add("tour-spotlight--hidden");
+      wrap.classList.add("tour-dialog-wrap--center");
+      wrap.style.top = "";
+      wrap.style.left = "";
+      wrap.style.bottom = "";
+      wrap.style.transform = "";
+    } else {
+      spotlight.classList.remove("tour-spotlight--hidden");
+      wrap.classList.remove("tour-dialog-wrap--center");
+      const pad = 10;
+      const r = el.getBoundingClientRect();
+      const top = Math.max(8, r.top - pad);
+      const left = Math.max(8, r.left - pad);
+      const w = Math.min(window.innerWidth - 16, r.width + pad * 2);
+      const h = Math.min(window.innerHeight - 16, r.height + pad * 2);
+      spotlight.style.top = `${top}px`;
+      spotlight.style.left = `${left}px`;
+      spotlight.style.width = `${w}px`;
+      spotlight.style.height = `${h}px`;
+
+      wrap.style.top = "auto";
+      wrap.style.bottom = "12px";
+      wrap.style.left = "50%";
+      wrap.style.transform = "translateX(-50%)";
+
+      el.scrollIntoView({ block: "nearest", behavior: "smooth", inline: "nearest" });
+    }
+
+    const last = idx >= EVENTS_TOUR_STEPS.length - 1;
+    dialog.innerHTML = `
+      <h2 class="tour-dialog__title" id="${titleId}">${escapeHtml(t(step.titleKey))}</h2>
+      <p class="tour-dialog__body" id="${liveId}">${escapeHtml(t(step.bodyKey))}</p>
+      <div class="tour-dialog__actions">
+        <button type="button" class="btn btn--primary" data-tour-next>${escapeHtml(t(last ? "tour_done" : "tour_next"))}</button>
+        <button type="button" class="btn" data-tour-skip>${escapeHtml(t("tour_skip"))}</button>
+      </div>
+      <p class="tour-dialog__hint" aria-hidden="true">Esc — close tour</p>
+    `;
+
+    dialog.querySelector("[data-tour-next]")?.addEventListener("click", () => {
+      if (last) {
+        localStorage.setItem(KEY_TOUR_EVENTS, "done");
+        destroyEventsTour();
+        return;
+      }
+      idx += 1;
+      layoutStep();
+    });
+    dialog.querySelector("[data-tour-skip]")?.addEventListener("click", () => {
+      localStorage.setItem(KEY_TOUR_EVENTS, "skipped");
+      destroyEventsTour();
+    });
+
+    dialog.querySelector("[data-tour-next]")?.focus();
+  }
+
+  function onKeyDown(e) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      destroyEventsTour();
+    }
+  }
+
+  function onHashChange() {
+    if (parseRoute().name !== "events") destroyEventsTour();
+  }
+
+  function onResize() {
+    layoutStep();
+  }
+
+  _tourCleanup = () => {
+    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("hashchange", onHashChange);
+    window.removeEventListener("resize", onResize);
+    layer.remove();
+    document.body.classList.remove("tour-open");
+  };
+
+  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("hashchange", onHashChange);
+  window.addEventListener("resize", onResize);
+
+  layoutStep();
+}
+
+function startDestinationsInformationTour() {
+  destroyEventsTour();
+  let idx = 0;
+
+  const layer = document.createElement("div");
+  layer.className = "tour-layer";
+  const spotlight = document.createElement("div");
+  spotlight.className = "tour-spotlight";
+  spotlight.setAttribute("aria-hidden", "true");
+  const wrap = document.createElement("div");
+  wrap.className = "tour-dialog-wrap";
+  const dialog = document.createElement("div");
+  dialog.className = "tour-dialog";
+  dialog.setAttribute("role", "dialog");
+  dialog.setAttribute("aria-modal", "true");
+  const titleId = "tourDialogTitle";
+  const liveId = "tourDialogLive";
+  dialog.setAttribute("aria-labelledby", titleId);
+  dialog.setAttribute("aria-describedby", liveId);
+
+  layer.append(spotlight, wrap);
+  wrap.appendChild(dialog);
+  document.body.appendChild(layer);
+  document.body.classList.add("tour-open");
+
+  function queryTarget(sel) {
+    if (!sel) return null;
+    return document.querySelector(sel);
+  }
+
+  function layoutStep() {
+    const step = DESTINATIONS_TOUR_STEPS[idx];
+    const el = queryTarget(step.target);
+    const isWelcome = !step.target;
+    const useCenterDialog = isWelcome || !el;
+
+    layer.classList.toggle("tour-layer--welcome", isWelcome || !el);
+
+    if (useCenterDialog) {
+      spotlight.classList.add("tour-spotlight--hidden");
+      wrap.classList.add("tour-dialog-wrap--center");
+      wrap.style.top = "";
+      wrap.style.left = "";
+      wrap.style.bottom = "";
+      wrap.style.transform = "";
+    } else {
+      spotlight.classList.remove("tour-spotlight--hidden");
+      wrap.classList.remove("tour-dialog-wrap--center");
+      const pad = 10;
+      const r = el.getBoundingClientRect();
+      const top = Math.max(8, r.top - pad);
+      const left = Math.max(8, r.left - pad);
+      const w = Math.min(window.innerWidth - 16, r.width + pad * 2);
+      const h = Math.min(window.innerHeight - 16, r.height + pad * 2);
+      spotlight.style.top = `${top}px`;
+      spotlight.style.left = `${left}px`;
+      spotlight.style.width = `${w}px`;
+      spotlight.style.height = `${h}px`;
+
+      wrap.style.top = "auto";
+      wrap.style.bottom = "12px";
+      wrap.style.left = "50%";
+      wrap.style.transform = "translateX(-50%)";
+
+      el.scrollIntoView({ block: "nearest", behavior: "smooth", inline: "nearest" });
+    }
+
+    const last = idx >= DESTINATIONS_TOUR_STEPS.length - 1;
+    dialog.innerHTML = `
+      <h2 class="tour-dialog__title" id="${titleId}">${escapeHtml(t(step.titleKey))}</h2>
+      <p class="tour-dialog__body" id="${liveId}">${escapeHtml(t(step.bodyKey))}</p>
+      <div class="tour-dialog__actions">
+        <button type="button" class="btn btn--primary" data-tour-next>${escapeHtml(t(last ? "tour_done" : "tour_next"))}</button>
+        <button type="button" class="btn" data-tour-skip>${escapeHtml(t("tour_skip"))}</button>
+      </div>
+      <p class="tour-dialog__hint" aria-hidden="true">Esc — close tour</p>
+    `;
+
+    dialog.querySelector("[data-tour-next]")?.addEventListener("click", () => {
+      if (last) {
+        localStorage.setItem(KEY_TOUR_DESTINATIONS, "done");
+        destroyEventsTour();
+        return;
+      }
+      idx += 1;
+      layoutStep();
+    });
+    dialog.querySelector("[data-tour-skip]")?.addEventListener("click", () => {
+      localStorage.setItem(KEY_TOUR_DESTINATIONS, "skipped");
+      destroyEventsTour();
+    });
+
+    dialog.querySelector("[data-tour-next]")?.focus();
+  }
+
+  function onKeyDown(e) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      destroyEventsTour();
+    }
+  }
+
+  function onHashChange() {
+    if (parseRoute().name !== "destinations") destroyEventsTour();
+  }
+
+  function onResize() {
+    layoutStep();
+  }
+
+  _tourCleanup = () => {
+    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("hashchange", onHashChange);
+    window.removeEventListener("resize", onResize);
+    layer.remove();
+    document.body.classList.remove("tour-open");
+  };
+
+  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("hashchange", onHashChange);
+  window.addEventListener("resize", onResize);
+
+  layoutStep();
 }
 
 // -----------------------------
@@ -1038,6 +1458,8 @@ function applyStaticI18n() {
   if (cardsBtn) cardsBtn.textContent = t("view_cards");
   if (listBtn) listBtn.textContent = t("view_list");
   if (footerPrefix) footerPrefix.textContent = t("sample_footer_prefix");
+  const tourReplay = document.getElementById("tourReplayBtn");
+  if (tourReplay) tourReplay.textContent = t("tour_replay");
 }
 
 function bindLangSelect({ rerender }) {
@@ -1056,5 +1478,24 @@ syncViewButtons();
 bindViewToggle();
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 bindLangSelect({ rerender });
+
+document.getElementById("tourReplayBtn")?.addEventListener("click", () => {
+  const route = parseRoute();
+  if (route.name === "destinations") {
+    localStorage.removeItem(KEY_TOUR_DESTINATIONS);
+    destroyEventsTour();
+    requestAnimationFrame(() => requestAnimationFrame(() => startDestinationsInformationTour()));
+    return;
+  }
+
+  localStorage.removeItem(KEY_TOUR_EVENTS);
+  destroyEventsTour();
+  if (route.name !== "events") {
+    window.location.hash = "#/events";
+    return;
+  }
+  requestAnimationFrame(() => requestAnimationFrame(() => startEventsInformationTour()));
+});
+
 startRouter({ mount });
 

@@ -8,26 +8,29 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="#/events" aria-label="Luxembourg Guide home">
+      <a class="brand" href="#/events" aria-label="Luxembourg Guide home" data-tour="brand">
         <span class="brand__title">Luxembourg Guide</span>
       </a>
 
-      <nav class="nav">
-        <a class="nav__link nav__link--active" href="#/events" data-nav="events">Events</a>
-        <a class="nav__link" href="#/destinations" data-nav="destinations">Destinations</a>
+      <button type="button" class="tour-replay" id="tourReplayBtn">Tour</button>
+
+      <nav class="nav" data-tour="main-nav" aria-label="Main sections">
+        <a class="nav__link nav__link--active" href="#/events" data-nav="events" data-tour="nav-events">Events</a>
+        <a class="nav__link" href="#/destinations" data-nav="destinations" data-tour="nav-destinations"
+          >Destinations</a>
       </nav>
 
       <div class="topbar__controls">
         <div class="control">
           <label class="control__label" for="langSelect">Lang</label>
-          <select id="langSelect" class="control__select">
+          <select id="langSelect" class="control__select" data-tour="lang">
             <option value="en" selected>EN</option>
             <option value="fr">FR</option>
             <option value="de">DE</option>
           </select>
         </div>
 
-        <div class="segmented" role="group" aria-label="View mode">
+        <div class="segmented" role="group" aria-label="View mode" data-tour="view-toggle">
           <button id="viewCardsBtn" class="segmented__btn" type="button">Cards</button>
           <button id="viewListBtn" class="segmented__btn" type="button">List</button>
         </div>
@@ -36,7 +39,7 @@
 
     <main id="app" class="container"></main>
 
-    <footer class="footer">
+    <footer class="footer" data-tour="ticket-info">
       <span>Sample data • Tickets redirect to </span>
       <a href="https://www.luxembourg-ticket.lu/" target="_blank" rel="noopener noreferrer">Luxembourg Ticket</a>
     </footer>

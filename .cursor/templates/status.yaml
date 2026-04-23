@@ -1,0 +1,94 @@
+# GSE-One Project Status
+# Auto-maintained by the GSE-One agent. Do not edit manually.
+# Schema aligned with current spec (see VERSION file at repository root)
+
+gse_version: ""                        # filled by /gse:hug from VERSION registry at project init
+current_sprint: 1
+current_phase: LC02                    # LC00 | LC01 | LC02 | LC03
+
+# Session pause state (set by /gse:pause, cleared by /gse:resume)
+session_paused: false                  # true between /gse:pause and /gse:resume
+pause_checkpoint: ""                   # filename of the active checkpoint (e.g., checkpoint-2026-04-21-1430.yaml)
+# plan_status removed in v0.20.1 — use .gse/plan.yaml `status` field instead
+# (active | completed | abandoned). Fallback file-existence check for pre-v0.20 projects.
+
+health:
+  score: 0.0                           # Composite score 0-10
+  dimensions:
+    requirements_coverage: 0           # 0-10: % of REQ with linked tests
+    test_pass_rate: 0                  # 0-10: % of tests passing
+    design_debt: 0                     # 0-10: inverse of known shortcuts
+    review_findings: 0                 # 0-10: ratio of resolved findings
+    complexity_budget: 0               # 0-10: budget consumption ratio
+    traceability: 0                    # 0-10: % of artefacts with traces
+    git_hygiene: 0                     # 0-10: branch health
+    ai_integrity: 0                    # 0-10: unverified assertions, engagement
+  last_computed: ""                    # ISO 8601 timestamp
+
+# (Sprint complexity budget lives in plan.yaml.budget, per gse-orchestrator.md Sprint Plan
+# Maintenance. Micro mode — no plan.yaml — has no budget by design.
+# A top-level `complexity:` block was previously declared here but had no writer; retired in v0.52.0.)
+
+# P16 pushback detection — see spec P16 for increment/reset rules
+# Incremented: Gate decision accepted without modification, single-word confirmation of artefact
+# Reset to 0: user selects Discuss, asks why, modifies proposal, rejects option, or checkpoint triggers
+consecutive_acceptances: 0             # primary counter — triggers pushback at threshold (beginner=3, intermediate=5, expert=8)
+pushback_dismissed: 0                  # times user chose "Everything looks good" — if >=2, suppress for rest of sprint
+
+# P16 root-cause discipline — see spec P16 "Root-Cause Discipline before patching" for rules
+# Incremented: patch applied but symptom persists (user reports again, or evidence test still fails)
+# Reset to 0: user confirms resolution, symptom explicitly changes, or new sprint promotion
+fix_attempts_on_current_symptom: 0     # triggers devil-advocate escalation at threshold (beginner=2, intermediate=3, expert=4)
+
+# P6 scope reconciliation — recorded at start of creator activities (produce, task)
+# Used at closure to compute `git diff --name-status <sha>..HEAD` and detect scope drift
+# Cleared at activity closure; empty when not in a creator activity
+activity_start_sha: ""                 # HEAD SHA at the start of the current creator activity
+
+# P14 coach agent — pedagogy-axis history (spec P14 + agents/coach.md)
+# Each entry records a preamble offered by the coach and the user's response.
+# Used to respect `not-interested` (permanent suppress) and `not-now` (activity-scoped).
+# Persists across /gse:pause / /gse:resume.
+learning_preambles: []                 # list of { topic, offered_at, sprint, response, lrn_ref, timestamp }
+
+# P14 coach agent — inferred-gap ledger (only populated if coach.proactive_gap_detection: true)
+# Running record of friction patterns the coach observes during the sprint (pedagogy axis).
+# Reviewed at /gse:compound Axe 3; may seed new learning_goals with user consent.
+detected_gaps: []                      # list of { concept, source, occurrences, last_seen, addressed_by_lrn }
+
+# Coach agent — profile-calibration axis (persistent drift signals)
+# Accumulates observations where the user's behavior diverges from the declared HUG profile
+# (e.g., declared beginner but consistently skips explanations; declared autonomous but asks
+# for Gate on every low-risk decision). Debounced across sessions to avoid over-reacting.
+# Reviewed at /gse:compound Axe 3; may propose /gse:hug --update with user consent.
+profile_drift_signals: {}              # map of { dimension → { observations: int, last_seen, direction, evidence: [] } }
+
+# Coach agent — cross-sprint workflow-axes ledger (persistent)
+# Accumulates observations from the 7 workflow-monitoring axes
+# (sprint_velocity, workflow_health, quality_trends, engagement_pattern,
+#  process_deviation, sustainability, profile_calibration) throughout
+# the project's lifetime. Required by trend-based axes (quality_trends,
+# sprint_velocity, sustainability) that need ≥ 3 sprints of history.
+# At each sprint close, /gse:compound Axe 2 summarizes raw observations
+# into condensed trend entries (but does NOT purge them) — this keeps
+# the ledger bounded in size while preserving historical signal.
+workflow_observations: []              # list of { axis, moment, observation, evidence, severity, timestamp, sprint, summarized: bool }
+
+last_activity: ""                      # e.g., /gse:produce
+last_activity_timestamp: ""            # ISO 8601 timestamp
+
+# Per-activity completion history (appended by orchestrator at each transition).
+# Authoritative source for `workflow.completed[*].completed_at` in `.gse/plan.yaml`.
+# Scoped to the current sprint — reset when `/gse:plan --strategic` creates a new sprint.
+activity_history: []                   # list of { activity, completed_at, sprint, notes }
+
+# Stale sprint detection (complexity/session-based, not calendar-based)
+sessions_without_progress: 0           # incremented each /gse:go or /gse:resume with no TASK status change
+
+# Review findings counter (used by hooks)
+review_findings_open: 0
+
+# /gse:audit history — appended by /gse:audit Step 6 after each audit execution.
+# Used for trend analysis (spec §14 Methodology Audit) and /gse:audit --auto cooldown checks.
+# Capped at last 20 entries; older entries are summarized per audit.md Step 6.
+audit_history: []                      # list of { timestamp, trigger, findings_total, findings_applied, findings_deferred, report_ref }

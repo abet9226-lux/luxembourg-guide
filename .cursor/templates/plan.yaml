@@ -1,0 +1,48 @@
+# GSE-One Sprint Plan
+# Created by /gse:plan --strategic. Maintained by orchestrator throughout sprint.
+# Target: .gse/plan.yaml
+# This is the AUTHORITATIVE schema — plan.md and spec reference this template.
+
+version: 1
+id: ""                                    # PLN-NNN — artefact ID for traceability
+sprint: 1                                 # Sprint number (integer, 1+)
+mode: full                                # full | lightweight (micro has no plan.yaml)
+status: active                            # active | completed | abandoned
+goal: ""                                  # Short sprint goal (user-provided)
+
+tasks: []
+  # list of:
+  # - id: TASK-NNN                        # Must exist in backlog.yaml
+  #   order: 1                            # Execution priority (integer, 1+)
+  #   complexity: 3                       # Points (P10 unit) — 1 pt ≈ 1 pair-session hour
+  #   branch: gse/sprint-01/feat/example  # Git branch name (planned, not yet created)
+
+budget:
+  total: 10                               # from config.yaml complexity.budget_per_sprint
+  consumed: 0                             # sum of completed task complexity
+  remaining: 10                           # total - consumed
+
+workflow:
+  expected: []                            # Original activity sequence (mode-dependent, never modified after init)
+  # Full mode:        [collect, assess, plan, reqs, design, preview, tests, produce, review, deliver]
+  # Lightweight mode: [plan, reqs, produce, deliver]
+  # preview conditional: only for web/mobile projects
+  # fix conditional: inserted by orchestrator post-REVIEW if HIGH/MEDIUM findings
+  completed: []                           # list of {activity, completed_at, notes}
+  active: null                            # Current activity name or null if sprint complete
+  pending: []                             # Remaining activity names (mutable by orchestrator)
+  skipped: []                             # list of {activity, reason}
+
+coherence:
+  last_evaluated: ""                      # ISO 8601 — updated by orchestrator at each transition
+  scope_changes: []                       # list of {timestamp, trigger, description, budget_impact}
+  alerts: []                              # budget_pressure | significant_scope_drift | velocity_risk
+
+risks: []
+  # list of:
+  # - description: ""                     # Risk statement
+  #   likelihood: low                     # low | medium | high
+  #   mitigation: ""                      # Mitigation plan
+
+created: ""                               # ISO 8601
+updated: ""                               # ISO 8601

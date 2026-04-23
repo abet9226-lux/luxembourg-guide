@@ -1,0 +1,24 @@
+FROM python:3.13-slim
+
+ARG SOURCE_COMMIT=unknown
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+ENV STREAMLIT_SERVER_HEADLESS=true \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_LINK_MODE=copy \
+    PORT=8501
+
+WORKDIR /app
+
+COPY pyproject.toml uv.lock* ./
+RUN uv sync --frozen --no-dev 2>/dev/null || uv pip install -r requirements.txt 2>/dev/null || true
+
+COPY . .
+
+EXPOSE 8501
+HEALTHCHECK CMD curl --fail http://localhost:$PORT/_stcore/health || exit 1
+CMD ["uv", "run", "streamlit", "run", "app.py", \
+     "--server.port=8501", "--server.address=0.0.0.0", \
+     "--server.enableCORS=false", "--server.enableXsrfProtection=false"]

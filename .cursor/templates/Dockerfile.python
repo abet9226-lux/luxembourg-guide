@@ -1,0 +1,26 @@
+# Generic Python application template.
+# Edit the CMD below to match your framework:
+#   FastAPI: ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+#   Flask:   ["uv", "run", "gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+#   Script:  ["uv", "run", "python", "main.py"]
+FROM python:3.13-slim
+
+ARG SOURCE_COMMIT=unknown
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_LINK_MODE=copy \
+    PORT=8000
+
+WORKDIR /app
+
+COPY pyproject.toml uv.lock* ./
+RUN uv sync --frozen --no-dev 2>/dev/null || uv pip install -r requirements.txt 2>/dev/null || true
+
+COPY . .
+
+EXPOSE 8000
+HEALTHCHECK CMD curl --fail http://localhost:$PORT/ || exit 1
+CMD ["uv", "run", "python", "main.py"]

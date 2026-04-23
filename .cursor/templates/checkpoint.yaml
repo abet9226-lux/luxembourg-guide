@@ -1,0 +1,38 @@
+# GSE-One Session Checkpoint
+# Created by /gse:pause. Read by /gse:resume.
+# Target: .gse/checkpoints/checkpoint-{YYYY-MM-DD-HHMM}.yaml
+# This is the AUTHORITATIVE schema — pause.md references this template.
+
+# --- Checkpoint metadata (flat top-level) ---
+timestamp: ""                             # ISO 8601 — creation time
+user: ""                                  # From profile.yaml → user.name
+last_task: ""                             # Session context (current TASK at pause)
+note: ""                                  # From --note flag, else empty
+
+# --- Status snapshot (structured mirror of status.yaml) ---
+status_snapshot:
+  current_phase: ""                       # LC00 | LC01 | LC02 | LC03
+  current_sprint: 1
+  last_activity: ""                       # e.g., /gse:produce
+  last_activity_timestamp: ""             # ISO 8601
+  health_score: 0.0                       # Overall health score 0-10
+
+# --- Backlog snapshot (current sprint items) ---
+backlog_sprint_snapshot:
+  tasks: {}
+    # keyed by TASK ID:
+    # TASK-001:
+    #   status: in-progress              # current task status
+    #   complexity: 3
+    #   branch: gse/sprint-01/feat/auth  # or null
+
+# --- Git state (branches and worktrees) ---
+git_state:
+  current_branch: ""
+  worktrees: []
+    # list of:
+    # - path: .worktrees/sprint-01-feat-auth
+    #   branch: gse/sprint-01/feat/auth
+    #   task: TASK-001
+    #   last_commit: ""                  # commit hash
+    #   clean: true                      # false if uncommitted changes

@@ -1,0 +1,194 @@
+# GSE-One Template Manifest
+# Declarative index of all templates, their target paths in a user project,
+# the activity that creates them, and their scope.
+#
+# Used by:
+# - Documentation (single source of truth for template→target mapping)
+# - Future /gse:upgrade (knows which project files to scan and migrate)
+# - gse_generate.py --verify (can check all listed templates exist)
+#
+templates:
+  # --- Core .gse/ state files (scope: project) ---
+  - source: status.yaml
+    target: .gse/status.yaml
+    created_by: /gse:hug
+    scope: project
+    description: Lifecycle state, health, complexity budget, coach observations
+
+  - source: config.yaml
+    target: .gse/config.yaml
+    created_by: /gse:hug
+    scope: project
+    description: Project configuration (~50 keys across 15 sections)
+
+  - source: profile.yaml
+    target: .gse/profile.yaml
+    created_by: /gse:hug
+    scope: project
+    description: User profile (HUG dimensions, expertise, competency map)
+
+  - source: backlog.yaml
+    target: .gse/backlog.yaml
+    created_by: /gse:hug
+    scope: project
+    description: Unified work items (TASK) with git state and test evidence
+
+  - source: plan.yaml
+    target: .gse/plan.yaml
+    created_by: /gse:plan --strategic
+    scope: sprint
+    description: Living sprint plan (workflow, budget, coherence, risks)
+
+  - source: sources.yaml
+    target: .gse/sources.yaml
+    created_by: /gse:collect
+    scope: project
+    description: External source registry (local dirs, GitHub repos)
+
+  - source: decisions.md
+    target: .gse/decisions.md
+    created_by: /gse:plan
+    scope: project
+    description: Decision journal (append-only, Gate and Inform tiers)
+
+  - source: checkpoint.yaml
+    target: .gse/checkpoints/checkpoint-{YYYY-MM-DD-HHMM}.yaml
+    created_by: /gse:pause
+    scope: session
+    description: Session pause snapshot (status, backlog, git state)
+
+  # --- Sprint artefacts (scope: sprint) ---
+  - source: sprint/reqs.md
+    target: docs/sprints/sprint-{NN}/reqs.md
+    created_by: /gse:reqs
+    scope: sprint
+    description: Requirements (FR, NFR, traceability, quality coverage)
+
+  - source: sprint/design.md
+    target: docs/sprints/sprint-{NN}/design.md
+    created_by: /gse:design
+    scope: sprint
+    description: Design decisions, components, interfaces, shared state
+
+  - source: sprint/tests.md
+    target: docs/sprints/sprint-{NN}/test-strategy.md
+    created_by: /gse:tests
+    scope: sprint
+    description: Test strategy (pyramid, unit/integration/E2E/policy)
+
+  - source: sprint/preview.md
+    target: docs/sprints/sprint-{NN}/preview.md
+    created_by: /gse:preview
+    scope: sprint
+    description: Pre-code visual/structural preview (static wireframes or scaffold) + Inform-tier decisions
+
+  - source: sprint/review.md
+    target: docs/sprints/sprint-{NN}/review.md
+    created_by: /gse:review
+    scope: sprint
+    description: Review findings from 7 agent perspectives
+
+  - source: sprint/compound.md
+    target: docs/sprints/sprint-{NN}/compound.md
+    created_by: /gse:compound
+    scope: sprint
+    description: Capitalization (3 axes — production, ecosystem, governance)
+
+  - source: sprint/release.md
+    target: docs/sprints/sprint-{NN}/release.md
+    created_by: /gse:deliver
+    scope: sprint
+    description: Release notes (features, fixes, quality summary)
+
+  - source: sprint/plan-summary.md
+    target: docs/sprints/sprint-{NN}/plan-summary.md
+    created_by: /gse:deliver
+    scope: sprint
+    description: Sprint plan archive (read-only snapshot from plan.yaml)
+
+  - source: sprint/methodology-feedback.md
+    target: docs/sprints/sprint-{NN}/methodology-feedback.md
+    created_by: /gse:compound
+    scope: sprint
+    description: Methodology feedback export (observations by theme)
+
+  - source: sprint/audit.md
+    target: docs/sprints/sprint-{NN}/audit-{YYYY-MM-DDThhmm}.md
+    created_by: /gse:audit
+    scope: sprint
+    description: Methodology audit report (deterministic findings + applied/deferred actions); alternate target `.gse/audits/audit-{timestamp}.md` when no sprint is active
+
+  # --- Project-level documents (scope: project) ---
+  - source: intent.md
+    target: docs/intent.md
+    created_by: /gse:go
+    scope: project
+    description: Project intent (description, users, boundaries, open questions)
+
+  - source: learning-note.md
+    target: docs/learning/LRN-{NNN}-{topic-slug}.md
+    created_by: /gse:learn
+    scope: project
+    description: Persistent learning note (concepts, project application, exercises)
+
+  - source: test-campaign.md
+    target: docs/sprints/sprint-{NN}/test-reports/campaign-{date}-TASK-{ID}.md
+    created_by: /gse:tests
+    scope: sprint
+    description: Test campaign evidence (execution results, coverage, failures)
+
+  # --- Infrastructure (scope: project) ---
+  - source: gitignore-additions.txt
+    target: .gitignore
+    created_by: /gse:hug
+    scope: project
+    description: Gitignore additions (.worktrees/, .gse/checkpoints/, etc.)
+
+  # --- Deploy templates (scope: project — /gse:deploy production-ready since v0.42) ---
+  - source: deploy.json
+    target: .gse/deploy.json
+    created_by: /gse:deploy
+    scope: project
+    description: Deploy state — phases, server, coolify, domain, applications
+
+  - source: deploy-env.example
+    target: deploy-env.example
+    created_by: /gse:deploy (Solo / Instructor)
+    scope: project
+    description: .env template for Hetzner+Coolify deployment (HETZNER_API_TOKEN, DEPLOY_DOMAIN)
+
+  - source: deploy-env-training.example
+    target: deploy-env-training.example
+    created_by: /gse:deploy (Learner)
+    scope: project
+    description: .env template for learner role (shared Coolify, no Hetzner token)
+
+  - source: Dockerfile.streamlit
+    target: Dockerfile
+    created_by: /gse:deploy (app_type=streamlit)
+    scope: project
+    description: Dockerfile for Streamlit apps (port 8501, healthcheck /_stcore/health)
+
+  - source: Dockerfile.python
+    target: Dockerfile
+    created_by: /gse:deploy (app_type=python)
+    scope: project
+    description: Dockerfile for generic Python apps (port 8000, healthcheck /)
+
+  - source: Dockerfile.node
+    target: Dockerfile
+    created_by: /gse:deploy (app_type=node)
+    scope: project
+    description: Dockerfile for Node.js apps (port 3000, healthcheck /)
+
+  - source: Dockerfile.static
+    target: Dockerfile
+    created_by: /gse:deploy (app_type=static)
+    scope: project
+    description: Dockerfile for static sites (port 80, nginx)
+
+  - source: .dockerignore
+    target: .dockerignore
+    created_by: /gse:deploy
+    scope: project
+    description: Excludes for Docker build context (.git, node_modules, .worktrees, etc.)

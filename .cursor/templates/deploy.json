@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "plugin": "gse-one",
+  "created_at": "",
+  "last_updated_at": "",
+  "user_role": "",
+
+  "phases_completed": {
+    "setup": "",
+    "provision": "",
+    "secure": "",
+    "coolify": "",
+    "dns": ""
+  },
+
+  "server": {
+    "name": "",
+    "id": null,
+    "ipv4": "",
+    "type": "cax21",
+    "datacenter": "fsn1"
+  },
+
+  "coolify": {
+    "url": "",
+    "version": ""
+  },
+
+  "domain": {
+    "base": "",
+    "registrar": ""
+  },
+
+  "cdn": {
+    "provider": "",
+    "enabled": false,
+    "bot_protection": false
+  },
+
+  "applications": []
+}

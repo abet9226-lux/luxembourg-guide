@@ -38,8 +38,11 @@ workflow:
     - activity: preview
       completed_at: "2026-04-23T00:00:00Z"
       notes: "UI wireframes created (cards default + list toggle)."
-  active: tests
-  pending: [produce, review, deliver]
+    - activity: tests
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Browser-based test strategy drafted (Playwright + screenshots)."
+  active: produce
+  pending: [review, deliver]
   skipped: []
 
 coherence:

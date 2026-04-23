@@ -1,0 +1,111 @@
+# GSE-One Project Configuration
+project:
+  name: ""
+  domain: "web"
+
+lifecycle:
+  mode: ""  # set by /gse:go after complexity assessment
+  stale_sprint_sessions: 3
+  phases:
+    LC02:
+      deliver: true
+      design: true
+      preview: true
+
+interaction:
+  verbosity: standard
+  language:
+    chat: en
+    artifacts: en
+
+decisions:
+  tier_bias: balanced
+  always_gate:
+    - security
+    - data-model
+    - external-dependency
+    - merge-strategy
+
+guardrails:
+  sensitivity: auto
+
+complexity:
+  budget_per_sprint: 10
+
+health:
+  disabled_dimensions: []
+
+hooks:
+  protect_main: true
+  block_force_push: true
+  review_findings_on_push: true
+
+git:
+  strategy: worktree
+  worktree_dir: .worktrees
+  branch_prefix: gse
+  merge_strategy_default: squash
+  protect_main: true
+  auto_commit_on_pause: true
+  commit_convention: gse
+  tag_on_deliver: true
+  cleanup_on_deliver: true
+  pre_merge_check: ""
+  post_tag_hook: ""
+  rollback_on_deploy_failure: true
+  backup_before_destructive: true
+  backup_retention_days: 30
+
+github:
+  enabled: false
+  repo: ""
+  sync_mode: manual
+  auto_close_on_deliver: true
+  upstream_repo: ""
+
+testing:
+  framework: auto
+  strategy: auto
+  pyramid: auto
+  dependency_audit: true
+  audit_tool: auto
+  visual:
+    enabled: false
+    tool: playwright
+    browsers: [chromium]
+    video: false
+    video_on_failure_only: true
+  coverage:
+    tool: auto
+    minimum: 60
+  environment:
+    db_test: auto
+    mocks: auto
+
+deploy:
+  provider: hetzner
+  server_type: cax21
+  datacenter: fsn1
+  app_type: auto
+  health_check_timeout: 120
+
+dashboard:
+  regen_debounce_seconds: 5
+
+compound:
+  max_proposed_issues_per_sprint: 3
+
+coach:
+  enabled: true
+  max_preambles_per_sprint: 3
+  max_advice_per_check: 3
+  proactive_gap_detection: true
+  axes:
+    pedagogy: true
+    profile_calibration: true
+    sprint_velocity: true
+    workflow_health: true
+    quality_trends: true
+    engagement_pattern: true
+    process_deviation: true
+    sustainability: true

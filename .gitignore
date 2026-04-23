@@ -1,0 +1,26 @@
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Build outputs
+dist/
+build/
+
+# GSE-One worktrees
+.worktrees/
+
+# GSE-One local state
+.gse/checkpoints/
+.gse/decisions-auto.log

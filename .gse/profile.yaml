@@ -1,0 +1,32 @@
+# GSE-One User Profile
+version: 1
+created: "2026-04-23"
+updated: "2026-04-23"
+
+user:
+  name: "ABE INFO"
+  git_email: "abe9226@gmail.com"
+
+dimensions:
+  it_expertise: beginner
+  scientific_expertise: practitioner
+  abstraction_capability: concrete-first
+  language:
+    chat: en
+    artifacts: en
+    overrides: {}
+  preferred_verbosity: normal
+  domain_background: "business"
+  decision_involvement: collaborative
+  project_domain: web
+  team_context: solo
+  learning_goals: []
+  contextual_tips: true
+  emoji: false
+
+inferred: {}
+
+expertise_domains: {}
+
+competency_map:
+  topics: {}

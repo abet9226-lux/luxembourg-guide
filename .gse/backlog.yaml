@@ -50,7 +50,7 @@ items:
       implements: []
       derives_from: [INT-001]
     acceptance_criteria: "A visitor can browse events, open an event detail page, and filter by date (today/this week/this month), city, and category (Music/Cultural festival/Seasonal event)."
-    status: review
+    status: fixing
     requires_review: true
     delivered_at: null
     completed_at: null

@@ -7,17 +7,17 @@ session_paused: false
 pause_checkpoint: ""
 
 health:
-  score: 0.0
+  score: 4.4
   dimensions:
-    requirements_coverage: 0
-    test_pass_rate: 0
-    design_debt: 0
-    review_findings: 0
-    complexity_budget: 0
-    traceability: 0
-    git_hygiene: 0
-    ai_integrity: 0
-  last_computed: ""
+    requirements_coverage: 2
+    test_pass_rate: 10
+    design_debt: 7
+    review_findings: 2
+    complexity_budget: 10
+    traceability: 3
+    git_hygiene: 6
+    ai_integrity: 10
+  last_computed: "2026-04-23T12:30:00Z"
 
 consecutive_acceptances: 0
 pushback_dismissed: 0
@@ -27,7 +27,7 @@ learning_preambles: []
 detected_gaps: []
 profile_drift_signals: {}
 workflow_observations: []
-last_activity: "tests"
+last_activity: "review"
 last_activity_timestamp: "2026-04-23T00:00:00Z"
 activity_history:
   - activity: collect
@@ -59,5 +59,5 @@ activity_history:
     sprint: 1
     notes: "Test strategy drafted"
 sessions_without_progress: 0
-review_findings_open: 0
+review_findings_open: 6
 audit_history: []

@@ -41,8 +41,14 @@ workflow:
     - activity: tests
       completed_at: "2026-04-23T00:00:00Z"
       notes: "Browser-based test strategy drafted (Playwright + screenshots)."
-  active: produce
-  pending: [review, deliver]
+    - activity: produce
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Implemented events pages + Playwright tests."
+    - activity: review
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Review report written; HIGH/MEDIUM findings require fixes."
+  active: fix
+  pending: [deliver]
   skipped: []
 
 coherence:

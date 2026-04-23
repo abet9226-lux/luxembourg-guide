@@ -35,8 +35,11 @@ workflow:
     - activity: design
       completed_at: "2026-04-23T00:00:00Z"
       notes: "Static site architecture drafted (hash routing, JSON data, filters/search, i18n)."
-  active: preview
-  pending: [tests, produce, review, deliver]
+    - activity: preview
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "UI wireframes created (cards default + list toggle)."
+  active: tests
+  pending: [produce, review, deliver]
   skipped: []
 
 coherence:

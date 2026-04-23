@@ -27,7 +27,7 @@ learning_preambles: []
 detected_gaps: []
 profile_drift_signals: {}
 workflow_observations: []
-last_activity: "design"
+last_activity: "preview"
 last_activity_timestamp: "2026-04-23T00:00:00Z"
 activity_history:
   - activity: collect
@@ -50,6 +50,10 @@ activity_history:
     completed_at: "2026-04-23T00:00:00Z"
     sprint: 1
     notes: "Static-site design drafted"
+  - activity: preview
+    completed_at: "2026-04-23T00:00:00Z"
+    sprint: 1
+    notes: "UI wireframes created"
 sessions_without_progress: 0
 review_findings_open: 0
 audit_history: []

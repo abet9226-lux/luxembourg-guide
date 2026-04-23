@@ -57,6 +57,7 @@ gse:
   2. The visitor can filter by city (starting with “Luxembourg” for v1).
   3. The visitor can filter by category: Music / Cultural festival / Seasonal event.
   4. Changing any filter updates the visible list to match the selected filters.
+  5. “This week” means the **next 7 days (rolling)** starting from today.
 - **Traces:** implements (—) | tested_by (—)
 
 ### REQ-004 — Search box on events list
@@ -138,4 +139,4 @@ gse:
 ## Open Questions
 
 1. Which exact UI languages should v1 include (e.g., English/French/German)?
-2. Should “This week” mean Monday–Sunday, or the next 7 days?
+2. (Resolved) “This week” means the next 7 days (rolling).

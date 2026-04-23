@@ -68,8 +68,14 @@ Public users: tourists and locals (no specific role yet).
 - **OQ-004** — Do you want a map view (Google Maps / OpenStreetMap) and directions?
   - resolves_in: DESIGN
   - impact: architectural
-  - status: pending
+  - status: resolved
   - raised_at: INT-001
+  - resolved_at: "2026-04-23"
+  - resolved_in: design
+  - answer: "V1 uses map links only (open in Google Maps / OpenStreetMap); no embedded interactive map."
+  - answered_by: user
+  - confidence: Verified
+  - traces: []
 
 - **OQ-005** — Do users need search + filters (date, city, category, season)?
   - resolves_in: REQS

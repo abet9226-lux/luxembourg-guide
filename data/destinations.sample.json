@@ -15,7 +15,7 @@
   {
     "id": "dst-0002",
     "name": "Mullerthal Trail (Sample)",
-    "type": "Hiking",
+    "type": "Natural",
     "city": "Echternach",
     "season": "Spring / Summer / Autumn",
     "shortDescription": "Scenic hiking area with rock formations.",
@@ -28,7 +28,7 @@
   {
     "id": "dst-0003",
     "name": "Moselle Riverside",
-    "type": "Scenic Area",
+    "type": "Natural",
     "city": "Remich",
     "season": "Spring / Summer",
     "shortDescription": "Riverside walks and relaxing views.",
@@ -41,7 +41,7 @@
   {
     "id": "dst-0004",
     "name": "Castle Viewpoint (Sample)",
-    "type": "Landmark",
+    "type": "City Walk",
     "city": "Vianden",
     "season": "All year",
     "shortDescription": "Popular viewpoint near a historic castle area.",
@@ -67,7 +67,7 @@
   {
     "id": "dst-0006",
     "name": "Family Park (Sample)",
-    "type": "Park",
+    "type": "Natural",
     "city": "Dudelange",
     "season": "Spring / Summer",
     "shortDescription": "Outdoor area for families and picnics.",
@@ -80,7 +80,7 @@
   {
     "id": "dst-0007",
     "name": "Wine Route Stops (Sample)",
-    "type": "Route",
+    "type": "City Walk",
     "city": "Grevenmacher",
     "season": "Summer / Autumn",
     "shortDescription": "Seasonal wine route visiting points.",
@@ -93,7 +93,7 @@
   {
     "id": "dst-0008",
     "name": "City Shopping Area (Sample)",
-    "type": "Shopping",
+    "type": "City Walk",
     "city": "Luxembourg City",
     "season": "All year",
     "shortDescription": "Central shops and cafés.",
@@ -106,7 +106,7 @@
   {
     "id": "dst-0009",
     "name": "Lake Picnic Spot (Sample)",
-    "type": "Lake",
+    "type": "Natural",
     "city": "Esch-sur-Sûre",
     "season": "Summer",
     "shortDescription": "Picnic and relaxing spot near a lake area.",
@@ -119,7 +119,7 @@
   {
     "id": "dst-0010",
     "name": "Winter Indoor Activity (Sample)",
-    "type": "Indoor",
+    "type": "Museum",
     "city": "Ettelbruck",
     "season": "Winter",
     "shortDescription": "Example indoor visiting point for cold season.",

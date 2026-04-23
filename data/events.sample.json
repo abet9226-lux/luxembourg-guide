@@ -2,7 +2,7 @@
   {
     "id": "evt-2026-0001",
     "title": "Spring Food Market",
-    "category": "Food & Drink",
+    "category": "Seasonal event",
     "startDate": "2026-05-10",
     "endDate": "2026-05-10",
     "city": "Luxembourg City",
@@ -36,7 +36,7 @@
   {
     "id": "evt-2026-0003",
     "title": "Autumn Art Exhibition",
-    "category": "Culture",
+    "category": "Cultural festival",
     "startDate": "2026-09-03",
     "endDate": "2026-09-20",
     "city": "Differdange",
@@ -53,7 +53,7 @@
   {
     "id": "evt-2026-0004",
     "title": "Winter Lights Festival",
-    "category": "Festival",
+    "category": "Cultural festival",
     "startDate": "2026-12-05",
     "endDate": "2026-12-20",
     "city": "Luxembourg City",
@@ -70,7 +70,7 @@
   {
     "id": "evt-2026-0005",
     "title": "Guided City Walk (Weekly)",
-    "category": "Tour",
+    "category": "Seasonal event",
     "startDate": "2026-05-01",
     "endDate": "2026-10-31",
     "city": "Luxembourg City",
@@ -87,7 +87,7 @@
   {
     "id": "evt-2026-0006",
     "title": "Family Outdoor Cinema",
-    "category": "Entertainment",
+    "category": "Seasonal event",
     "startDate": "2026-07-24",
     "endDate": "2026-07-26",
     "city": "Dudelange",
@@ -104,7 +104,7 @@
   {
     "id": "evt-2026-0007",
     "title": "Wine Tasting Weekend",
-    "category": "Food & Drink",
+    "category": "Seasonal event",
     "startDate": "2026-08-15",
     "endDate": "2026-08-16",
     "city": "Remich",
@@ -121,7 +121,7 @@
   {
     "id": "evt-2026-0008",
     "title": "Tech Meetup: Travel Apps",
-    "category": "Conference",
+    "category": "Cultural festival",
     "startDate": "2026-06-05",
     "endDate": "2026-06-05",
     "city": "Luxembourg City",
@@ -138,7 +138,7 @@
   {
     "id": "evt-2026-0009",
     "title": "Local Crafts Fair",
-    "category": "Market",
+    "category": "Cultural festival",
     "startDate": "2026-04-30",
     "endDate": "2026-05-02",
     "city": "Ettelbruck",

@@ -78,7 +78,9 @@ function setViewMode(mode) {
 // Data
 // -----------------------------
 const EVENTS_URL = "/data/events.sample.json";
+const DESTINATIONS_URL = "/data/destinations.sample.json";
 let _eventsCache = null;
+let _destinationsCache = null;
 
 function normalizeEvent(e) {
   const start = parseISODate(e.startDate);
@@ -113,6 +115,28 @@ function getUniqueValues(events, key) {
     if (typeof v === "string" && v.trim()) set.add(v.trim());
   }
   return Array.from(set).sort((a, b) => a.localeCompare(b));
+}
+
+function normalizeDestination(d) {
+  return {
+    ...d,
+    _searchText: `${d.name ?? ""} ${d.shortDescription ?? ""}`.toLowerCase(),
+  };
+}
+
+async function loadDestinations() {
+  if (_destinationsCache) return _destinationsCache;
+  const res = await fetch(DESTINATIONS_URL, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load destinations data (${res.status})`);
+  const json = await res.json();
+  _destinationsCache = (Array.isArray(json) ? json : []).map(normalizeDestination);
+  return _destinationsCache;
+}
+
+async function getDestinationById(id) {
+  const items = await loadDestinations();
+  const needle = String(id);
+  return items.find((d) => String(d.id) === needle) ?? null;
 }
 
 // -----------------------------
@@ -432,6 +456,251 @@ async function renderEventDetails(mount, eventId) {
   `;
 }
 
+function destinationCardsHtml(items) {
+  return `
+    <div class="grid">
+      ${items
+        .map((d) => {
+          return `
+            <article class="card">
+              <h3 class="card__title">${escapeHtml(d.name)}</h3>
+              <div class="card__meta">
+                <span class="badge">${escapeHtml(d.type ?? "—")}</span>
+                <span class="badge">${escapeHtml(d.city ?? "—")}</span>
+                <span class="badge">${escapeHtml(d.season ?? "—")}</span>
+              </div>
+              <p class="card__desc">${escapeHtml(d.shortDescription ?? "")}</p>
+              <div class="btn-row">
+                <a class="btn btn--primary" href="#/destinations/${encodeURIComponent(
+                  String(d.id)
+                )}">View details</a>
+              </div>
+            </article>
+          `;
+        })
+        .join("")}
+    </div>
+  `;
+}
+
+function destinationListHtml(items) {
+  return `
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>City</th>
+          <th>Type</th>
+          <th>Season</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${items
+          .map((d) => {
+            return `
+              <tr>
+                <td><a class="rowlink" href="#/destinations/${encodeURIComponent(
+                  String(d.id)
+                )}">${escapeHtml(d.name)}</a></td>
+                <td>${escapeHtml(d.city ?? "—")}</td>
+                <td>${escapeHtml(d.type ?? "—")}</td>
+                <td>${escapeHtml(d.season ?? "—")}</td>
+              </tr>
+            `;
+          })
+          .join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderDestinationsFilters({ container, state, cityOptions, typeOptions, seasonOptions }) {
+  container.innerHTML = `
+    <div class="panel">
+      <div class="panel__header">
+        <div>
+          <h1 class="panel__title">Destinations</h1>
+          <div class="muted">Seasonal places to visit in Luxembourg</div>
+        </div>
+        <div class="muted">Cards & List view supported</div>
+      </div>
+
+      <div class="filters" role="search">
+        <input class="input" id="dstSearchInput" type="search" aria-label="Search destinations" placeholder="Search destinations…" value="${escapeHtml(
+          state.q
+        )}" />
+
+        <select class="select" id="dstCitySelect" aria-label="Destination city filter">
+          ${["All", ...cityOptions]
+            .map(
+              (c) =>
+                `<option value="${escapeHtml(c)}" ${state.city === c ? "selected" : ""}>${escapeHtml(
+                  c
+                )}</option>`
+            )
+            .join("")}
+        </select>
+
+        <select class="select" id="dstTypeSelect" aria-label="Destination type filter">
+          ${["All", ...typeOptions]
+            .map(
+              (t) =>
+                `<option value="${escapeHtml(t)}" ${state.type === t ? "selected" : ""}>${escapeHtml(
+                  t
+                )}</option>`
+            )
+            .join("")}
+        </select>
+
+        <select class="select" id="dstSeasonSelect" aria-label="Destination season filter">
+          ${["All", ...seasonOptions]
+            .map(
+              (s) =>
+                `<option value="${escapeHtml(s)}" ${state.season === s ? "selected" : ""}>${escapeHtml(
+                  s
+                )}</option>`
+            )
+            .join("")}
+        </select>
+      </div>
+
+      <div id="dstResults"></div>
+    </div>
+  `;
+}
+
+function applyDestinationFilters(items, { city, type, season, q }) {
+  const query = (q || "").trim().toLowerCase();
+  return items.filter((d) => {
+    if (city && city !== "All") {
+      if (String(d.city || "").toLowerCase() !== String(city).toLowerCase()) return false;
+    }
+    if (type && type !== "All") {
+      if (String(d.type || "") !== type) return false;
+    }
+    if (season && season !== "All") {
+      if (String(d.season || "") !== season) return false;
+    }
+    if (query) {
+      if (!String(d._searchText || "").includes(query)) return false;
+    }
+    return true;
+  });
+}
+
+async function renderDestinationsList(mount) {
+  const items = await loadDestinations();
+  const state = { city: "All", type: "All", season: "All", q: "" };
+
+  const cityOptions = getUniqueValues(items, "city");
+  const typeOptions = getUniqueValues(items, "type");
+  const seasonOptions = getUniqueValues(items, "season");
+
+  renderDestinationsFilters({ container: mount, state, cityOptions, typeOptions, seasonOptions });
+
+  const resultsEl = mount.querySelector("#dstResults");
+  function rerender() {
+    const filtered = applyDestinationFilters(items, state);
+    if (!filtered.length) {
+      resultsEl.innerHTML = `<div class="empty">No destinations match your filters.</div>`;
+      return;
+    }
+    const mode = getViewMode();
+    resultsEl.innerHTML = mode === "list" ? destinationListHtml(filtered) : destinationCardsHtml(filtered);
+  }
+
+  mount.querySelector("#dstSearchInput").addEventListener("input", (e) => {
+    state.q = e.target.value ?? "";
+    rerender();
+  });
+  mount.querySelector("#dstCitySelect").addEventListener("change", (e) => {
+    state.city = e.target.value;
+    rerender();
+  });
+  mount.querySelector("#dstTypeSelect").addEventListener("change", (e) => {
+    state.type = e.target.value;
+    rerender();
+  });
+  mount.querySelector("#dstSeasonSelect").addEventListener("change", (e) => {
+    state.season = e.target.value;
+    rerender();
+  });
+
+  rerender();
+}
+
+async function renderDestinationDetails(mount, destinationId) {
+  const d = await getDestinationById(destinationId);
+  if (!d) {
+    mount.innerHTML = `
+      <div class="panel">
+        <a class="backlink" href="#/destinations">← Back to destinations</a>
+        <div class="empty">Destination not found.</div>
+      </div>
+    `;
+    return;
+  }
+
+  const officialUrl = safeExternalUrl(d.officialUrl) || null;
+  const mapUrl = safeExternalUrl(d.mapUrl) || null;
+  const mapsFallback = buildMapLinks({ venue: d.name, city: d.city });
+
+  mount.innerHTML = `
+    <div class="panel">
+      <a class="backlink" href="#/destinations">← Back to destinations</a>
+
+      <div class="detail">
+        <section class="detail__section">
+          <h1 class="h1">${escapeHtml(d.name)}</h1>
+          <div class="card__meta" style="margin-top:6px">
+            <span class="badge">${escapeHtml(d.type ?? "—")}</span>
+            <span class="badge">${escapeHtml(d.city ?? "—")}</span>
+            <span class="badge">${escapeHtml(d.season ?? "—")}</span>
+          </div>
+
+          <div class="kv" aria-label="Destination details">
+            <b>City</b><span>${escapeHtml(d.city ?? "—")}</span>
+            <b>Type</b><span>${escapeHtml(d.type ?? "—")}</span>
+            <b>Season</b><span>${escapeHtml(d.season ?? "—")}</span>
+            <b>Tags</b><span>${Array.isArray(d.tags) ? d.tags.map(escapeHtml).join(", ") : "—"}</span>
+          </div>
+
+          <p style="margin-top:12px; line-height:1.5; color:rgba(230,233,242,.92)">${escapeHtml(
+            d.shortDescription ?? ""
+          )}</p>
+        </section>
+
+        <aside class="detail__section">
+          <h2 style="margin:0 0 10px; font-size:16px">Actions</h2>
+
+          <div class="btn-row">
+            ${
+              officialUrl
+                ? `<a class="btn btn--primary" href="${escapeHtml(
+                    officialUrl
+                  )}" target="_blank" rel="noopener noreferrer">Official website</a>`
+                : `<span class="muted">No official website provided.</span>`
+            }
+          </div>
+
+          <div style="margin-top:12px" class="btn-row">
+            ${
+              mapUrl
+                ? `<a class="btn" href="${escapeHtml(
+                    mapUrl
+                  )}" target="_blank" rel="noopener noreferrer">Open map</a>`
+                : mapsFallback
+                  ? `<a class="btn" href="${mapsFallback.google}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+                     <a class="btn" href="${mapsFallback.osm}" target="_blank" rel="noopener noreferrer">Open in OpenStreetMap</a>`
+                  : `<span class="muted">No map location for this destination.</span>`
+            }
+          </div>
+        </aside>
+      </div>
+    </div>
+  `;
+}
+
 // -----------------------------
 // Router + boot
 // -----------------------------
@@ -441,7 +710,23 @@ function parseRoute() {
   const parts = cleaned.split("/").filter(Boolean);
   const [root, id] = parts;
   if (root === "events" && id) return { name: "eventDetails", id: decodeURIComponent(id) };
+  if (root === "destinations" && id)
+    return { name: "destinationDetails", id: decodeURIComponent(id) };
+  if (root === "destinations") return { name: "destinations" };
   return { name: "events" };
+}
+
+function syncNav(routeName) {
+  const links = document.querySelectorAll("[data-nav]");
+  for (const a of links) {
+    const isActive =
+      (routeName === "events" || routeName === "eventDetails")
+        ? a.getAttribute("data-nav") === "events"
+        : (routeName === "destinations" || routeName === "destinationDetails")
+          ? a.getAttribute("data-nav") === "destinations"
+          : false;
+    a.classList.toggle("nav__link--active", isActive);
+  }
 }
 
 function renderError(mount, e) {
@@ -459,8 +744,17 @@ function renderError(mount, e) {
 function startRouter({ mount }) {
   async function render() {
     const route = parseRoute();
+    syncNav(route.name);
     if (route.name === "eventDetails") {
       await renderEventDetails(mount, route.id);
+      return;
+    }
+    if (route.name === "destinationDetails") {
+      await renderDestinationDetails(mount, route.id);
+      return;
+    }
+    if (route.name === "destinations") {
+      await renderDestinationsList(mount);
       return;
     }
     await renderEventsList(mount);

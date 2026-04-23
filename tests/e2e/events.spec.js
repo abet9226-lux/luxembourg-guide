@@ -37,3 +37,18 @@ test("open event details and see ticket link", async ({ page }) => {
   await page.screenshot({ path: "tests/e2e/screenshots/details.png", fullPage: true });
 });
 
+test("destinations page loads", async ({ page }) => {
+  await page.goto("/app/index.html#/destinations");
+  await expect(page.getByRole("heading", { name: "Destinations" })).toBeVisible();
+  await expect(page.locator(".grid")).toBeVisible();
+  await page.screenshot({ path: "tests/e2e/screenshots/destinations.png", fullPage: true });
+});
+
+test("open destination details", async ({ page }) => {
+  await page.goto("/app/index.html#/destinations");
+  await page.getByRole("link", { name: "View details" }).first().click();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByText("Actions")).toBeVisible();
+  await page.screenshot({ path: "tests/e2e/screenshots/destination-details.png", fullPage: true });
+});
+

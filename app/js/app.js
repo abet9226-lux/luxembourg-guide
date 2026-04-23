@@ -66,12 +66,177 @@ function safeExternalUrl(urlString) {
 // Small persistence (view mode)
 // -----------------------------
 const KEY_VIEW = "luxguide.view";
+const KEY_LANG = "luxguide.lang";
 function getViewMode() {
   const v = localStorage.getItem(KEY_VIEW);
   return v === "list" ? "list" : "cards";
 }
 function setViewMode(mode) {
   localStorage.setItem(KEY_VIEW, mode === "list" ? "list" : "cards");
+}
+
+function getLang() {
+  const v = localStorage.getItem(KEY_LANG);
+  return v === "fr" || v === "de" ? v : "en";
+}
+
+function setLang(lang) {
+  localStorage.setItem(KEY_LANG, lang === "fr" || lang === "de" ? lang : "en");
+}
+
+const I18N = {
+  en: {
+    nav_events: "Events",
+    nav_destinations: "Destinations",
+    lang_label: "Lang",
+    view_cards: "Cards",
+    view_list: "List",
+    sample_footer_prefix: "Sample data • Tickets redirect to ",
+
+    events_title: "Events",
+    events_subtitle: "Sorted by soonest upcoming first",
+    events_supports_view: "Cards & List view supported",
+    search_events_aria: "Search events",
+    search_events_ph: "Search events…",
+    date_filter_aria: "Date filter",
+    city_filter_aria: "City filter",
+    category_filter_aria: "Category filter",
+    empty_events: "No events match your filters.",
+    view_details: "View details",
+    back_events: "← Back to events",
+    event_not_found: "Event not found.",
+    actions: "Actions",
+    tickets_book: "Tickets / Book",
+    no_ticket_link: "No ticket link provided.",
+    open_google_maps: "Open in Google Maps",
+    open_osm: "Open in OpenStreetMap",
+    no_map_location_event: "No map location for this event.",
+    ticket_note: "Ticket links open on the official provider website.",
+    kv_date: "Date",
+    kv_city: "City",
+    kv_venue: "Venue",
+    kv_tags: "Tags",
+
+    destinations_title: "Destinations",
+    destinations_subtitle: "Seasonal places to visit in Luxembourg",
+    search_destinations_aria: "Search destinations",
+    search_destinations_ph: "Search destinations…",
+    dst_city_filter_aria: "Destination city filter",
+    dst_type_filter_aria: "Destination type filter",
+    dst_season_filter_aria: "Destination season filter",
+    empty_destinations: "No destinations match your filters.",
+    back_destinations: "← Back to destinations",
+    destination_not_found: "Destination not found.",
+    official_website: "Official website",
+    no_official_website: "No official website provided.",
+    open_map: "Open map",
+    no_map_location_destination: "No map location for this destination.",
+    kv_type: "Type",
+    kv_season: "Season",
+  },
+  fr: {
+    nav_events: "Événements",
+    nav_destinations: "Destinations",
+    lang_label: "Langue",
+    view_cards: "Cartes",
+    view_list: "Liste",
+    sample_footer_prefix: "Données d’exemple • Billets via ",
+
+    events_title: "Événements",
+    events_subtitle: "Triés du plus proche au plus lointain",
+    events_supports_view: "Cartes & liste disponibles",
+    search_events_aria: "Rechercher des événements",
+    search_events_ph: "Rechercher…",
+    date_filter_aria: "Filtre de date",
+    city_filter_aria: "Filtre de ville",
+    category_filter_aria: "Filtre de catégorie",
+    empty_events: "Aucun événement ne correspond aux filtres.",
+    view_details: "Voir détails",
+    back_events: "← Retour aux événements",
+    event_not_found: "Événement introuvable.",
+    actions: "Actions",
+    tickets_book: "Billets / Réserver",
+    no_ticket_link: "Aucun lien de billetterie.",
+    open_google_maps: "Ouvrir dans Google Maps",
+    open_osm: "Ouvrir dans OpenStreetMap",
+    no_map_location_event: "Pas de lieu de carte pour cet événement.",
+    ticket_note: "Les liens de billetterie s’ouvrent sur le site officiel.",
+    kv_date: "Date",
+    kv_city: "Ville",
+    kv_venue: "Lieu",
+    kv_tags: "Tags",
+
+    destinations_title: "Destinations",
+    destinations_subtitle: "Lieux saisonniers à visiter au Luxembourg",
+    search_destinations_aria: "Rechercher des destinations",
+    search_destinations_ph: "Rechercher…",
+    dst_city_filter_aria: "Filtre ville (destination)",
+    dst_type_filter_aria: "Filtre type (destination)",
+    dst_season_filter_aria: "Filtre saison (destination)",
+    empty_destinations: "Aucune destination ne correspond aux filtres.",
+    back_destinations: "← Retour aux destinations",
+    destination_not_found: "Destination introuvable.",
+    official_website: "Site officiel",
+    no_official_website: "Aucun site officiel.",
+    open_map: "Ouvrir la carte",
+    no_map_location_destination: "Pas de lieu de carte pour cette destination.",
+    kv_type: "Type",
+    kv_season: "Saison",
+  },
+  de: {
+    nav_events: "Events",
+    nav_destinations: "Reiseziele",
+    lang_label: "Sprache",
+    view_cards: "Karten",
+    view_list: "Liste",
+    sample_footer_prefix: "Beispieldaten • Tickets weiter zu ",
+
+    events_title: "Events",
+    events_subtitle: "Nach dem nächsten Termin sortiert",
+    events_supports_view: "Karten- & Listenansicht verfügbar",
+    search_events_aria: "Events suchen",
+    search_events_ph: "Suchen…",
+    date_filter_aria: "Datumsfilter",
+    city_filter_aria: "Stadtfilter",
+    category_filter_aria: "Kategoriefilter",
+    empty_events: "Keine Events passen zu den Filtern.",
+    view_details: "Details ansehen",
+    back_events: "← Zurück zu Events",
+    event_not_found: "Event nicht gefunden.",
+    actions: "Aktionen",
+    tickets_book: "Tickets / Buchen",
+    no_ticket_link: "Kein Ticket-Link vorhanden.",
+    open_google_maps: "In Google Maps öffnen",
+    open_osm: "In OpenStreetMap öffnen",
+    no_map_location_event: "Kein Kartenort für dieses Event.",
+    ticket_note: "Ticket-Links öffnen auf der offiziellen Anbieter-Seite.",
+    kv_date: "Datum",
+    kv_city: "Stadt",
+    kv_venue: "Ort",
+    kv_tags: "Tags",
+
+    destinations_title: "Reiseziele",
+    destinations_subtitle: "Saisonale Orte in Luxemburg",
+    search_destinations_aria: "Reiseziele suchen",
+    search_destinations_ph: "Suchen…",
+    dst_city_filter_aria: "Stadtfilter (Reiseziel)",
+    dst_type_filter_aria: "Typfilter (Reiseziel)",
+    dst_season_filter_aria: "Saisonfilter (Reiseziel)",
+    empty_destinations: "Keine Reiseziele passen zu den Filtern.",
+    back_destinations: "← Zurück zu Reisezielen",
+    destination_not_found: "Reiseziel nicht gefunden.",
+    official_website: "Offizielle Webseite",
+    no_official_website: "Keine offizielle Webseite vorhanden.",
+    open_map: "Karte öffnen",
+    no_map_location_destination: "Kein Kartenort für dieses Reiseziel.",
+    kv_type: "Typ",
+    kv_season: "Saison",
+  },
+};
+
+function t(key) {
+  const lang = getLang();
+  return I18N?.[lang]?.[key] ?? I18N.en[key] ?? key;
 }
 
 // -----------------------------
@@ -290,24 +455,28 @@ function renderFilters({ container, state, cityOptions }) {
     <div class="panel">
       <div class="panel__header">
         <div>
-          <h1 class="panel__title">Events</h1>
-          <div class="muted">Sorted by soonest upcoming first</div>
+          <h1 class="panel__title">${escapeHtml(t("events_title"))}</h1>
+          <div class="muted">${escapeHtml(t("events_subtitle"))}</div>
         </div>
-        <div class="muted">Cards & List view supported</div>
+        <div class="muted">${escapeHtml(t("events_supports_view"))}</div>
       </div>
 
       <div class="filters" role="search">
-        <input class="input" id="searchInput" type="search" aria-label="Search events" placeholder="Search events…" value="${escapeHtml(
+        <input class="input" id="searchInput" type="search" aria-label="${escapeHtml(
+          t("search_events_aria")
+        )}" placeholder="${escapeHtml(t("search_events_ph"))}" value="${escapeHtml(
           state.q
         )}" />
 
-        <div class="chips" aria-label="Date filter">${chips}</div>
+        <div class="chips" aria-label="${escapeHtml(t("date_filter_aria"))}">${chips}</div>
 
-        <select class="select" id="citySelect" aria-label="City filter">
+        <select class="select" id="citySelect" aria-label="${escapeHtml(t("city_filter_aria"))}">
           ${citySelectOptions.join("")}
         </select>
 
-        <select class="select" id="categorySelect" aria-label="Category filter">
+        <select class="select" id="categorySelect" aria-label="${escapeHtml(
+          t("category_filter_aria")
+        )}">
           ${categoryOptions.join("")}
         </select>
       </div>
@@ -335,7 +504,7 @@ async function renderEventsList(mount) {
   function rerenderResults() {
     const filtered = sortSoonestFirst(applyFilters(events, state));
     if (!filtered.length) {
-      resultsEl.innerHTML = `<div class="empty">No events match your filters.</div>`;
+      resultsEl.innerHTML = `<div class="empty">${escapeHtml(t("empty_events"))}</div>`;
       return;
     }
     const mode = getViewMode();
@@ -388,8 +557,8 @@ async function renderEventDetails(mount, eventId) {
   if (!e) {
     mount.innerHTML = `
       <div class="panel">
-        <a class="backlink" href="#/events">← Back to events</a>
-        <div class="empty">Event not found.</div>
+        <a class="backlink" href="#/events">${escapeHtml(t("back_events"))}</a>
+        <div class="empty">${escapeHtml(t("event_not_found"))}</div>
       </div>
     `;
     return;
@@ -402,7 +571,7 @@ async function renderEventDetails(mount, eventId) {
 
   mount.innerHTML = `
     <div class="panel">
-      <a class="backlink" href="#/events">← Back to events</a>
+      <a class="backlink" href="#/events">${escapeHtml(t("back_events"))}</a>
 
       <div class="detail">
         <section class="detail__section">
@@ -414,10 +583,10 @@ async function renderEventDetails(mount, eventId) {
           </div>
 
           <div class="kv" aria-label="Event details">
-            <b>Date</b><span>${escapeHtml(when)}</span>
-            <b>City</b><span>${escapeHtml(e.city ?? "—")}</span>
-            <b>Venue</b><span>${escapeHtml(e.venue ?? "—")}</span>
-            <b>Tags</b><span>${Array.isArray(e.tags) ? e.tags.map(escapeHtml).join(", ") : "—"}</span>
+            <b>${escapeHtml(t("kv_date"))}</b><span>${escapeHtml(when)}</span>
+            <b>${escapeHtml(t("kv_city"))}</b><span>${escapeHtml(e.city ?? "—")}</span>
+            <b>${escapeHtml(t("kv_venue"))}</b><span>${escapeHtml(e.venue ?? "—")}</span>
+            <b>${escapeHtml(t("kv_tags"))}</b><span>${Array.isArray(e.tags) ? e.tags.map(escapeHtml).join(", ") : "—"}</span>
           </div>
 
           <p style="margin-top:12px; line-height:1.5; color:rgba(230,233,242,.92)">${escapeHtml(
@@ -426,29 +595,35 @@ async function renderEventDetails(mount, eventId) {
         </section>
 
         <aside class="detail__section">
-          <h2 style="margin:0 0 10px; font-size:16px">Actions</h2>
+          <h2 style="margin:0 0 10px; font-size:16px">${escapeHtml(t("actions"))}</h2>
 
           <div class="btn-row">
             ${
               providerUrl
                 ? `<a class="btn btn--primary" href="${escapeHtml(
                     providerUrl
-                  )}" target="_blank" rel="noopener noreferrer">Tickets / Book (${escapeHtml(providerName)})</a>`
-                : `<span class="muted">No ticket link provided.</span>`
+                  )}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+                    t("tickets_book")
+                  )} (${escapeHtml(providerName)})</a>`
+                : `<span class="muted">${escapeHtml(t("no_ticket_link"))}</span>`
             }
           </div>
 
           <div style="margin-top:12px" class="btn-row">
             ${
               maps
-                ? `<a class="btn" href="${maps.google}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
-                   <a class="btn" href="${maps.osm}" target="_blank" rel="noopener noreferrer">Open in OpenStreetMap</a>`
-                : `<span class="muted">No map location for this event.</span>`
+                ? `<a class="btn" href="${maps.google}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+                    t("open_google_maps")
+                  )}</a>
+                   <a class="btn" href="${maps.osm}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+                     t("open_osm")
+                   )}</a>`
+                : `<span class="muted">${escapeHtml(t("no_map_location_event"))}</span>`
             }
           </div>
 
           <div style="margin-top:14px" class="muted">
-            Ticket links open on the official provider website.
+            ${escapeHtml(t("ticket_note"))}
           </div>
         </aside>
       </div>
@@ -519,18 +694,22 @@ function renderDestinationsFilters({ container, state, cityOptions, typeOptions,
     <div class="panel">
       <div class="panel__header">
         <div>
-          <h1 class="panel__title">Destinations</h1>
-          <div class="muted">Seasonal places to visit in Luxembourg</div>
+          <h1 class="panel__title">${escapeHtml(t("destinations_title"))}</h1>
+          <div class="muted">${escapeHtml(t("destinations_subtitle"))}</div>
         </div>
-        <div class="muted">Cards & List view supported</div>
+        <div class="muted">${escapeHtml(t("events_supports_view"))}</div>
       </div>
 
       <div class="filters" role="search">
-        <input class="input" id="dstSearchInput" type="search" aria-label="Search destinations" placeholder="Search destinations…" value="${escapeHtml(
+        <input class="input" id="dstSearchInput" type="search" aria-label="${escapeHtml(
+          t("search_destinations_aria")
+        )}" placeholder="${escapeHtml(t("search_destinations_ph"))}" value="${escapeHtml(
           state.q
         )}" />
 
-        <select class="select" id="dstCitySelect" aria-label="Destination city filter">
+        <select class="select" id="dstCitySelect" aria-label="${escapeHtml(
+          t("dst_city_filter_aria")
+        )}">
           ${["All", ...cityOptions]
             .map(
               (c) =>
@@ -541,7 +720,9 @@ function renderDestinationsFilters({ container, state, cityOptions, typeOptions,
             .join("")}
         </select>
 
-        <select class="select" id="dstTypeSelect" aria-label="Destination type filter">
+        <select class="select" id="dstTypeSelect" aria-label="${escapeHtml(
+          t("dst_type_filter_aria")
+        )}">
           ${["All", ...typeOptions]
             .map(
               (t) =>
@@ -552,7 +733,9 @@ function renderDestinationsFilters({ container, state, cityOptions, typeOptions,
             .join("")}
         </select>
 
-        <select class="select" id="dstSeasonSelect" aria-label="Destination season filter">
+        <select class="select" id="dstSeasonSelect" aria-label="${escapeHtml(
+          t("dst_season_filter_aria")
+        )}">
           ${["All", ...seasonOptions]
             .map(
               (s) =>
@@ -602,7 +785,7 @@ async function renderDestinationsList(mount) {
   function rerender() {
     const filtered = applyDestinationFilters(items, state);
     if (!filtered.length) {
-      resultsEl.innerHTML = `<div class="empty">No destinations match your filters.</div>`;
+      resultsEl.innerHTML = `<div class="empty">${escapeHtml(t("empty_destinations"))}</div>`;
       return;
     }
     const mode = getViewMode();
@@ -634,8 +817,8 @@ async function renderDestinationDetails(mount, destinationId) {
   if (!d) {
     mount.innerHTML = `
       <div class="panel">
-        <a class="backlink" href="#/destinations">← Back to destinations</a>
-        <div class="empty">Destination not found.</div>
+        <a class="backlink" href="#/destinations">${escapeHtml(t("back_destinations"))}</a>
+        <div class="empty">${escapeHtml(t("destination_not_found"))}</div>
       </div>
     `;
     return;
@@ -647,7 +830,7 @@ async function renderDestinationDetails(mount, destinationId) {
 
   mount.innerHTML = `
     <div class="panel">
-      <a class="backlink" href="#/destinations">← Back to destinations</a>
+      <a class="backlink" href="#/destinations">${escapeHtml(t("back_destinations"))}</a>
 
       <div class="detail">
         <section class="detail__section">
@@ -659,10 +842,10 @@ async function renderDestinationDetails(mount, destinationId) {
           </div>
 
           <div class="kv" aria-label="Destination details">
-            <b>City</b><span>${escapeHtml(d.city ?? "—")}</span>
-            <b>Type</b><span>${escapeHtml(d.type ?? "—")}</span>
-            <b>Season</b><span>${escapeHtml(d.season ?? "—")}</span>
-            <b>Tags</b><span>${Array.isArray(d.tags) ? d.tags.map(escapeHtml).join(", ") : "—"}</span>
+            <b>${escapeHtml(t("kv_city"))}</b><span>${escapeHtml(d.city ?? "—")}</span>
+            <b>${escapeHtml(t("kv_type"))}</b><span>${escapeHtml(d.type ?? "—")}</span>
+            <b>${escapeHtml(t("kv_season"))}</b><span>${escapeHtml(d.season ?? "—")}</span>
+            <b>${escapeHtml(t("kv_tags"))}</b><span>${Array.isArray(d.tags) ? d.tags.map(escapeHtml).join(", ") : "—"}</span>
           </div>
 
           <p style="margin-top:12px; line-height:1.5; color:rgba(230,233,242,.92)">${escapeHtml(
@@ -671,15 +854,15 @@ async function renderDestinationDetails(mount, destinationId) {
         </section>
 
         <aside class="detail__section">
-          <h2 style="margin:0 0 10px; font-size:16px">Actions</h2>
+          <h2 style="margin:0 0 10px; font-size:16px">${escapeHtml(t("actions"))}</h2>
 
           <div class="btn-row">
             ${
               officialUrl
                 ? `<a class="btn btn--primary" href="${escapeHtml(
                     officialUrl
-                  )}" target="_blank" rel="noopener noreferrer">Official website</a>`
-                : `<span class="muted">No official website provided.</span>`
+                  )}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("official_website"))}</a>`
+                : `<span class="muted">${escapeHtml(t("no_official_website"))}</span>`
             }
           </div>
 
@@ -688,11 +871,15 @@ async function renderDestinationDetails(mount, destinationId) {
               mapUrl
                 ? `<a class="btn" href="${escapeHtml(
                     mapUrl
-                  )}" target="_blank" rel="noopener noreferrer">Open map</a>`
+                  )}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("open_map"))}</a>`
                 : mapsFallback
-                  ? `<a class="btn" href="${mapsFallback.google}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
-                     <a class="btn" href="${mapsFallback.osm}" target="_blank" rel="noopener noreferrer">Open in OpenStreetMap</a>`
-                  : `<span class="muted">No map location for this destination.</span>`
+                  ? `<a class="btn" href="${mapsFallback.google}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+                      t("open_google_maps")
+                    )}</a>
+                     <a class="btn" href="${mapsFallback.osm}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+                       t("open_osm")
+                     )}</a>`
+                  : `<span class="muted">${escapeHtml(t("no_map_location_destination"))}</span>`
             }
           </div>
         </aside>
@@ -793,8 +980,39 @@ function bindViewToggle() {
   });
 }
 
+function applyStaticI18n() {
+  const langSelect = document.getElementById("langSelect");
+  const navEvents = document.querySelector('[data-nav="events"]');
+  const navDestinations = document.querySelector('[data-nav="destinations"]');
+  const langLabel = document.querySelector('label[for="langSelect"]');
+  const cardsBtn = document.getElementById("viewCardsBtn");
+  const listBtn = document.getElementById("viewListBtn");
+  const footerPrefix = document.querySelector(".footer span");
+
+  if (langSelect) langSelect.value = getLang();
+  if (langLabel) langLabel.textContent = t("lang_label");
+  if (navEvents) navEvents.textContent = t("nav_events");
+  if (navDestinations) navDestinations.textContent = t("nav_destinations");
+  if (cardsBtn) cardsBtn.textContent = t("view_cards");
+  if (listBtn) listBtn.textContent = t("view_list");
+  if (footerPrefix) footerPrefix.textContent = t("sample_footer_prefix");
+}
+
+function bindLangSelect({ rerender }) {
+  const langSelect = document.getElementById("langSelect");
+  if (!langSelect) return;
+  langSelect.addEventListener("change", () => {
+    setLang(langSelect.value);
+    applyStaticI18n();
+    rerender();
+  });
+}
+
 const mount = document.getElementById("app");
+applyStaticI18n();
 syncViewButtons();
 bindViewToggle();
+const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
+bindLangSelect({ rerender });
 startRouter({ mount });
 

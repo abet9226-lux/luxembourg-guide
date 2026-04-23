@@ -22,6 +22,7 @@ build/
 # Playwright
 test-results/
 playwright-report/
+tests/e2e/screenshots/
 
 # GSE-One worktrees
 .worktrees/

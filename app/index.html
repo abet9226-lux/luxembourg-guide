@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Luxembourg Guide</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#/events" aria-label="Luxembourg Guide home">
+        <span class="brand__title">Luxembourg Guide</span>
+      </a>
+
+      <nav class="nav">
+        <a class="nav__link nav__link--active" href="#/events" data-nav="events">Events</a>
+        <a class="nav__link nav__link--disabled" href="#/destinations" aria-disabled="true" title="Coming later">
+          Destinations
+        </a>
+      </nav>
+
+      <div class="topbar__controls">
+        <div class="control">
+          <label class="control__label" for="langSelect">Lang</label>
+          <select id="langSelect" class="control__select" disabled>
+            <option value="en" selected>EN</option>
+          </select>
+        </div>
+
+        <div class="segmented" role="group" aria-label="View mode">
+          <button id="viewCardsBtn" class="segmented__btn" type="button">Cards</button>
+          <button id="viewListBtn" class="segmented__btn" type="button">List</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="app" class="container" aria-live="polite"></main>
+
+    <footer class="footer">
+      <span>Sample data • Tickets redirect to </span>
+      <a href="https://www.luxembourg-ticket.lu/" target="_blank" rel="noopener noreferrer">Luxembourg Ticket</a>
+    </footer>
+
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

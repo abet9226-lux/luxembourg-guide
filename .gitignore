@@ -7,6 +7,7 @@ Desktop.ini
 
 # Node
 node_modules/
+npm-debug.log*
 
 # Python
 __pycache__/
@@ -17,6 +18,10 @@ __pycache__/
 # Build outputs
 dist/
 build/
+
+# Playwright
+test-results/
+playwright-report/
 
 # GSE-One worktrees
 .worktrees/

@@ -29,8 +29,11 @@ workflow:
     - activity: plan
       completed_at: "2026-04-23T00:00:00Z"
       notes: "Sprint 1 plan: start with events list + details + filters (TASK-002)."
-  active: reqs
-  pending: [design, preview, tests, produce, review, deliver]
+    - activity: reqs
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Events-first requirements drafted (list, details, filters, search, redirect booking)."
+  active: design
+  pending: [preview, tests, produce, review, deliver]
   skipped: []
 
 coherence:

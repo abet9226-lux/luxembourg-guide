@@ -27,7 +27,7 @@ learning_preambles: []
 detected_gaps: []
 profile_drift_signals: {}
 workflow_observations: []
-last_activity: "plan"
+last_activity: "reqs"
 last_activity_timestamp: "2026-04-23T00:00:00Z"
 activity_history:
   - activity: collect
@@ -42,6 +42,10 @@ activity_history:
     completed_at: "2026-04-23T00:00:00Z"
     sprint: 1
     notes: "Selected TASK-002 (events pages first)"
+  - activity: reqs
+    completed_at: "2026-04-23T00:00:00Z"
+    sprint: 1
+    notes: "Requirements drafted"
 sessions_without_progress: 0
 review_findings_open: 0
 audit_history: []

@@ -50,9 +50,9 @@ items:
       implements: []
       derives_from: [INT-001]
     acceptance_criteria: "A visitor can browse events, open an event detail page, and filter by date (today/this week/this month), city, and category (Music/Cultural festival/Seasonal event)."
-    status: done
+    status: delivered
     requires_review: true
-    delivered_at: null
+    delivered_at: "2026-04-23T12:55:00Z"
     completed_at: null
     origin: user
     origin_ref: INT-001
@@ -67,7 +67,7 @@ items:
     deliverable: true
     test_evidence:
       status: pass
-      campaign_ref: null
+      campaign_ref: "docs/sprints/sprint-01/test-reports/campaign-2026-04-23-task-002.md"
       timestamp: "2026-04-23T12:00:00Z"
       pass_rate: 100
       code_coverage: null

@@ -1,6 +1,6 @@
 # GSE-One Project Configuration
 project:
-  name: ""
+  name: "Luxembourg Guide"
   domain: "web"
 
 # High-level goals for ASSESS/PLAN (derived from INT-001)

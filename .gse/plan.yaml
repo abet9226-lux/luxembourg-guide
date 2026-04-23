@@ -3,7 +3,7 @@ version: 1
 id: "PLN-001"
 sprint: 1
 mode: full
-status: active
+status: completed
 goal: "Luxembourg guide app v1: events-first browsing (list + details + filters), then destinations"
 
 tasks:
@@ -65,4 +65,4 @@ risks:
     mitigation: "Start by defining booking scope clearly (redirect vs in-app), then pick minimal safe approach for v1."
 
 created: "2026-04-23T00:00:00Z"
-updated: "2026-04-23T00:00:00Z"
+updated: "2026-04-23T12:55:00Z"

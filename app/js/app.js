@@ -256,8 +256,9 @@ function renderLongText(text) {
 // -----------------------------
 // Data
 // -----------------------------
-const EVENTS_URL = "/data/events.sample.json";
-const DESTINATIONS_URL = "/data/destinations.sample.json";
+// Use URLs relative to the current page (works locally and on GitHub Pages under a repo sub-path).
+const EVENTS_URL = new URL("../data/events.sample.json", window.location.href).toString();
+const DESTINATIONS_URL = new URL("../data/destinations.sample.json", window.location.href).toString();
 let _eventsCache = null;
 let _destinationsCache = null;
 

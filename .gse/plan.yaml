@@ -18,7 +18,7 @@ budget:
   remaining: 10
 
 workflow:
-  expected: [collect, assess, plan, reqs, design, preview, tests, produce, review, deliver]
+  expected: [collect, assess, plan, reqs, design, preview, tests, produce, review, fix, deliver, compound]
   completed:
     - activity: collect
       completed_at: "2026-04-23T00:00:00Z"
@@ -50,7 +50,13 @@ workflow:
     - activity: fix
       completed_at: "2026-04-23T12:40:00Z"
       notes: "Applied security/UX/correctness fixes; tests pass."
-  active: deliver
+    - activity: deliver
+      completed_at: "2026-04-23T12:55:00Z"
+      notes: "Released v0.1.0; release notes approved; TASK-002 delivered."
+    - activity: compound
+      completed_at: "2026-04-23T14:05:00Z"
+      notes: "LC03 capitalization; methodology feedback exported; TASK-002 archived from active backlog."
+  active: ~
   pending: []
   skipped: []
 
@@ -65,4 +71,4 @@ risks:
     mitigation: "Start by defining booking scope clearly (redirect vs in-app), then pick minimal safe approach for v1."
 
 created: "2026-04-23T00:00:00Z"
-updated: "2026-04-23T12:55:00Z"
+updated: "2026-04-23T14:05:00Z"

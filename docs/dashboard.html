@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="refresh" content="30">
 <title>GSE-One Dashboard — Luxembourg Guide</title>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
   :root {
     --bg: #1a1a2e; --card: #16213e; --accent: #0f3460; --text: #e0e0e0;
@@ -57,7 +57,7 @@
     <span class="muted">GSE-One Dashboard &mdash; web &mdash; full mode</span>
   </div>
   <div class="header-right">
-    <div>Updated: 2026-04-23 14:32:35</div>
+    <div>Updated: 2026-04-23 18:19:13</div>
     <button class="refresh-btn" onclick="location.reload()">Refresh</button>
     <div class="muted" style="margin-top:4px">Auto-refresh every 30s</div>
   </div>
@@ -68,9 +68,9 @@
   <!-- Project State -->
   <div class="card">
     <div class="card-title">Project State</div>
-    <div class="metric"><span class="metric-label">Sprint</span><span class="metric-value">1</span></div>
+    <div class="metric"><span class="metric-label">Sprint</span><span class="metric-value">2</span></div>
     <div class="metric"><span class="metric-label">Phase</span><span class="metric-value">LC01</span></div>
-    <div class="metric"><span class="metric-label">Last Activity</span><span class="metric-value">deliver</span></div>
+    <div class="metric"><span class="metric-label">Last Activity</span><span class="metric-value">compound</span></div>
     <div class="metric"><span class="metric-label">User</span><span class="metric-value">ABE INFO (beginner)</span></div>
     <div class="metric"><span class="metric-label">Decisions</span><span class="metric-value">collaborative</span></div>
   </div>
@@ -89,26 +89,26 @@
         <div class="kanban-count">0</div><div class="kanban-label">Review/Fix</div>
       </div>
       <div class="kanban-col" style="background:#27ae60">
-        <div class="kanban-count">1</div><div class="kanban-label">Done</div>
+        <div class="kanban-count">2</div><div class="kanban-label">Done</div>
       </div>
     </div>
     <div class="progress-bar" style="margin-top:10px">
-      <div class="progress-fill" style="width:6%;background:var(--green)"></div>
+      <div class="progress-fill" style="width:12%;background:var(--green)"></div>
     </div>
-    <div class="muted">6% complete</div>
+    <div class="muted">12% complete</div>
   </div>
 
   <!-- Lifecycle Checklist -->
   <div class="card">
-    <div class="card-title">Lifecycle — Sprint 1 (1 total)</div>
+    <div class="card-title">Lifecycle — Sprint 2 (1 total)</div>
     <ul class="checklist">
       <li class="done">Onboarding (HUG)</li>
       <li class="done">Discovery (COLLECT &gt; ASSESS &gt; PLAN)</li>
       <li class="pending">Requirements (9 REQs)</li>
-      <li class="done">Design</li>
+      <li class="pending">Design</li>
       <li class="done">Test Strategy</li>
-      <li class="pending">Production (1/16 tasks)</li>
-      <li class="done">Review</li>
+      <li class="pending">Production (2/16 tasks)</li>
+      <li class="pending">Review</li>
       <li class="pending">Capitalization (COMPOUND)</li>
     </ul>
   </div>
@@ -126,7 +126,9 @@
       <li class="done">produce</li>
       <li class="done">review</li>
       <li class="done">fix</li>
-      <li class="active">deliver <span class="muted">(active)</span></li>
+      <li class="done">deliver</li>
+      <li class="done">compound</li>
+      <li class="active">~ <span class="muted">(active)</span></li>
     </ul>
     <div class="metric"><span class="metric-label">Budget</span>
       <span class="metric-value">0/10 pts (0%)</span></div>
@@ -136,40 +138,8 @@
   <!-- Health Radar -->
   <div class="card">
     <div class="card-title">Project Health</div>
-    <div class="no-data">No health data yet (available after first review)</div>
-    <div class="metric">
-          <span class="metric-label">Test Pass Rate</span>
-          <span class="metric-value" style="color:#2ecc71">10/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2ecc71"></div></div><div class="metric">
-          <span class="metric-label">Review Findings</span>
-          <span class="metric-value" style="color:#e74c3c">2/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:20%;background:#e74c3c"></div></div><div class="metric">
-          <span class="metric-label">Git Hygiene</span>
-          <span class="metric-value" style="color:#f39c12">6/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:60%;background:#f39c12"></div></div><div class="metric">
-          <span class="metric-label">Design Debt</span>
-          <span class="metric-value" style="color:#2ecc71">7/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:70%;background:#2ecc71"></div></div><div class="metric">
-          <span class="metric-label">Complexity Budget</span>
-          <span class="metric-value" style="color:#2ecc71">10/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2ecc71"></div></div><div class="metric">
-          <span class="metric-label">Requirements Coverage</span>
-          <span class="metric-value" style="color:#e74c3c">2/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:20%;background:#e74c3c"></div></div><div class="metric">
-          <span class="metric-label">Traceability</span>
-          <span class="metric-value" style="color:#e74c3c">3/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:30%;background:#e74c3c"></div></div><div class="metric">
-          <span class="metric-label">Ai Integrity</span>
-          <span class="metric-value" style="color:#2ecc71">10/10</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:#2ecc71"></div></div>
+    <canvas id="healthRadar"></canvas>
+    
   </div>
 
   <!-- Quality -->
@@ -185,14 +155,45 @@
   <div class="card">
     <div class="card-title">Version Control</div>
     <div class="metric"><span class="metric-label">Active Branches</span><span class="metric-value">1</span></div>
-    <div class="metric"><span class="metric-label">Last Commit</span><span class="metric-value" style="font-size:0.8em">1f5fa9d gse(deliver): sprint 01 delivery</span></div>
+    <div class="metric"><span class="metric-label">Last Commit</span><span class="metric-value" style="font-size:0.8em">fe824f7 ui(tickets): improve multi-provider layout</span></div>
     <div class="metric"><span class="metric-label">Tags</span><span class="metric-value">v0.1.0</span></div>
     <div class="metric"><span class="metric-label">Sprint History</span><span class="metric-value">1 active, 0 archived</span></div>
   </div>
 
 </div>
 
-
+<script>
+    new Chart(document.getElementById('healthRadar'), {
+      type: 'radar',
+      data: {
+        labels: ["Test Pass Rate", "Review Findings", "Git Hygiene", "Design Debt", "Complexity Budget", "Requirements Coverage", "Traceability", "Ai Integrity"],
+        datasets: [{
+          label: 'Health Score',
+          data: [10, 2, 6, 7, 10, 2, 3, 10],
+          fill: true,
+          backgroundColor: 'rgba(52, 152, 219, 0.2)',
+          borderColor: 'rgba(52, 152, 219, 1)',
+          pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(52, 152, 219, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          r: {
+            min: 0, max: 10,
+            ticks: { stepSize: 2, color: '#7f8c8d' },
+            grid: { color: 'rgba(127, 140, 141, 0.3)' },
+            pointLabels: { color: '#e0e0e0', font: { size: 11 } },
+            angleLines: { color: 'rgba(127, 140, 141, 0.3)' }
+          }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+    </script>
 
 <div class="muted" style="text-align:center; margin-top:20px; padding:10px">
   GSE-One Dashboard &mdash; Generated from <code>.gse/</code> state files &mdash;

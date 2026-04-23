@@ -20,7 +20,9 @@ dimensions:
   decision_involvement: collaborative
   project_domain: web
   team_context: solo
-  learning_goals: []
+  learning_goals:
+    - "Optional: read OWASP DOM XSS basics (reinforces RVW-001 class fixes)."
+    - "Optional: Playwright patterns for hash-based SPAs (stable waits)."
   contextual_tips: true
   emoji: false
 
@@ -29,4 +31,10 @@ inferred: {}
 expertise_domains: {}
 
 competency_map:
-  topics: {}
+  topics:
+    static_web_delivery:
+      level: practicing
+      evidence: "Shipped Luxembourg Guide v0.1.0 (events-first static site, hash routing, JSON data)."
+    browser_e2e_playwright:
+      level: practicing
+      evidence: "Sprint 1 Playwright campaign — 5/5 passing after review fixes."

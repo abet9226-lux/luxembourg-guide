@@ -1,5 +1,6 @@
 import { getUniqueValues, loadEvents } from "../data.js";
 import { addDays, endOfDay, formatDateRange, rangesOverlap, startOfDay } from "../utils.js";
+import { escapeHtml } from "../utils.js";
 
 const CATEGORY_OPTIONS = ["All", "Music", "Cultural festival", "Seasonal event"];
 const DATE_OPTIONS = [
@@ -22,7 +23,7 @@ function applyFilters(events, { dateFilter, city, category, q }) {
     rangeEnd = todayEnd;
   } else if (dateFilter === "week") {
     rangeStart = todayStart;
-    rangeEnd = endOfDay(addDays(todayStart, 7)); // next 7 days rolling
+    rangeEnd = endOfDay(addDays(todayStart, 6)); // next 7 days rolling (inclusive of today)
   } else if (dateFilter === "month") {
     const start = new Date(todayStart.getFullYear(), todayStart.getMonth(), 1);
     const end = new Date(todayStart.getFullYear(), todayStart.getMonth() + 1, 0);
@@ -75,19 +76,19 @@ function cardsHtml(events) {
     <div class="grid">
       ${events
         .map((e) => {
-          const when = formatDateRange(e.startDate, e.endDate);
-          const where = `${e.city ?? ""}${e.venue ? ` • ${e.venue}` : ""}`;
+          const when = escapeHtml(formatDateRange(e.startDate, e.endDate));
+          const where = escapeHtml(`${e.city ?? ""}${e.venue ? ` • ${e.venue}` : ""}`);
           return `
             <article class="card">
-              <h3 class="card__title">${e.title}</h3>
+              <h3 class="card__title">${escapeHtml(e.title)}</h3>
               <div class="card__meta">
                 <span class="badge">${when}</span>
-                <span class="badge">${e.category ?? "—"}</span>
-                <span class="badge">${e.city ?? "—"}</span>
+                <span class="badge">${escapeHtml(e.category ?? "—")}</span>
+                <span class="badge">${escapeHtml(e.city ?? "—")}</span>
               </div>
-              <p class="card__desc">${e.shortDescription ?? ""}</p>
+              <p class="card__desc">${escapeHtml(e.shortDescription ?? "")}</p>
               <div class="btn-row">
-                <a class="btn btn--primary" href="#/events/${encodeURIComponent(e.id)}">View details</a>
+                <a class="btn btn--primary" href="#/events/${encodeURIComponent(String(e.id))}">View details</a>
                 <span class="muted" aria-hidden="true">${where}</span>
               </div>
             </article>
@@ -112,13 +113,13 @@ function listHtml(events) {
       <tbody>
         ${events
           .map((e) => {
-            const when = formatDateRange(e.startDate, e.endDate);
+            const when = escapeHtml(formatDateRange(e.startDate, e.endDate));
             return `
               <tr>
                 <td>${when}</td>
-                <td><a class="rowlink" href="#/events/${encodeURIComponent(e.id)}">${e.title}</a></td>
-                <td>${e.city ?? "—"}</td>
-                <td>${e.category ?? "—"}</td>
+                <td><a class="rowlink" href="#/events/${encodeURIComponent(String(e.id))}">${escapeHtml(e.title)}</a></td>
+                <td>${escapeHtml(e.city ?? "—")}</td>
+                <td>${escapeHtml(e.category ?? "—")}</td>
               </tr>
             `;
           })
@@ -133,16 +134,18 @@ function renderFilters({ container, state, cityOptions }) {
     (x) => `
       <button class="chip" type="button" data-date="${x.id}" aria-pressed="${
         state.dateFilter === x.id ? "true" : "false"
-      }">${x.label}</button>
+      }">${escapeHtml(x.label)}</button>
     `
   ).join("");
 
   const citySelectOptions = ["All", ...cityOptions].map(
-    (c) => `<option value="${c}" ${state.city === c ? "selected" : ""}>${c}</option>`
+    (c) =>
+      `<option value="${escapeHtml(c)}" ${state.city === c ? "selected" : ""}>${escapeHtml(c)}</option>`
   );
 
   const categoryOptions = CATEGORY_OPTIONS.map(
-    (c) => `<option value="${c}" ${state.category === c ? "selected" : ""}>${c}</option>`
+    (c) =>
+      `<option value="${escapeHtml(c)}" ${state.category === c ? "selected" : ""}>${escapeHtml(c)}</option>`
   );
 
   container.innerHTML = `
@@ -156,7 +159,9 @@ function renderFilters({ container, state, cityOptions }) {
       </div>
 
       <div class="filters" role="search">
-        <input class="input" id="searchInput" type="search" placeholder="Search events…" value="${state.q}" />
+        <input class="input" id="searchInput" type="search" aria-label="Search events" placeholder="Search events…" value="${escapeHtml(
+          state.q
+        )}" />
 
         <div class="chips" aria-label="Date filter">${chips}</div>
 

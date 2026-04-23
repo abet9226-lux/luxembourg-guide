@@ -88,12 +88,12 @@ gse:
 
 - **Type:** functional
 - **Actor:** Visitor
-- **Capability:** Use the app in multiple languages
+- **Capability:** Use the app in multiple languages (deferred to a later sprint)
 - **Rationale:** Visitors from any country can use it easily
-- **Priority:** Should
+- **Priority:** Could
 - **Acceptance Criteria:**
-  1. The app supports more than 2 UI languages (exact list to be decided in DESIGN/implementation).
-  2. The visitor can switch language in the UI.
+  1. Sprint 1 ships in English only.
+  2. Multilingual UI is implemented in a later sprint.
 - **Traces:** implements (—) | tested_by (—)
 
 ## Non-Functional Requirements

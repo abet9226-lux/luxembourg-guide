@@ -1,6 +1,17 @@
 import { getEventById } from "../data.js";
 import { escapeHtml, formatDateRange } from "../utils.js";
 
+function safeExternalUrl(urlString) {
+  if (!urlString) return null;
+  try {
+    const u = new URL(urlString, window.location.origin);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return null;
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
 function buildMapLinks({ venue, city }) {
   const q = [venue, city].filter(Boolean).join(", ");
   if (!q) return null;
@@ -24,7 +35,7 @@ export async function renderEventDetails(mount, eventId) {
   }
 
   const when = formatDateRange(e.startDate, e.endDate);
-  const providerUrl = e.ticketProvider?.url || null;
+  const providerUrl = safeExternalUrl(e.ticketProvider?.url) || null;
   const providerName = e.ticketProvider?.name || "Tickets";
   const maps = buildMapLinks({ venue: e.venue, city: e.city });
 

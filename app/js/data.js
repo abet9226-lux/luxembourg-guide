@@ -1,6 +1,6 @@
 import { parseISODate } from "./utils.js";
 
-const EVENTS_URL = "../data/events.sample.json";
+const EVENTS_URL = "/data/events.sample.json";
 
 let _eventsCache = null;
 
@@ -26,7 +26,8 @@ export async function loadEvents() {
 
 export async function getEventById(id) {
   const events = await loadEvents();
-  return events.find((e) => e.id === id) ?? null;
+  const needle = String(id);
+  return events.find((e) => String(e.id) === needle) ?? null;
 }
 
 export function getUniqueValues(events, key) {

@@ -6,7 +6,7 @@ function parseRoute() {
   const cleaned = hash.replace(/^#/, "");
   const parts = cleaned.split("/").filter(Boolean);
   const [root, id] = parts;
-  if (root === "events" && id) return { name: "eventDetails", id };
+  if (root === "events" && id) return { name: "eventDetails", id: decodeURIComponent(id) };
   if (root === "events") return { name: "events" };
   return { name: "events" };
 }
@@ -23,16 +23,28 @@ export function startRouter({ mount, getViewMode }) {
 
   window.addEventListener("hashchange", () => {
     render().catch((e) => {
-      mount.innerHTML = `<div class="panel"><p class="muted">Something went wrong.</p><pre>${String(
-        e?.message ?? e
-      )}</pre></div>`;
+      const box = document.createElement("div");
+      box.className = "panel";
+      const p = document.createElement("p");
+      p.className = "muted";
+      p.textContent = "Something went wrong.";
+      const pre = document.createElement("pre");
+      pre.textContent = String(e?.message ?? e);
+      box.append(p, pre);
+      mount.replaceChildren(box);
     });
   });
 
   render().catch((e) => {
-    mount.innerHTML = `<div class="panel"><p class="muted">Something went wrong.</p><pre>${String(
-      e?.message ?? e
-    )}</pre></div>`;
+    const box = document.createElement("div");
+    box.className = "panel";
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = "Something went wrong.";
+    const pre = document.createElement("pre");
+    pre.textContent = String(e?.message ?? e);
+    box.append(p, pre);
+    mount.replaceChildren(box);
   });
 }
 

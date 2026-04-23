@@ -1,2 +1,148 @@
 # GSE-One Unified Backlog
-items: []
+items:
+  - id: TASK-001
+    title: "Define data sources for events and destinations"
+    description: "Decide where data comes from (manual vs APIs vs other), and what fields we need."
+    artefact_type: spike
+    sprint: null
+    priority: must
+    complexity: 2
+    traces:
+      implements: []
+      derives_from: [INT-001]
+    acceptance_criteria: "We can name the chosen data source approach and list the minimum fields for an event and a destination."
+    status: open
+    requires_review: false
+    delivered_at: null
+    completed_at: null
+    origin: user
+    origin_ref: INT-001
+    git:
+      branch: null
+      branch_status: null
+      worktree: null
+      worktree_status: null
+      last_commit: null
+      uncommitted_changes: 0
+    github_issue: null
+    question: "What is the best data source approach for v1?"
+    complexity_cap: 3
+    deliverable: false
+    outcome: null
+    test_evidence:
+      status: absent
+      campaign_ref: null
+      timestamp: null
+      pass_rate: null
+      code_coverage: null
+      summary: null
+    created: "2026-04-23T00:00:00Z"
+    updated: "2026-04-23T00:00:00Z"
+
+  - id: TASK-002
+    title: "Build the events browsing pages"
+    description: "List, search, filter, and view details for Luxembourg events."
+    artefact_type: code
+    sprint: null
+    priority: must
+    complexity: null
+    traces:
+      implements: []
+      derives_from: [INT-001]
+    acceptance_criteria: "A visitor can browse events, open an event detail page, and use basic search/filters."
+    status: open
+    requires_review: true
+    delivered_at: null
+    completed_at: null
+    origin: user
+    origin_ref: INT-001
+    git:
+      branch: null
+      branch_status: null
+      worktree: null
+      worktree_status: null
+      last_commit: null
+      uncommitted_changes: 0
+    github_issue: null
+    deliverable: true
+    test_evidence:
+      status: absent
+      campaign_ref: null
+      timestamp: null
+      pass_rate: null
+      code_coverage: null
+      summary: null
+    created: "2026-04-23T00:00:00Z"
+    updated: "2026-04-23T00:00:00Z"
+
+  - id: TASK-003
+    title: "Build the destinations browsing pages"
+    description: "List, search, filter, and view details for destinations/visiting points."
+    artefact_type: code
+    sprint: null
+    priority: must
+    complexity: null
+    traces:
+      implements: []
+      derives_from: [INT-001]
+    acceptance_criteria: "A visitor can browse destinations, open a destination detail page, and use basic search/filters."
+    status: open
+    requires_review: true
+    delivered_at: null
+    completed_at: null
+    origin: user
+    origin_ref: INT-001
+    git:
+      branch: null
+      branch_status: null
+      worktree: null
+      worktree_status: null
+      last_commit: null
+      uncommitted_changes: 0
+    github_issue: null
+    deliverable: true
+    test_evidence:
+      status: absent
+      campaign_ref: null
+      timestamp: null
+      pass_rate: null
+      code_coverage: null
+      summary: null
+    created: "2026-04-23T00:00:00Z"
+    updated: "2026-04-23T00:00:00Z"
+
+  - id: TASK-004
+    title: "Add booking/ticket links (v1)"
+    description: "For each event/place, provide a clear way to book/buy tickets (at least link out to official sources)."
+    artefact_type: code
+    sprint: null
+    priority: should
+    complexity: null
+    traces:
+      implements: []
+      derives_from: [INT-001]
+    acceptance_criteria: "A visitor can click a booking/tickets button and reach the correct official website."
+    status: open
+    requires_review: true
+    delivered_at: null
+    completed_at: null
+    origin: user
+    origin_ref: INT-001
+    git:
+      branch: null
+      branch_status: null
+      worktree: null
+      worktree_status: null
+      last_commit: null
+      uncommitted_changes: 0
+    github_issue: null
+    deliverable: true
+    test_evidence:
+      status: absent
+      campaign_ref: null
+      timestamp: null
+      pass_rate: null
+      code_coverage: null
+      summary: null
+    created: "2026-04-23T00:00:00Z"
+    updated: "2026-04-23T00:00:00Z"

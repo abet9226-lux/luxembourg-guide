@@ -628,7 +628,7 @@ async function renderEventDetails(mount, eventId) {
         <aside class="detail__section">
           <h2 style="margin:0 0 10px; font-size:16px">${escapeHtml(t("actions"))}</h2>
 
-          <div class="btn-row">
+          <div class="${providers.length > 1 ? "stack" : "btn-row"}">
             ${
               providers.length
                 ? providers

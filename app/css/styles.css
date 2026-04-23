@@ -163,6 +163,8 @@ a:focus-visible{
 .btn--primary{background:rgba(77,163,255,.18); border-color:rgba(77,163,255,.35)}
 .btn--ghost{background:transparent}
 .btn-row{display:flex; gap:10px; flex-wrap:wrap}
+.stack{display:flex; flex-direction:column; gap:10px}
+.stack .btn{justify-content:flex-start}
 
 .table{
   width:100%;

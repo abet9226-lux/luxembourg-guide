@@ -52,3 +52,17 @@ test("open destination details", async ({ page }) => {
   await page.screenshot({ path: "tests/e2e/screenshots/destination-details.png", fullPage: true });
 });
 
+test("destinations filters work", async ({ page }) => {
+  await page.goto("/app/index.html#/destinations");
+  await page.getByLabel("Destination type filter").selectOption("Museum");
+  await expect(page.getByText("National Museum (Sample)")).toBeVisible();
+  await page.screenshot({ path: "tests/e2e/screenshots/destinations-filter-museum.png", fullPage: true });
+});
+
+test("destinations supports list view", async ({ page }) => {
+  await page.goto("/app/index.html#/destinations");
+  await page.getByRole("button", { name: "List" }).click();
+  await expect(page.locator("table.table")).toBeVisible();
+  await page.screenshot({ path: "tests/e2e/screenshots/destinations-list-view.png", fullPage: true });
+});
+

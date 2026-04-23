@@ -15,9 +15,12 @@ budget:
 
 workflow:
   expected: [collect, assess, plan, reqs, design, preview, tests, produce, review, deliver]
-  completed: []
-  active: collect
-  pending: [assess, plan, reqs, design, preview, tests, produce, review, deliver]
+  completed:
+    - activity: collect
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Inventory complete: intent, sample data, and booking provider link captured."
+  active: assess
+  pending: [plan, reqs, design, preview, tests, produce, review, deliver]
   skipped: []
 
 coherence:

@@ -1,0 +1,172 @@
+[
+  {
+    "id": "evt-2026-0001",
+    "title": "Spring Food Market",
+    "category": "Food & Drink",
+    "startDate": "2026-05-10",
+    "endDate": "2026-05-10",
+    "city": "Luxembourg City",
+    "venue": "City Center",
+    "shortDescription": "Local food stalls and tasting experiences.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["market", "family-friendly"]
+  },
+  {
+    "id": "evt-2026-0002",
+    "title": "Summer Jazz Night",
+    "category": "Music",
+    "startDate": "2026-06-18",
+    "endDate": "2026-06-18",
+    "city": "Esch-sur-Alzette",
+    "venue": "Cultural Hall",
+    "shortDescription": "Evening jazz concert featuring local bands.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["music", "night"]
+  },
+  {
+    "id": "evt-2026-0003",
+    "title": "Autumn Art Exhibition",
+    "category": "Culture",
+    "startDate": "2026-09-03",
+    "endDate": "2026-09-20",
+    "city": "Differdange",
+    "venue": "Art Gallery",
+    "shortDescription": "Seasonal art exhibition with guided tours.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["art", "exhibition"]
+  },
+  {
+    "id": "evt-2026-0004",
+    "title": "Winter Lights Festival",
+    "category": "Festival",
+    "startDate": "2026-12-05",
+    "endDate": "2026-12-20",
+    "city": "Luxembourg City",
+    "venue": "Old Town",
+    "shortDescription": "Light installations and seasonal performances.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["festival", "winter"]
+  },
+  {
+    "id": "evt-2026-0005",
+    "title": "Guided City Walk (Weekly)",
+    "category": "Tour",
+    "startDate": "2026-05-01",
+    "endDate": "2026-10-31",
+    "city": "Luxembourg City",
+    "venue": "Tourist Info Point",
+    "shortDescription": "Weekly guided walking tour for visitors.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["tour", "history"]
+  },
+  {
+    "id": "evt-2026-0006",
+    "title": "Family Outdoor Cinema",
+    "category": "Entertainment",
+    "startDate": "2026-07-24",
+    "endDate": "2026-07-26",
+    "city": "Dudelange",
+    "venue": "Open Air Park",
+    "shortDescription": "Outdoor movie screenings across three evenings.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["cinema", "family-friendly"]
+  },
+  {
+    "id": "evt-2026-0007",
+    "title": "Wine Tasting Weekend",
+    "category": "Food & Drink",
+    "startDate": "2026-08-15",
+    "endDate": "2026-08-16",
+    "city": "Remich",
+    "venue": "Riverside Pavilion",
+    "shortDescription": "Regional wines and local food pairings.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["wine", "weekend"]
+  },
+  {
+    "id": "evt-2026-0008",
+    "title": "Tech Meetup: Travel Apps",
+    "category": "Conference",
+    "startDate": "2026-06-05",
+    "endDate": "2026-06-05",
+    "city": "Luxembourg City",
+    "venue": "Innovation Hub",
+    "shortDescription": "Talks and networking for travel-tech enthusiasts.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["tech", "networking"]
+  },
+  {
+    "id": "evt-2026-0009",
+    "title": "Local Crafts Fair",
+    "category": "Market",
+    "startDate": "2026-04-30",
+    "endDate": "2026-05-02",
+    "city": "Ettelbruck",
+    "venue": "Town Square",
+    "shortDescription": "Handmade crafts and souvenirs from local makers.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["crafts", "souvenirs"]
+  },
+  {
+    "id": "evt-2026-0010",
+    "title": "New Year Countdown Concert",
+    "category": "Music",
+    "startDate": "2026-12-31",
+    "endDate": "2026-12-31",
+    "city": "Luxembourg City",
+    "venue": "Concert Hall",
+    "shortDescription": "Year-end concert and countdown event.",
+    "ticketProvider": {
+      "name": "Luxembourg Ticket",
+      "url": "https://www.luxembourg-ticket.lu/"
+    },
+    "officialUrl": null,
+    "imageUrl": null,
+    "tags": ["new-year", "concert"]
+  }
+]

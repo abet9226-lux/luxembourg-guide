@@ -1,0 +1,42 @@
+sources:
+  - id: SRC-001
+    origin: "user-provided (sample dataset)"
+    path: "data/events.sample.json"
+    assessment: reusable-as-is
+    description: "Initial sample events dataset for UI prototyping"
+    included: true
+    local_path: "data/events.sample.json"
+    imported_at: "2026-04-23"
+    provenance:
+      url: null
+      commit: null
+      license: null
+      scanned_at: "2026-04-23"
+
+  - id: SRC-002
+    origin: "user-provided (sample dataset)"
+    path: "data/destinations.sample.json"
+    assessment: reusable-as-is
+    description: "Initial sample destinations dataset for UI prototyping"
+    included: true
+    local_path: "data/destinations.sample.json"
+    imported_at: "2026-04-23"
+    provenance:
+      url: null
+      commit: null
+      license: null
+      scanned_at: "2026-04-23"
+
+  - id: SRC-003
+    origin: "official ticket provider"
+    path: null
+    assessment: reference-only
+    description: "Ticket booking links in v1 (redirect to provider)"
+    included: true
+    local_path: null
+    imported_at: "2026-04-23"
+    provenance:
+      url: "https://www.luxembourg-ticket.lu/"
+      commit: null
+      license: null
+      scanned_at: "2026-04-23"

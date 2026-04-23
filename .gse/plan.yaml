@@ -4,9 +4,13 @@ id: "PLN-001"
 sprint: 1
 mode: full
 status: active
-goal: "Luxembourg guide app v1: events, destinations, and in-app bookings scope"
+goal: "Luxembourg guide app v1: events-first browsing (list + details + filters), then destinations"
 
-tasks: []
+tasks:
+  - id: TASK-002
+    order: 1
+    complexity: 5
+    branch: gse/sprint-01/feat/events
 
 budget:
   total: 10
@@ -22,8 +26,11 @@ workflow:
     - activity: assess
       completed_at: "2026-04-23T00:00:00Z"
       notes: "Key decisions captured: sample dataset, events-first home, and v1 filters (date/city/category)."
-  active: plan
-  pending: [reqs, design, preview, tests, produce, review, deliver]
+    - activity: plan
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Sprint 1 plan: start with events list + details + filters (TASK-002)."
+  active: reqs
+  pending: [design, preview, tests, produce, review, deliver]
   skipped: []
 
 coherence:

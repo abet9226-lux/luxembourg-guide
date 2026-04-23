@@ -19,8 +19,11 @@ workflow:
     - activity: collect
       completed_at: "2026-04-23T00:00:00Z"
       notes: "Inventory complete: intent, sample data, and booking provider link captured."
-  active: assess
-  pending: [plan, reqs, design, preview, tests, produce, review, deliver]
+    - activity: assess
+      completed_at: "2026-04-23T00:00:00Z"
+      notes: "Key decisions captured: sample dataset, events-first home, and v1 filters (date/city/category)."
+  active: plan
+  pending: [reqs, design, preview, tests, produce, review, deliver]
   skipped: []
 
 coherence:

@@ -27,13 +27,17 @@ learning_preambles: []
 detected_gaps: []
 profile_drift_signals: {}
 workflow_observations: []
-last_activity: "collect"
+last_activity: "assess"
 last_activity_timestamp: "2026-04-23T00:00:00Z"
 activity_history:
   - activity: collect
     completed_at: "2026-04-23T00:00:00Z"
     sprint: 1
     notes: "Inventory complete"
+  - activity: assess
+    completed_at: "2026-04-23T00:00:00Z"
+    sprint: 1
+    notes: "Decisions captured: sample data + filters"
 sessions_without_progress: 0
 review_findings_open: 0
 audit_history: []

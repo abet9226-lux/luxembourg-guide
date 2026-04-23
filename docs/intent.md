@@ -21,7 +21,7 @@ traces:
 - A web app that shows **Luxembourg annual events** and **seasonal tour destinations / visiting points**.
 - It should help **tourists and locals** quickly see **what’s going on** and **where to visit**.
 - The main goal is **easy access to information** for visitors from any country.
-- You also want **bookings/tickets support** (more complex than info-only).
+- Tickets/bookings in v1 will be **links to official ticket providers** (redirect out of the app).
 
 ## Users
 
@@ -44,8 +44,14 @@ Public users: tourists and locals (no specific role yet).
 - **OQ-002** — What “bookings/tickets” means here: link out to official sites, or book inside the app?
   - resolves_in: REQS
   - impact: scope-shaping
-  - status: pending
+  - status: resolved
   - raised_at: INT-001
+  - resolved_at: "2026-04-23"
+  - resolved_in: go
+  - answer: "V1 is redirect-only: show official provider links (e.g., Luxembourg Ticket) and send users to the provider website to book."
+  - answered_by: user
+  - confidence: Verified
+  - traces: []
 
 - **OQ-003** — Which languages must the UI support (English only vs multilingual)?
   - resolves_in: REQS

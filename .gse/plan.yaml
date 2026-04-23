@@ -47,8 +47,11 @@ workflow:
     - activity: review
       completed_at: "2026-04-23T00:00:00Z"
       notes: "Review report written; HIGH/MEDIUM findings require fixes."
-  active: fix
-  pending: [deliver]
+    - activity: fix
+      completed_at: "2026-04-23T12:40:00Z"
+      notes: "Applied security/UX/correctness fixes; tests pass."
+  active: deliver
+  pending: []
   skipped: []
 
 coherence:

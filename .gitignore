@@ -5,6 +5,10 @@ Desktop.ini
 # Logs
 *.log
 
+# Env / secrets
+.env
+.env.*
+
 # Node
 node_modules/
 npm-debug.log*

@@ -17,6 +17,19 @@
   --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
+/* Compact mode (better for phones) */
+body.is-compact .app{ padding: 12px; }
+body.is-compact .panel__header{ padding: 10px 10px; }
+body.is-compact .panel__content{ padding: 10px; }
+body.is-compact .tab{ padding: 10px 10px; }
+body.is-compact .card{ padding: 10px; }
+body.is-compact .btn{ padding: 9px 10px; }
+body.is-compact .search input{ padding: 9px 10px; }
+body.is-compact .select select{ padding: 9px 10px; }
+body.is-compact .thumb{ width: 60px; height: 60px; border-radius: 12px; }
+body.is-compact .media{ grid-template-columns: 60px 1fr; gap: 10px; }
+body.is-compact .hero{ max-height: 200px; }
+
 *{ box-sizing: border-box; }
 html,body{ height: 100%; }
 body{

@@ -1,6 +1,7 @@
 const STORAGE_KEY = "lux-guide:saved:v1";
 const CUSTOM_KEY = "lux-guide:custom:v1";
 const OFFICIAL_FILE = "./data/official.json";
+const UI_KEY = "lux-guide:ui:v1";
 
 const IMAGE_FALLBACK =
   "data:image/svg+xml;charset=utf-8," +
@@ -30,6 +31,7 @@ const state = {
   area: "all",
   placeArea: "all",
   savedArea: "all",
+  compact: false,
   yearView: false,
   seed: null,
   official: null,
@@ -40,6 +42,29 @@ const state = {
 
 function $(id) {
   return document.getElementById(id);
+}
+
+function loadUiPrefs() {
+  try {
+    const raw = localStorage.getItem(UI_KEY);
+    if (!raw) return { compact: false };
+    const parsed = JSON.parse(raw);
+    return { compact: Boolean(parsed?.compact) };
+  } catch {
+    return { compact: false };
+  }
+}
+
+function saveUiPrefs(next) {
+  localStorage.setItem(UI_KEY, JSON.stringify(next));
+}
+
+function setCompactMode(on) {
+  state.compact = Boolean(on);
+  document.body.classList.toggle("is-compact", state.compact);
+  const btn = $("compactBtn");
+  if (btn) btn.textContent = state.compact ? "Comfort" : "Compact";
+  saveUiPrefs({ compact: state.compact });
 }
 
 function imageHtml(url, className) {
@@ -1223,6 +1248,10 @@ async function main() {
   window.addEventListener("online", setOnlinePill);
   window.addEventListener("offline", setOnlinePill);
 
+  // UI prefs
+  const ui = loadUiPrefs();
+  setCompactMode(ui.compact);
+
   // PWA install prompt
   let deferredInstall = null;
   window.addEventListener("beforeinstallprompt", (e) => {
@@ -1246,6 +1275,7 @@ async function main() {
   $("addBtn").addEventListener("click", openAddModal);
   $("importBtn").addEventListener("click", showImportHelp);
   $("reloadBtn").addEventListener("click", reloadData);
+  $("compactBtn").addEventListener("click", () => setCompactMode(!state.compact));
   $("installBtn").addEventListener("click", async () => {
     if (deferredInstall) {
       deferredInstall.prompt();

@@ -97,7 +97,7 @@ deploy:
   provider: hetzner
   server_type: cax21
   datacenter: fsn1
-  app_type: auto
+  app_type: static
   health_check_timeout: 120
 
 dashboard:

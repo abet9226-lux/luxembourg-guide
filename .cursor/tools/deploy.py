@@ -612,7 +612,8 @@ def deploy_app(
                 git_repository=github_repo,
                 git_branch=branch,
                 ports_exposes=str(port),
-                fqdn=f"https://{subdomain}",
+                # Coolify expects bare domains (no scheme).
+                fqdn=subdomain,
             )
             app_uuid = app.uuid
             client.trigger_deploy(app_uuid, force=False)

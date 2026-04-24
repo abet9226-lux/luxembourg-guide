@@ -103,6 +103,36 @@ function toggleSave(type, id) {
   saveSaved(saved);
 }
 
+function isCustomId(id) {
+  return typeof id === "string" && (id.startsWith("evt_custom_") || id.startsWith("pl_custom_"));
+}
+
+function deleteCustomItem(type, id) {
+  const next = loadCustom();
+  if (type === "event") {
+    next.events = next.events.filter((e) => e.id !== id);
+  } else {
+    next.places = next.places.filter((p) => p.id !== id);
+  }
+  saveCustom(next);
+
+  // Also remove from saved if it was saved.
+  const saved = loadSaved();
+  if (type === "event") delete saved.events[id];
+  else delete saved.places[id];
+  saveSaved(saved);
+}
+
+function updateCustomItem(type, id, patch) {
+  const next = loadCustom();
+  if (type === "event") {
+    next.events = next.events.map((e) => (e.id === id ? { ...e, ...patch, id } : e));
+  } else {
+    next.places = next.places.map((p) => (p.id === id ? { ...p, ...patch, id } : p));
+  }
+  saveCustom(next);
+}
+
 function setOnlinePill() {
   const el = $("netStatus");
   if (!el) return;
@@ -299,13 +329,31 @@ function renderDetail() {
   }
 
   const savedNow = isSaved(type, id);
+  const canEdit = isCustomId(id);
 
-  body.innerHTML = isEvent ? eventDetail(item, savedNow) : placeDetail(item, savedNow);
+  body.innerHTML = isEvent
+    ? eventDetail(item, savedNow, { canEdit })
+    : placeDetail(item, savedNow, { canEdit });
 
   body.querySelector("#saveBtn").addEventListener("click", () => {
     toggleSave(type, id);
     renderDetail();
   });
+
+  const editBtn = body.querySelector("#editBtn");
+  if (editBtn) {
+    editBtn.addEventListener("click", () => openEditModal(type, item));
+  }
+
+  const delBtn = body.querySelector("#deleteBtn");
+  if (delBtn) {
+    delBtn.addEventListener("click", () => {
+      const ok = window.confirm("Delete this item? This cannot be undone.");
+      if (!ok) return;
+      deleteCustomItem(type, id);
+      hideDetail();
+    });
+  }
 
   const mapBtn = body.querySelector("#mapBtn");
   if (mapBtn) {
@@ -383,13 +431,15 @@ function placeCard(p, opts = {}) {
   return el;
 }
 
-function eventDetail(e, savedNow) {
+function eventDetail(e, savedNow, opts = {}) {
   const actions = `
     <div class="detail__actions">
       <button id="saveBtn" class="btn ${savedNow ? "btn--danger" : "btn--primary"}" type="button">
         ${savedNow ? "Unsave" : "Save for offline"}
       </button>
       <button id="mapBtn" class="btn" type="button">Open map</button>
+      ${opts.canEdit ? `<button id="editBtn" class="btn" type="button">Edit</button>` : ""}
+      ${opts.canEdit ? `<button id="deleteBtn" class="btn btn--danger" type="button">Delete</button>` : ""}
     </div>
   `;
 
@@ -410,13 +460,15 @@ function eventDetail(e, savedNow) {
   `;
 }
 
-function placeDetail(p, savedNow) {
+function placeDetail(p, savedNow, opts = {}) {
   const actions = `
     <div class="detail__actions">
       <button id="saveBtn" class="btn ${savedNow ? "btn--danger" : "btn--primary"}" type="button">
         ${savedNow ? "Unsave" : "Save for offline"}
       </button>
       <button id="mapBtn" class="btn" type="button">Open map</button>
+      ${opts.canEdit ? `<button id="editBtn" class="btn" type="button">Edit</button>` : ""}
+      ${opts.canEdit ? `<button id="deleteBtn" class="btn btn--danger" type="button">Delete</button>` : ""}
     </div>
   `;
 
@@ -478,12 +530,12 @@ function openAddModal() {
 
     try {
       if (isEvents) {
-        const payload = readEventForm();
+        const payload = { id: makeId("evt_custom"), ...readEventForm() };
         const next = loadCustom();
         next.events.push(payload);
         saveCustom(next);
       } else {
-        const payload = readPlaceForm();
+        const payload = { id: makeId("pl_custom"), ...readPlaceForm() };
         const next = loadCustom();
         // Ensure category exists in custom set if user chose it.
         if (!data.categories.some((c) => c.id === payload.categoryId)) {
@@ -495,6 +547,49 @@ function openAddModal() {
 
       modal.close();
       render();
+    } catch (e) {
+      if (err) err.textContent = e instanceof Error ? e.message : "Invalid input.";
+    }
+  };
+
+  modal.showModal();
+}
+
+function openEditModal(type, item) {
+  const modal = $("modal");
+  const title = $("modalTitle");
+  const body = $("modalBody");
+  const saveBtn = $("modalSaveBtn");
+
+  if (!modal || !title || !body || !saveBtn) return;
+
+  const isEvent = type === "event";
+  title.textContent = isEvent ? "Edit event" : "Edit place";
+  saveBtn.style.display = "";
+
+  const data = mergedData();
+  if (!data) return;
+
+  body.innerHTML = isEvent ? editEventForm(item) : editPlaceForm(data.categories, item);
+
+  const err = body.querySelector("#formError");
+  const form = $("modalForm");
+  form.onsubmit = (ev) => {
+    const submitter = ev.submitter;
+    const isCancel = submitter && submitter.value === "cancel";
+    if (isCancel) return;
+
+    ev.preventDefault();
+    try {
+      if (isEvent) {
+        const patch = readEventForm({ prefix: "evE_" });
+        updateCustomItem("event", item.id, patch);
+      } else {
+        const patch = readPlaceForm({ prefix: "plE_" });
+        updateCustomItem("place", item.id, patch);
+      }
+      modal.close();
+      renderDetail();
     } catch (e) {
       if (err) err.textContent = e instanceof Error ? e.message : "Invalid input.";
     }
@@ -525,6 +620,32 @@ function addEventForm() {
     <div class="field">
       <label for="evSource">Source URL (optional)</label>
       <input id="evSource" name="sourceUrl" placeholder="https://…" autocomplete="off" />
+    </div>
+  `;
+}
+
+function editEventForm(e) {
+  return `
+    <div class="error" id="formError"></div>
+    <div class="field">
+      <label for="evE_title">Title *</label>
+      <input id="evE_title" value="${escapeAttr(e.title ?? "")}" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="evE_date">Date *</label>
+      <input id="evE_date" value="${escapeAttr(e.date ?? "")}" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="evE_location">Location *</label>
+      <input id="evE_location" value="${escapeAttr(e.location ?? "")}" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="evE_description">Description</label>
+      <textarea id="evE_description" placeholder="Short, clear public info">${escapeHtml(e.description ?? "")}</textarea>
+    </div>
+    <div class="field">
+      <label for="evE_sourceUrl">Source URL (optional)</label>
+      <input id="evE_sourceUrl" value="${escapeAttr(e.sourceUrl ?? "")}" placeholder="https://…" autocomplete="off" />
     </div>
   `;
 }
@@ -567,17 +688,59 @@ function addPlaceForm(categories) {
   `;
 }
 
+function editPlaceForm(categories, p) {
+  const opts = categories
+    .map((c) => {
+      const selected = c.id === p.categoryId ? "selected" : "";
+      return `<option value="${escapeAttr(c.id)}" ${selected}>${escapeHtml(c.name)}</option>`;
+    })
+    .join("");
+
+  return `
+    <div class="error" id="formError"></div>
+    <div class="field">
+      <label for="plE_name">Place name *</label>
+      <input id="plE_name" value="${escapeAttr(p.name ?? "")}" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="plE_categoryId">Category *</label>
+      <select id="plE_categoryId" required>${opts}</select>
+    </div>
+    <div class="field">
+      <label for="plE_area">Area</label>
+      <input id="plE_area" value="${escapeAttr(p.area ?? "")}" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plE_address">Address</label>
+      <input id="plE_address" value="${escapeAttr(p.address ?? "")}" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plE_hours">Opening hours</label>
+      <input id="plE_hours" value="${escapeAttr(p.hours ?? "")}" placeholder="e.g., 10:00–18:00" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plE_description">Description</label>
+      <textarea id="plE_description" placeholder="Short, clear public info">${escapeHtml(p.description ?? "")}</textarea>
+    </div>
+    <div class="field">
+      <label for="plE_sourceUrl">Source URL (optional)</label>
+      <input id="plE_sourceUrl" value="${escapeAttr(p.sourceUrl ?? "")}" placeholder="https://…" autocomplete="off" />
+    </div>
+  `;
+}
+
 function makeId(prefix) {
   const rand = Math.random().toString(16).slice(2);
   return `${prefix}_${Date.now().toString(16)}_${rand}`;
 }
 
-function readEventForm() {
-  const title = $("evTitle")?.value?.trim();
-  const date = $("evDate")?.value?.trim();
-  const location = $("evLocation")?.value?.trim();
-  const description = $("evDesc")?.value?.trim() ?? "";
-  const sourceUrl = $("evSource")?.value?.trim() ?? "";
+function readEventForm(opts = {}) {
+  const prefix = opts.prefix ?? "";
+  const title = $(prefix ? `${prefix}title` : "evTitle")?.value?.trim();
+  const date = $(prefix ? `${prefix}date` : "evDate")?.value?.trim();
+  const location = $(prefix ? `${prefix}location` : "evLocation")?.value?.trim();
+  const description = $(prefix ? `${prefix}description` : "evDesc")?.value?.trim() ?? "";
+  const sourceUrl = $(prefix ? `${prefix}sourceUrl` : "evSource")?.value?.trim() ?? "";
 
   if (!title) throw new Error("Title is required.");
   if (!date) throw new Error("Date is required.");
@@ -585,7 +748,6 @@ function readEventForm() {
   if (sourceUrl && !looksLikeUrl(sourceUrl)) throw new Error("Source URL must start with http:// or https://");
 
   return {
-    id: makeId("evt_custom"),
     title,
     date,
     location,
@@ -594,21 +756,21 @@ function readEventForm() {
   };
 }
 
-function readPlaceForm() {
-  const name = $("plName")?.value?.trim();
-  const categoryId = $("plCategory")?.value?.trim();
-  const area = $("plArea")?.value?.trim() ?? "";
-  const address = $("plAddress")?.value?.trim() ?? "";
-  const hours = $("plHours")?.value?.trim() ?? "";
-  const description = $("plDesc")?.value?.trim() ?? "";
-  const sourceUrl = $("plSource")?.value?.trim() ?? "";
+function readPlaceForm(opts = {}) {
+  const prefix = opts.prefix ?? "";
+  const name = $(prefix ? `${prefix}name` : "plName")?.value?.trim();
+  const categoryId = $(prefix ? `${prefix}categoryId` : "plCategory")?.value?.trim();
+  const area = $(prefix ? `${prefix}area` : "plArea")?.value?.trim() ?? "";
+  const address = $(prefix ? `${prefix}address` : "plAddress")?.value?.trim() ?? "";
+  const hours = $(prefix ? `${prefix}hours` : "plHours")?.value?.trim() ?? "";
+  const description = $(prefix ? `${prefix}description` : "plDesc")?.value?.trim() ?? "";
+  const sourceUrl = $(prefix ? `${prefix}sourceUrl` : "plSource")?.value?.trim() ?? "";
 
   if (!name) throw new Error("Place name is required.");
   if (!categoryId) throw new Error("Category is required.");
   if (sourceUrl && !looksLikeUrl(sourceUrl)) throw new Error("Source URL must start with http:// or https://");
 
   return {
-    id: makeId("pl_custom"),
     categoryId,
     name,
     area,

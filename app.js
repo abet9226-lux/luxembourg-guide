@@ -1,10 +1,12 @@
 const STORAGE_KEY = "lux-guide:saved:v1";
 const CUSTOM_KEY = "lux-guide:custom:v1";
+const OFFICIAL_FILE = "./data/official.json";
 
 const state = {
   tab: "events", // events | guide | saved
   query: "",
   seed: null,
+  official: null,
   custom: { events: [], categories: [], places: [] },
   selected: null, // { type: "event"|"place", id: string }
   guideCategoryId: null
@@ -59,18 +61,27 @@ function saveCustom(next) {
 function mergedData() {
   if (!state.seed) return null;
   const seed = state.seed;
+  const official = state.official;
   const custom = state.custom ?? { events: [], categories: [], places: [] };
 
   const categories = [...seed.categories];
+  if (official?.categories) {
+    for (const c of official.categories) {
+      if (!categories.some((x) => x.id === c.id)) categories.push(c);
+    }
+  }
   for (const c of custom.categories) {
     if (!categories.some((x) => x.id === c.id)) categories.push(c);
   }
 
+  const officialEvents = Array.isArray(official?.events) ? official.events : [];
+  const officialPlaces = Array.isArray(official?.places) ? official.places : [];
+
   return {
     ...seed,
-    events: [...seed.events, ...custom.events],
+    events: [...seed.events, ...officialEvents, ...custom.events],
     categories,
-    places: [...seed.places, ...custom.places]
+    places: [...seed.places, ...officialPlaces, ...custom.places]
   };
 }
 
@@ -104,6 +115,16 @@ async function loadSeed() {
   const resp = await fetch("./data/seed.json", { cache: "no-store" });
   if (!resp.ok) throw new Error("Failed to load seed data");
   return await resp.json();
+}
+
+async function loadOfficialOptional() {
+  try {
+    const resp = await fetch(OFFICIAL_FILE, { cache: "no-store" });
+    if (!resp.ok) return null;
+    return await resp.json();
+  } catch {
+    return null;
+  }
 }
 
 function setTab(tab) {
@@ -603,6 +624,7 @@ async function main() {
   $("searchInput").addEventListener("input", (e) => setQuery(e.target.value));
   $("backBtn").addEventListener("click", hideDetail);
   $("addBtn").addEventListener("click", openAddModal);
+  $("importBtn").addEventListener("click", showImportHelp);
 
   // PWA/offline shell
   if ("serviceWorker" in navigator) {
@@ -614,9 +636,57 @@ async function main() {
   }
 
   state.seed = await loadSeed();
+  state.official = await loadOfficialOptional();
   state.custom = loadCustom();
   setAddButtonVisibility();
   render();
+}
+
+function showImportHelp() {
+  const modal = $("modal");
+  const title = $("modalTitle");
+  const body = $("modalBody");
+  const saveBtn = $("modalSaveBtn");
+
+  if (!modal || !title || !body || !saveBtn) return;
+
+  title.textContent = "Update from official sources";
+  saveBtn.style.display = "none";
+
+  const hasOfficial = Boolean(state.official);
+  const status = hasOfficial
+    ? `<div class="pill pill--ok">official.json loaded</div>`
+    : `<div class="pill pill--warn">official.json not found yet</div>`;
+
+  body.innerHTML = `
+    ${status}
+    <div style="color: rgba(255,255,255,.70); line-height: 1.45;">
+      This website is static, so it cannot directly download data from official sites (they block cross-site requests).
+      To update the list, run the importer script on your PC — it will create <code>data/official.json</code>.
+    </div>
+    <div class="field">
+      <label>Run this in PowerShell (project folder):</label>
+      <input readonly value="python tools/import_official.py" />
+    </div>
+    <div style="color: rgba(255,255,255,.70); line-height: 1.45;">
+      Then refresh the page. Your Saved items still work offline.
+    </div>
+  `;
+
+  const form = $("modalForm");
+  form.onsubmit = (ev) => {
+    const submitter = ev.submitter;
+    const isCancel = submitter && submitter.value === "cancel";
+    if (isCancel) {
+      saveBtn.style.display = "";
+      return;
+    }
+    ev.preventDefault();
+    modal.close();
+    saveBtn.style.display = "";
+  };
+
+  modal.showModal();
 }
 
 main().catch((err) => {

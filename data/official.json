@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-04-24",
+  "sources": [
+    {
+      "name": "Ville de Luxembourg — Festivals, fairs and events",
+      "url": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_official_winterlights",
+      "title": "Winterlights",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/winterlights-0"
+    },
+    {
+      "id": "evt_official_imaischen",
+      "title": "Éimaischen",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/eimaischen"
+    },
+    {
+      "id": "evt_official_fr_ijoer_op_der_g_lle_fra",
+      "title": "Fréijoer op der Gëlle Fra",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/freijoer-op-der-gelle-fra"
+    },
+    {
+      "id": "evt_official_national_day_vdl_page",
+      "title": "National Day (VDL page)",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/national-day"
+    },
+    {
+      "id": "evt_official_schueberfouer_vdl_page",
+      "title": "Schueberfouer (VDL page)",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/schueberfouer-old"
+    },
+    {
+      "id": "evt_official_buergbrennen",
+      "title": "Buergbrennen",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/buergbrennen"
+    }
+  ],
+  "categories": [],
+  "places": []
+}

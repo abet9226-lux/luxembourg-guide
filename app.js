@@ -674,6 +674,7 @@ function eventDetail(e, savedNow, opts = {}) {
   const gettingThere = e.gettingThere ? escapeHtml(e.gettingThere) : "";
   const goodToKnow = e.goodToKnow ? escapeHtml(e.goodToKnow) : "";
   const avatar = e.imageUrl ? imageHtml(e.imageUrl, "detail__avatar") : "";
+  const mapQuery = `${e.title ?? ""} ${e.location ?? ""} Luxembourg City`.trim();
 
   return `
     <div class="detail__heading">
@@ -681,6 +682,7 @@ function eventDetail(e, savedNow, opts = {}) {
       <div class="detail__title">${escapeHtml(e.title)}</div>
     </div>
     ${e.imageUrl ? imageHtml(e.imageUrl, "hero") : ""}
+    ${mapPreviewHtml(mapQuery)}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Date</div><div>${escapeHtml(e.date)}</div></div>
       <div class="kv__row"><div class="kv__key">Location</div><div>${escapeHtml(e.location)}</div></div>
@@ -715,6 +717,7 @@ function placeDetail(p, savedNow, opts = {}) {
   const gettingThere = p.gettingThere ? escapeHtml(p.gettingThere) : "";
   const goodToKnow = p.goodToKnow ? escapeHtml(p.goodToKnow) : "";
   const avatar = p.imageUrl ? imageHtml(p.imageUrl, "detail__avatar") : "";
+  const mapQuery = `${p.name ?? ""} ${p.address ?? ""} Luxembourg City`.trim();
 
   return `
     <div class="detail__heading">
@@ -722,6 +725,7 @@ function placeDetail(p, savedNow, opts = {}) {
       <div class="detail__title">${escapeHtml(p.name)}</div>
     </div>
     ${p.imageUrl ? imageHtml(p.imageUrl, "hero") : ""}
+    ${mapPreviewHtml(mapQuery)}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Area</div><div>${escapeHtml(p.area || "Luxembourg City")}</div></div>
       ${areaNote ? `<div class="kv__row"><div class="kv__key">About this area</div><div>${areaNote}</div></div>` : ""}
@@ -747,6 +751,30 @@ function escapeHtml(str) {
 
 function escapeAttr(str) {
   return escapeHtml(str).replaceAll("`", "&#096;");
+}
+
+function mapEmbedUrl(query) {
+  const q = encodeURIComponent(query);
+  return `https://www.google.com/maps?q=${q}&output=embed`;
+}
+
+function mapLinkUrl(query) {
+  const q = encodeURIComponent(query);
+  return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+
+function mapPreviewHtml(query) {
+  if (!query) return "";
+  const src = mapEmbedUrl(query);
+  const link = mapLinkUrl(query);
+  return `
+    <div class="mapPreview">
+      <iframe title="Map preview" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${escapeAttr(src)}"></iframe>
+      <div class="mapPreview__meta">
+        Map preview uses Google Maps. <a href="${escapeAttr(link)}" target="_blank" rel="noopener noreferrer">Open in Maps</a>
+      </div>
+    </div>
+  `;
 }
 
 function openAddModal() {
@@ -1195,6 +1223,20 @@ async function main() {
   window.addEventListener("online", setOnlinePill);
   window.addEventListener("offline", setOnlinePill);
 
+  // PWA install prompt
+  let deferredInstall = null;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstall = e;
+    const btn = $("installBtn");
+    if (btn) btn.classList.remove("is-hidden");
+  });
+  window.addEventListener("appinstalled", () => {
+    const btn = $("installBtn");
+    if (btn) btn.classList.add("is-hidden");
+    deferredInstall = null;
+  });
+
   document.querySelectorAll(".tab").forEach((btn) => {
     btn.addEventListener("click", () => setTab(btn.dataset.tab));
   });
@@ -1204,6 +1246,21 @@ async function main() {
   $("addBtn").addEventListener("click", openAddModal);
   $("importBtn").addEventListener("click", showImportHelp);
   $("reloadBtn").addEventListener("click", reloadData);
+  $("installBtn").addEventListener("click", async () => {
+    if (deferredInstall) {
+      deferredInstall.prompt();
+      try {
+        await deferredInstall.userChoice;
+      } catch {
+        // ignore
+      }
+      deferredInstall = null;
+      $("installBtn").classList.add("is-hidden");
+      return;
+    }
+    // iOS/Firefox fallback
+    window.alert("To install: use your browser menu and choose 'Install' or 'Add to Home Screen'.");
+  });
   $("backupBtn").addEventListener("click", exportBackup);
   $("restoreBtn").addEventListener("click", async () => {
     const ok = window.confirm(

@@ -1,0 +1,185 @@
+{
+  "generatedAt": "2026-04-24",
+  "sources": [
+    {
+      "name": "Ville de Luxembourg — Festivals, fairs and events",
+      "url": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events"
+    },
+    {
+      "name": "Visit Luxembourg City — Sights & Tourist Attractions",
+      "url": "https://www.luxembourg-city.com/en/tours-activities/sights"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_official_winterlights",
+      "title": "Winterlights",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/winterlights-0"
+    },
+    {
+      "id": "evt_official_imaischen",
+      "title": "Éimaischen",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/eimaischen"
+    },
+    {
+      "id": "evt_official_fr_ijoer_op_der_g_lle_fra",
+      "title": "Fréijoer op der Gëlle Fra",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/freijoer-op-der-gelle-fra"
+    },
+    {
+      "id": "evt_official_national_day_vdl_page",
+      "title": "National Day (VDL page)",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/national-day"
+    },
+    {
+      "id": "evt_official_schueberfouer_vdl_page",
+      "title": "Schueberfouer (VDL page)",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/schueberfouer-old"
+    },
+    {
+      "id": "evt_official_buergbrennen",
+      "title": "Buergbrennen",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/buergbrennen"
+    },
+    {
+      "id": "evt_official_secret_places",
+      "title": "Secret places",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/secret-places"
+    },
+    {
+      "id": "evt_official_stroossemaart",
+      "title": "Stroossemaart",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/stroossemaart"
+    },
+    {
+      "id": "evt_official_summer_an_der_stad",
+      "title": "Summer an der Stad",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/summer-der-stad"
+    },
+    {
+      "id": "evt_official_concerts_de_midi",
+      "title": "Concerts de midi",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/concerts-de-midi"
+    },
+    {
+      "id": "evt_official_my_urban_piano",
+      "title": "My Urban Piano",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/my-urban-piano"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_official_landmarks",
+      "name": "Official: Landmarks"
+    },
+    {
+      "id": "cat_official_museums",
+      "name": "Official: Museums"
+    },
+    {
+      "id": "cat_official_views",
+      "name": "Official: Views & Walks"
+    }
+  ],
+  "places": [
+    {
+      "id": "pl_official_bock_casemates",
+      "categoryId": "cat_official_landmarks",
+      "name": "Bock Casemates",
+      "area": "Old Town",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for latest details and tickets if required).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/fortification/bock-casemates"
+    },
+    {
+      "id": "pl_official_grand_ducal_palace",
+      "categoryId": "cat_official_landmarks",
+      "name": "Grand Ducal Palace",
+      "area": "City Center",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for latest details).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/iconic-buildings/grand-ducal-palace"
+    },
+    {
+      "id": "pl_official_cathedral_notre_dame",
+      "categoryId": "cat_official_landmarks",
+      "name": "Cathedral Notre-Dame de Luxembourg",
+      "area": "City Center",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for latest details).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/church/cathedral-of-the-blessed-virgin"
+    },
+    {
+      "id": "pl_official_chemin_corniche",
+      "categoryId": "cat_official_views",
+      "name": "Chemin de la Corniche",
+      "area": "Old Town",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for route details and highlights).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/fortifications/chemin-de-la-corniche"
+    },
+    {
+      "id": "pl_official_pfaffenthal_lift",
+      "categoryId": "cat_official_views",
+      "name": "Panoramic Elevator of the Pfaffenthal",
+      "area": "Pfaffenthal",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for access info and hours).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/monument/panoramic-elevator-of-the-pfaffenthal"
+    },
+    {
+      "id": "pl_official_mudam",
+      "categoryId": "cat_official_museums",
+      "name": "MUDAM — Museum of Modern Art Grand-Duc Jean",
+      "area": "Kirchberg",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for exhibitions and tickets).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/museum/mudam-museum-of-modern-art-grand-duc-jean-a-luxembourg"
+    }
+  ]
+}

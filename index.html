@@ -1,16 +1,116 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Luxembourg Guide</title>
-    <meta http-equiv="refresh" content="0; url=./app/index.html#/events" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta
+      name="description"
+      content="Luxembourg City events calendar and tourist guide with offline saved items."
+    />
+    <title>Luxembourg City • Events & Guide</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <p>
-      Redirecting… If nothing happens, open
-      <a href="./app/index.html#/events">Luxembourg Guide</a>.
-    </p>
+    <header class="topbar">
+      <div class="topbar__title">
+        <div class="topbar__brand">Luxembourg City</div>
+        <div class="topbar__sub">Annual Events & Tourist Guide</div>
+      </div>
+
+      <div class="topbar__status" aria-live="polite">
+        <span id="netStatus" class="pill pill--ok">Online</span>
+        <button id="reloadBtn" class="btn" type="button">Reload</button>
+      </div>
+    </header>
+
+    <main class="app" id="app">
+      <nav class="tabs" aria-label="Primary">
+        <button class="tab is-active" data-tab="events" type="button">Events</button>
+        <button class="tab" data-tab="guide" type="button">Guide</button>
+        <button class="tab" data-tab="saved" type="button">Saved</button>
+      </nav>
+
+      <section class="panel">
+        <div class="panel__header">
+          <div class="panel__title" id="panelTitle">Events</div>
+          <div class="panel__actions">
+            <label class="search" aria-label="Search">
+              <input id="searchInput" type="search" placeholder="Search…" />
+            </label>
+            <label class="select is-hidden" id="monthFilterWrap" aria-label="Month filter">
+              <select id="monthFilter">
+                <option value="all">All months</option>
+                <option value="1">Jan</option>
+                <option value="2">Feb</option>
+                <option value="3">Mar</option>
+                <option value="4">Apr</option>
+                <option value="5">May</option>
+                <option value="6">Jun</option>
+                <option value="7">Jul</option>
+                <option value="8">Aug</option>
+                <option value="9">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+              </select>
+            </label>
+            <label class="select is-hidden" id="areaFilterWrap" aria-label="Area filter">
+              <select id="areaFilter">
+                <option value="all">All areas</option>
+              </select>
+            </label>
+            <label class="select is-hidden" id="placeAreaFilterWrap" aria-label="Place area filter">
+              <select id="placeAreaFilter">
+                <option value="all">All place areas</option>
+              </select>
+            </label>
+            <label class="select is-hidden" id="savedAreaFilterWrap" aria-label="Saved area filter">
+              <select id="savedAreaFilter">
+                <option value="all">All saved areas</option>
+              </select>
+            </label>
+            <button id="yearViewBtn" class="btn is-hidden" type="button">Year view</button>
+            <button id="importBtn" class="btn" type="button">Update list</button>
+            <button id="backupBtn" class="btn is-hidden" type="button">Backup</button>
+            <button id="restoreBtn" class="btn is-hidden" type="button">Restore</button>
+            <button id="addBtn" class="btn btn--primary" type="button">+ Add</button>
+          </div>
+        </div>
+
+        <div class="panel__content">
+          <div id="listView" class="list" role="list"></div>
+
+          <article id="detailView" class="detail is-hidden" aria-live="polite">
+            <button id="backBtn" class="btn btn--ghost" type="button">← Back</button>
+            <div id="detailBody"></div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__note">
+          Basic, clear public information only. No hidden/private data.
+        </div>
+      </footer>
+    </main>
+
+    <dialog id="modal" class="modal">
+      <form id="modalForm" method="dialog" class="modal__card">
+        <div class="modal__header">
+          <div class="modal__title" id="modalTitle">Add</div>
+          <button class="btn btn--ghost" value="cancel" type="submit" aria-label="Close">✕</button>
+        </div>
+        <div class="modal__body" id="modalBody"></div>
+        <div class="modal__actions">
+          <button class="btn" value="cancel" type="submit">Cancel</button>
+          <button class="btn btn--primary" id="modalSaveBtn" value="default" type="submit">Save</button>
+        </div>
+        <div class="modal__hint">Saved on this device (offline). You can edit `data/seed.json` later for permanent data.</div>
+      </form>
+    </dialog>
+
+    <script src="./app.js" defer></script>
   </body>
 </html>
-

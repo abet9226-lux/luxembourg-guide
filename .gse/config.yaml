@@ -1,0 +1,18 @@
+version: 1
+created: 2026-04-24
+updated: 2026-04-24
+
+language:
+  chat: en
+  artifacts: en
+
+git:
+  strategy: branch-only
+  default_branch: master
+  worktree_dir: .worktrees
+
+lifecycle:
+  mode: ""
+  stale_sprint_sessions: 3
+
+dependency_audit: false

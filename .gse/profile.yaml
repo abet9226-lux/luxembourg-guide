@@ -1,0 +1,24 @@
+version: 1
+created: 2026-04-24
+updated: 2026-04-24
+user:
+  name: "ABE"
+  git_email: "abe9226@gmail.com"
+dimensions:
+  it_expertise: beginner
+  scientific_expertise: none
+  abstraction_capability: balanced
+  language:
+    chat: en
+    artifacts: en
+    overrides: {}
+  preferred_verbosity: normal
+  domain_background: ""
+  decision_involvement: autonomous
+  project_domain: mobile
+  team_context: solo
+  learning_goals: []
+  contextual_tips: true
+  emoji: false
+inferred:
+  language.chat: true

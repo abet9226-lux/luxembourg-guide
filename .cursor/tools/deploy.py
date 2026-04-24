@@ -613,21 +613,28 @@ def deploy_app(
             client.trigger_deploy(app_uuid, force=True)
             created = False
         else:
-            # Create new application
-            app = client.create_application(
-                project_uuid=project.uuid,
-                environment_name="production",
-                name=name,
-                git_repository=github_repo,
-                git_branch=branch,
-                ports_exposes=str(port),
-                # Coolify expects a full URL in domains (scheme included).
-                fqdn=f"https://{subdomain}",
-                server_uuid=server_uuid,
-            )
-            app_uuid = app.uuid
-            client.trigger_deploy(app_uuid, force=False)
-            created = True
+            # Try to reuse an existing app by name (in case state was lost).
+            existing_remote = client.find_application_by_name(name)
+            if existing_remote and existing_remote.uuid:
+                app_uuid = existing_remote.uuid
+                client.trigger_deploy(app_uuid, force=True)
+                created = False
+            else:
+                # Create new application
+                app = client.create_application(
+                    project_uuid=project.uuid,
+                    environment_name="production",
+                    name=name,
+                    git_repository=github_repo,
+                    git_branch=branch,
+                    ports_exposes=str(port),
+                    # Coolify expects a full URL in domains (scheme included).
+                    fqdn=f"https://{subdomain}",
+                    server_uuid=server_uuid,
+                )
+                app_uuid = app.uuid
+                client.trigger_deploy(app_uuid, force=False)
+                created = True
 
         # 5. Health check
         health_path = DEFAULT_HEALTH_CHECK_PATHS.get(type_, "/")

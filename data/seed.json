@@ -4,32 +4,49 @@
     {
       "id": "evt_schueberfouer",
       "title": "Schueberfouer (Funfair)",
-      "date": "Late Aug – Early Sep (annual)",
-      "location": "Luxembourg City (Glacis area)",
-      "description": "Major annual funfair with rides, food, and attractions.",
-      "sourceUrl": ""
+      "date": "21 Aug – 9 Sep 2026",
+      "location": "Champ du Glacis (Parking Glacis), Luxembourg City",
+      "description": "Luxembourg’s biggest annual funfair: rides, games, street food (including famous Gromperekichelcher), and a festive atmosphere in the city. Traditionally ends with discounted attractions and fireworks.",
+      "sourceUrl": "https://www.visitluxembourg.com/event/schueberfouer"
     },
     {
       "id": "evt_national_day",
       "title": "National Day celebrations",
-      "date": "23 June (annual)",
-      "location": "Luxembourg City",
-      "description": "Parades, ceremonies, and celebrations around National Day.",
-      "sourceUrl": ""
+      "date": "22–23 Jun 2026 (annual)",
+      "location": "Luxembourg City (Place de la Constitution and city center)",
+      "description": "One of Luxembourg’s biggest traditions. Festivities begin on the eve (22 June) with a changing of the guard and a torchlight procession, plus concerts and an open-air party. On 23 June: official ceremony, military parade, and Te Deum at the cathedral.",
+      "sourceUrl": "https://www.visitluxembourg.com/event/national-holiday"
     },
     {
       "id": "evt_christmas_markets",
-      "title": "Christmas markets (Winterlights)",
-      "date": "Late Nov – Dec (annual)",
+      "title": "Winterlights (Christmas markets & winter festival)",
+      "date": "20 Nov 2026 – 3 Jan 2027",
       "location": "Luxembourg City (various squares)",
-      "description": "Seasonal markets, lights, and winter activities.",
-      "sourceUrl": ""
+      "description": "Winter festival with Christmas markets across the city, lights, concerts, exhibitions, and workshops for kids—designed for all ages and a festive atmosphere.",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/winterlights-0"
+    },
+    {
+      "id": "evt_eimaischen",
+      "title": "Éimaischen (Easter Monday crafts market)",
+      "date": "6 Apr 2026 (Easter Monday, annual)",
+      "location": "Old Town streets (around Marché aux Poissons, Rue du Marché aux Herbes, etc.)",
+      "description": "Traditional crafts market (at least since 1827), famous for pottery and the small bird-shaped terracotta whistles called Péckvillercher—sold only at Éimaischen and different every year.",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/eimaischen"
+    },
+    {
+      "id": "evt_freijoer_gelle_fra",
+      "title": "Fréijoer op der Gëlle Fra (spring programme)",
+      "date": "22 May – 14 Jun 2026",
+      "location": "Place de la Constitution (Gëlle Fra), Luxembourg City",
+      "description": "Spring entertainment programme with floral décor, seating, food stalls, and activities. Includes attractions like a panoramic tower and family-friendly rides.",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/freijoer-op-der-gelle-fra"
     }
   ],
   "categories": [
     { "id": "cat_landmarks", "name": "Landmarks" },
     { "id": "cat_museums", "name": "Museums" },
     { "id": "cat_parks", "name": "Parks & Nature" },
+    { "id": "cat_views", "name": "Viewpoints & Walks" },
     { "id": "cat_food", "name": "Food & Cafés" }
   ],
   "places": [
@@ -40,8 +57,9 @@
       "area": "Old Town",
       "address": "Montée de Clausen, Luxembourg City",
       "hours": "",
-      "description": "Historic underground tunnels and fortifications (UNESCO area).",
-      "mapUrl": ""
+      "description": "Underground tunnels carved into the rock as part of Luxembourg’s fortifications (UNESCO-listed old quarters and fortifications). A major historic site and one of the city’s most iconic visits.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/fortification/bock-casemates"
     },
     {
       "id": "pl_grand_ducal_palace",
@@ -50,8 +68,31 @@
       "area": "City Center",
       "address": "Rue du Marché-aux-Herbes, Luxembourg City",
       "hours": "",
-      "description": "Official residence of the Grand Duke; a key landmark in the center.",
-      "mapUrl": ""
+      "description": "Iconic building in the city center and official residence of the Grand Duke. A key stop when walking through the historic center.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/iconic-buildings/grand-ducal-palace"
+    },
+    {
+      "id": "pl_cathedral_notre_dame",
+      "categoryId": "cat_landmarks",
+      "name": "Cathedral Notre-Dame de Luxembourg",
+      "area": "City Center",
+      "address": "Rue Notre Dame, Luxembourg City",
+      "hours": "",
+      "description": "Historic cathedral in the center of Luxembourg City, known for its architecture and role in national ceremonies.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/church/cathedral-of-the-blessed-virgin"
+    },
+    {
+      "id": "pl_gelle_fra",
+      "categoryId": "cat_landmarks",
+      "name": "Gëlle Fra (Monument of Remembrance)",
+      "area": "City Center",
+      "address": "Place de la Constitution, Luxembourg City",
+      "hours": "",
+      "description": "Famous monument in the city center and a key viewpoint area overlooking the Pétrusse valley.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/monument/gelle-fra-memorial"
     },
     {
       "id": "pl_mudam",
@@ -60,8 +101,20 @@
       "area": "Kirchberg",
       "address": "3 Park Dräi Eechelen, Luxembourg City",
       "hours": "",
-      "description": "Museum of modern art with exhibitions and cultural events.",
-      "mapUrl": ""
+      "description": "Museum of modern and contemporary art in Kirchberg, with rotating exhibitions and cultural events.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/museum/mudam-museum-of-modern-art-grand-duc-jean-a-luxembourg"
+    },
+    {
+      "id": "pl_mnha",
+      "categoryId": "cat_museums",
+      "name": "National Museum of History and Art (MNHA)",
+      "area": "Old Town",
+      "address": "Marché-aux-Poissons, Luxembourg City",
+      "hours": "",
+      "description": "Major museum in the old town covering archaeology, history, and art collections.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/museum/national-museum-of-history-and-art-luxembourg"
     },
     {
       "id": "pl_parc_municipal",
@@ -71,7 +124,41 @@
       "address": "Avenue Monterey, Luxembourg City",
       "hours": "",
       "description": "Central city park for walking and relaxing.",
-      "mapUrl": ""
+      "mapUrl": "",
+      "sourceUrl": ""
+    },
+    {
+      "id": "pl_pfaffenthal_lift",
+      "categoryId": "cat_views",
+      "name": "Panoramic Elevator of the Pfaffenthal",
+      "area": "Pfaffenthal",
+      "address": "Pfaffenthal, Luxembourg City",
+      "hours": "",
+      "description": "Panoramic lift offering impressive views and an easy connection between upper city and Pfaffenthal.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/monument/panoramic-elevator-of-the-pfaffenthal"
+    },
+    {
+      "id": "pl_chemin_corniche",
+      "categoryId": "cat_views",
+      "name": "Chemin de la Corniche",
+      "area": "Old Town",
+      "address": "Chemin de la Corniche, Luxembourg City",
+      "hours": "",
+      "description": "Scenic walkway along the fortifications with famous panoramic views—often called “the most beautiful balcony in Europe”.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/fortifications/chemin-de-la-corniche"
+    },
+    {
+      "id": "pl_wenzel_walk",
+      "categoryId": "cat_views",
+      "name": "Wenzel Circular Walk (Wenzel Walk)",
+      "area": "Old Town & fortifications",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Popular city walk that takes you through the old quarters and along UNESCO-listed fortifications.",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/tour/wenzel-circular-walk"
     },
     {
       "id": "pl_place_darmes",
@@ -81,7 +168,8 @@
       "address": "Place d’Armes, Luxembourg City",
       "hours": "",
       "description": "Popular square with cafés and places to sit and enjoy the city.",
-      "mapUrl": ""
+      "mapUrl": "",
+      "sourceUrl": ""
     }
   ]
 }

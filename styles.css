@@ -216,6 +216,22 @@ a:hover{ color: #d2cbff; }
   margin: 10px 0 12px;
   background: rgba(255,255,255,.02);
 }
+.mapPreview__toggle{
+  width: 100%;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  justify-content: center;
+}
+.mapPreview__frame{
+  padding: 0;
+}
+.mapPreview__offline{
+  padding: 14px 12px;
+  color: rgba(255,255,255,.65);
+  font-size: 13px;
+}
 .mapPreview iframe{
   width: 100%;
   height: 220px;

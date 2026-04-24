@@ -572,6 +572,30 @@ function renderDetail() {
       window.open(url, "_blank", "noopener,noreferrer");
     });
   }
+
+  body.querySelectorAll("[data-map-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const frame = body.querySelector("[data-map-frame]");
+      if (!frame) return;
+      const src = btn.getAttribute("data-map-src") || "";
+      const isOpen = !frame.classList.contains("is-hidden");
+      if (isOpen) {
+        frame.classList.add("is-hidden");
+        btn.textContent = "Show map preview";
+        return;
+      }
+      frame.classList.remove("is-hidden");
+      btn.textContent = "Hide map preview";
+      if (!navigator.onLine) return;
+      if (frame.querySelector("iframe")) return;
+      const iframe = document.createElement("iframe");
+      iframe.title = "Map preview";
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.src = src;
+      frame.append(iframe);
+    });
+  });
 }
 
 function matchesQuery(...fields) {
@@ -767,9 +791,15 @@ function mapPreviewHtml(query) {
   if (!query) return "";
   const src = mapEmbedUrl(query);
   const link = mapLinkUrl(query);
+  const offline = !navigator.onLine;
   return `
     <div class="mapPreview">
-      <iframe title="Map preview" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${escapeAttr(src)}"></iframe>
+      <button class="btn mapPreview__toggle" type="button" data-map-toggle data-map-src="${escapeAttr(src)}">
+        Show map preview
+      </button>
+      <div class="mapPreview__frame is-hidden" data-map-frame>
+        ${offline ? `<div class="mapPreview__offline">You’re offline. Map preview is unavailable.</div>` : ""}
+      </div>
       <div class="mapPreview__meta">
         Map preview uses Google Maps. <a href="${escapeAttr(link)}" target="_blank" rel="noopener noreferrer">Open in Maps</a>
       </div>

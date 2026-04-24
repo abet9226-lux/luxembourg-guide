@@ -8,7 +8,7 @@ language:
 
 git:
   strategy: branch-only
-  default_branch: master
+  default_branch: main
   worktree_dir: .worktrees
 
 lifecycle:

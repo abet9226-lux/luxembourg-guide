@@ -6,6 +6,10 @@ language:
   chat: en
   artifacts: en
 
+project:
+  name: "Annual Events & Tourist Guide"
+  domain: mobile
+
 git:
   strategy: branch-only
   default_branch: main

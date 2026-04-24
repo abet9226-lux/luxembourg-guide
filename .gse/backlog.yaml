@@ -1,4 +1,24 @@
 version: 1
 created: 2026-04-24
 updated: 2026-04-24
-tasks: []
+tasks:
+  - id: TASK-001
+    title: "Define target area + content sources"
+    status: open
+    traces:
+      derives_from: [INT-001]
+  - id: TASK-002
+    title: "Create events calendar/indicator (basic)"
+    status: open
+    traces:
+      derives_from: [INT-001]
+  - id: TASK-003
+    title: "Create tourist guide listings (basic)"
+    status: open
+    traces:
+      derives_from: [INT-001]
+  - id: TASK-004
+    title: "Offline support for saved content"
+    status: open
+    traces:
+      derives_from: [INT-001]

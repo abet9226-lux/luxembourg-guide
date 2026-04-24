@@ -1,0 +1,29 @@
+version: 1
+created: 2026-04-24
+updated: 2026-04-24
+
+status: draft
+mode: lightweight
+sprint: 1
+
+workflow:
+  active: plan
+  pending:
+    - reqs
+    - produce
+    - deliver
+  skipped: []
+
+tasks:
+  - id: TASK-001
+    title: "Define target area + content sources"
+    status: planned
+  - id: TASK-002
+    title: "Create events calendar/indicator (basic)"
+    status: planned
+  - id: TASK-003
+    title: "Create tourist guide listings (basic)"
+    status: planned
+  - id: TASK-004
+    title: "Offline support for saved content"
+    status: planned

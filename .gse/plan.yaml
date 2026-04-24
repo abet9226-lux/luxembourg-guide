@@ -7,9 +7,8 @@ mode: lightweight
 sprint: 1
 
 workflow:
-  active: reqs
+  active: produce
   pending:
-    - produce
     - deliver
   skipped: []
 

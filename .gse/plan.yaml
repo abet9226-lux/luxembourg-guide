@@ -2,14 +2,13 @@ version: 1
 created: 2026-04-24
 updated: 2026-04-24
 
-status: draft
+status: active
 mode: lightweight
 sprint: 1
 
 workflow:
-  active: plan
+  active: reqs
   pending:
-    - reqs
     - produce
     - deliver
   skipped: []

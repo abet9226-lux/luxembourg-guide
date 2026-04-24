@@ -21,6 +21,7 @@
 
       <div class="topbar__status" aria-live="polite">
         <span id="netStatus" class="pill pill--ok">Online</span>
+        <button id="reloadBtn" class="btn" type="button">Reload</button>
       </div>
     </header>
 
@@ -65,8 +66,15 @@
                 <option value="all">All place areas</option>
               </select>
             </label>
+            <label class="select is-hidden" id="savedAreaFilterWrap" aria-label="Saved area filter">
+              <select id="savedAreaFilter">
+                <option value="all">All saved areas</option>
+              </select>
+            </label>
             <button id="yearViewBtn" class="btn is-hidden" type="button">Year view</button>
             <button id="importBtn" class="btn" type="button">Update list</button>
+            <button id="backupBtn" class="btn is-hidden" type="button">Backup</button>
+            <button id="restoreBtn" class="btn is-hidden" type="button">Restore</button>
             <button id="addBtn" class="btn btn--primary" type="button">+ Add</button>
           </div>
         </div>

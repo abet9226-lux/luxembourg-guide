@@ -45,6 +45,14 @@ a:hover{ color: #d2cbff; }
   gap: 14px;
 }
 
+.topbar__status{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .topbar__title{ display:flex; flex-direction:column; gap:2px; }
 .topbar__brand{ font-weight: 750; letter-spacing: .2px; }
 .topbar__sub{ color: var(--muted); font-size: 12px; }
@@ -104,6 +112,8 @@ a:hover{ color: #d2cbff; }
   display:flex;
   align-items:center;
   gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .select select{
@@ -247,7 +257,22 @@ a:hover{ color: #d2cbff; }
 }
 .kv__key{ min-width: 110px; color: rgba(255,255,255,.55); }
 
-.detail__title{ font-weight: 800; font-size: 18px; margin: 8px 0 8px; }
+.detail__heading{
+  display:flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 8px;
+}
+.detail__avatar{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  background: rgba(255,255,255,.04);
+  flex: 0 0 auto;
+}
+.detail__title{ font-weight: 800; font-size: 18px; margin: 0; }
 .detail__desc{ color: var(--muted); line-height: 1.4; }
 .detail__actions{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
 

@@ -2,12 +2,34 @@ const STORAGE_KEY = "lux-guide:saved:v1";
 const CUSTOM_KEY = "lux-guide:custom:v1";
 const OFFICIAL_FILE = "./data/official.json";
 
+const IMAGE_FALLBACK =
+  "data:image/svg+xml;charset=utf-8," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#101a2f"/>
+          <stop offset="1" stop-color="#0b1220"/>
+        </linearGradient>
+      </defs>
+      <rect width="480" height="320" fill="url(#g)"/>
+      <circle cx="170" cy="150" r="44" fill="#16213e"/>
+      <rect x="230" y="120" width="110" height="14" rx="7" fill="#16213e"/>
+      <rect x="230" y="148" width="150" height="14" rx="7" fill="#16213e"/>
+      <rect x="230" y="176" width="90" height="14" rx="7" fill="#16213e"/>
+      <text x="240" y="260" text-anchor="middle" font-family="system-ui,Segoe UI,Arial" font-size="14" fill="rgba(255,255,255,.55)">
+        Image unavailable offline
+      </text>
+    </svg>`
+  );
+
 const state = {
   tab: "events", // events | guide | saved
   query: "",
   month: "all",
   area: "all",
   placeArea: "all",
+  savedArea: "all",
   yearView: false,
   seed: null,
   official: null,
@@ -18,6 +40,11 @@ const state = {
 
 function $(id) {
   return document.getElementById(id);
+}
+
+function imageHtml(url, className) {
+  if (!url) return "";
+  return `<img class="${className}" src="${escapeAttr(url)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${IMAGE_FALLBACK}';this.classList.add('is-fallback');" />`;
 }
 
 function formatMeta(parts) {
@@ -60,6 +87,86 @@ function loadCustom() {
 function saveCustom(next) {
   localStorage.setItem(CUSTOM_KEY, JSON.stringify(next));
   state.custom = next;
+}
+
+function downloadTextFile(filename, text) {
+  const blob = new Blob([text], { type: "application/json;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function openJsonFilePicker() {
+  return new Promise((resolve) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.style.display = "none";
+    document.body.appendChild(input);
+    input.addEventListener("change", async () => {
+      const file = input.files && input.files[0];
+      input.remove();
+      if (!file) return resolve(null);
+      try {
+        const txt = await file.text();
+        resolve(txt);
+      } catch {
+        resolve(null);
+      }
+    });
+    input.click();
+  });
+}
+
+function makeBackupPayload() {
+  return {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    saved: loadSaved(),
+    custom: loadCustom()
+  };
+}
+
+function exportBackup() {
+  const payload = makeBackupPayload();
+  const stamp = new Date().toISOString().slice(0, 10);
+  downloadTextFile(`lux-city-backup-${stamp}.json`, JSON.stringify(payload, null, 2));
+}
+
+async function restoreBackup() {
+  const txt = await openJsonFilePicker();
+  if (!txt) return;
+  let parsed;
+  try {
+    parsed = JSON.parse(txt);
+  } catch {
+    window.alert("Invalid backup file (not JSON).");
+    return;
+  }
+
+  const saved = parsed?.saved;
+  const custom = parsed?.custom;
+
+  const validSaved = saved && typeof saved === "object" && typeof saved.events === "object" && typeof saved.places === "object";
+  const validCustom = custom && typeof custom === "object" && Array.isArray(custom.events) && Array.isArray(custom.places) && Array.isArray(custom.categories);
+
+  if (!validSaved || !validCustom) {
+    window.alert("Invalid backup file (missing required fields).");
+    return;
+  }
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+  localStorage.setItem(CUSTOM_KEY, JSON.stringify(custom));
+  state.custom = custom;
+  state.selected = null;
+  window.alert("Backup restored. Your Saved and custom items are back.");
+  setEventsControlsVisibility();
+  render();
 }
 
 function mergedData() {
@@ -161,6 +268,20 @@ async function loadOfficialOptional() {
   }
 }
 
+async function reloadData() {
+  try {
+    state.seed = await loadSeed();
+    state.official = await loadOfficialOptional();
+    state.custom = loadCustom();
+    state.selected = null;
+    hydrateAreaFilter();
+    setEventsControlsVisibility();
+    render();
+  } catch {
+    window.alert("Reload failed. Please refresh the page.");
+  }
+}
+
 function setTab(tab) {
   state.tab = tab;
   state.selected = null;
@@ -169,6 +290,7 @@ function setTab(tab) {
   state.month = "all";
   state.area = "all";
   state.placeArea = "all";
+  state.savedArea = "all";
   state.yearView = false;
 
   // update UI
@@ -196,8 +318,11 @@ function setEventsControlsVisibility() {
   const wrap = $("monthFilterWrap");
   const areaWrap = $("areaFilterWrap");
   const placeAreaWrap = $("placeAreaFilterWrap");
+  const savedAreaWrap = $("savedAreaFilterWrap");
   const yearBtn = $("yearViewBtn");
-  if (!wrap || !areaWrap || !placeAreaWrap || !yearBtn) return;
+  const backupBtn = $("backupBtn");
+  const restoreBtn = $("restoreBtn");
+  if (!wrap || !areaWrap || !placeAreaWrap || !savedAreaWrap || !yearBtn) return;
 
   const showEvents = state.tab === "events";
   wrap.classList.toggle("is-hidden", !showEvents);
@@ -213,6 +338,15 @@ function setEventsControlsVisibility() {
   placeAreaWrap.classList.toggle("is-hidden", !showPlaceAreas);
   if (showPlaceAreas) {
     $("placeAreaFilter").value = state.placeArea;
+  }
+
+  const showBackup = state.tab === "saved";
+  if (backupBtn) backupBtn.classList.toggle("is-hidden", !showBackup);
+  if (restoreBtn) restoreBtn.classList.toggle("is-hidden", !showBackup);
+
+  savedAreaWrap.classList.toggle("is-hidden", !showBackup);
+  if (showBackup) {
+    $("savedAreaFilter").value = state.savedArea;
   }
 }
 
@@ -233,6 +367,11 @@ function setArea(a) {
 
 function setPlaceArea(a) {
   state.placeArea = a;
+  renderList();
+}
+
+function setSavedArea(a) {
+  state.savedArea = a;
   renderList();
 }
 
@@ -359,12 +498,15 @@ function renderList() {
     return matchesQuery(item.name, item.area, item.address);
   });
 
-  if (filtered.length === 0) {
+  hydrateSavedAreaFilter(filtered);
+  const areaFiltered = filterSavedByArea(filtered, state.savedArea);
+
+  if (areaFiltered.length === 0) {
     list.append(emptyCard("No saved items yet. Save events or places to see them here offline."));
     return;
   }
 
-  filtered.forEach(({ type, item }) => {
+  areaFiltered.forEach(({ type, item }) => {
     const el = type === "event" ? eventCard(item, { showSavedTag: true }) : placeCard(item, { showSavedTag: true });
     list.append(el);
   });
@@ -453,9 +595,7 @@ function eventCard(e, opts = {}) {
   const el = document.createElement("div");
   el.className = "card";
   el.setAttribute("role", "listitem");
-  const img = e.imageUrl
-    ? `<img class="thumb" src="${escapeAttr(e.imageUrl)}" alt="" loading="lazy" />`
-    : `<div class="thumb" aria-hidden="true"></div>`;
+  const img = e.imageUrl ? imageHtml(e.imageUrl, "thumb") : `<div class="thumb" aria-hidden="true"></div>`;
   el.innerHTML = `
     <div class="media">
       ${img}
@@ -495,9 +635,7 @@ function placeCard(p, opts = {}) {
   const el = document.createElement("div");
   el.className = "card";
   el.setAttribute("role", "listitem");
-  const img = p.imageUrl
-    ? `<img class="thumb" src="${escapeAttr(p.imageUrl)}" alt="" loading="lazy" />`
-    : `<div class="thumb" aria-hidden="true"></div>`;
+  const img = p.imageUrl ? imageHtml(p.imageUrl, "thumb") : `<div class="thumb" aria-hidden="true"></div>`;
   el.innerHTML = `
     <div class="media">
       ${img}
@@ -532,14 +670,24 @@ function eventDetail(e, savedNow, opts = {}) {
     : `<span style="color: rgba(255,255,255,.55)">Source: (not set)</span>`;
 
   const area = e.area ? escapeHtml(e.area) : "Luxembourg City";
+  const areaNote = e.areaNote ? escapeHtml(e.areaNote) : "";
+  const gettingThere = e.gettingThere ? escapeHtml(e.gettingThere) : "";
+  const goodToKnow = e.goodToKnow ? escapeHtml(e.goodToKnow) : "";
+  const avatar = e.imageUrl ? imageHtml(e.imageUrl, "detail__avatar") : "";
 
   return `
-    <div class="detail__title">${escapeHtml(e.title)}</div>
-    ${e.imageUrl ? `<img class="hero" src="${escapeAttr(e.imageUrl)}" alt="" loading="lazy" />` : ""}
+    <div class="detail__heading">
+      ${avatar}
+      <div class="detail__title">${escapeHtml(e.title)}</div>
+    </div>
+    ${e.imageUrl ? imageHtml(e.imageUrl, "hero") : ""}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Date</div><div>${escapeHtml(e.date)}</div></div>
       <div class="kv__row"><div class="kv__key">Location</div><div>${escapeHtml(e.location)}</div></div>
       <div class="kv__row"><div class="kv__key">Area</div><div>${area}</div></div>
+      ${areaNote ? `<div class="kv__row"><div class="kv__key">About this area</div><div>${areaNote}</div></div>` : ""}
+      ${gettingThere ? `<div class="kv__row"><div class="kv__key">Getting there</div><div>${gettingThere}</div></div>` : ""}
+      ${goodToKnow ? `<div class="kv__row"><div class="kv__key">Good to know</div><div>${goodToKnow}</div></div>` : ""}
       <div class="kv__row"><div class="kv__key">Link</div><div>${source}</div></div>
     </div>
     <div class="detail__desc">${escapeHtml(e.description || "")}</div>
@@ -563,11 +711,22 @@ function placeDetail(p, savedNow, opts = {}) {
     ? `<a href="${escapeAttr(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">Source</a>`
     : `<span style="color: rgba(255,255,255,.55)">Source: (not set)</span>`;
 
+  const areaNote = p.areaNote ? escapeHtml(p.areaNote) : "";
+  const gettingThere = p.gettingThere ? escapeHtml(p.gettingThere) : "";
+  const goodToKnow = p.goodToKnow ? escapeHtml(p.goodToKnow) : "";
+  const avatar = p.imageUrl ? imageHtml(p.imageUrl, "detail__avatar") : "";
+
   return `
-    <div class="detail__title">${escapeHtml(p.name)}</div>
-    ${p.imageUrl ? `<img class="hero" src="${escapeAttr(p.imageUrl)}" alt="" loading="lazy" />` : ""}
+    <div class="detail__heading">
+      ${avatar}
+      <div class="detail__title">${escapeHtml(p.name)}</div>
+    </div>
+    ${p.imageUrl ? imageHtml(p.imageUrl, "hero") : ""}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Area</div><div>${escapeHtml(p.area || "Luxembourg City")}</div></div>
+      ${areaNote ? `<div class="kv__row"><div class="kv__key">About this area</div><div>${areaNote}</div></div>` : ""}
+      ${gettingThere ? `<div class="kv__row"><div class="kv__key">Getting there</div><div>${gettingThere}</div></div>` : ""}
+      ${goodToKnow ? `<div class="kv__row"><div class="kv__key">Good to know</div><div>${goodToKnow}</div></div>` : ""}
       ${p.address ? `<div class="kv__row"><div class="kv__key">Address</div><div>${escapeHtml(p.address)}</div></div>` : ""}
       ${p.hours ? `<div class="kv__row"><div class="kv__key">Hours</div><div>${escapeHtml(p.hours)}</div></div>` : ""}
       <div class="kv__row"><div class="kv__key">Link</div><div>${source}</div></div>
@@ -971,6 +1130,36 @@ function hydratePlaceAreaFilter(places) {
   state.placeArea = select.value;
 }
 
+function getSavedAreas(items) {
+  const seen = new Set();
+  for (const { item } of items) {
+    const a = (item?.area ?? "").trim();
+    if (a) seen.add(a);
+  }
+  return [...seen].sort((a, b) => a.localeCompare(b));
+}
+
+function hydrateSavedAreaFilter(items) {
+  const select = $("savedAreaFilter");
+  if (!select) return;
+
+  const areas = getSavedAreas(items);
+  const cur = state.savedArea;
+
+  select.innerHTML =
+    `<option value="all">All saved areas</option>` +
+    areas.map((a) => `<option value="${escapeAttr(a)}">${escapeHtml(a)}</option>`).join("");
+
+  select.value = areas.includes(cur) ? cur : "all";
+  state.savedArea = select.value;
+  setEventsControlsVisibility();
+}
+
+function filterSavedByArea(items, area) {
+  if (area === "all") return items;
+  return items.filter(({ item }) => (item?.area ?? "").trim() === area);
+}
+
 function renderEventsYearView(list, events) {
   const buckets = new Map();
   for (const e of events) {
@@ -1014,9 +1203,20 @@ async function main() {
   $("backBtn").addEventListener("click", hideDetail);
   $("addBtn").addEventListener("click", openAddModal);
   $("importBtn").addEventListener("click", showImportHelp);
+  $("reloadBtn").addEventListener("click", reloadData);
+  $("backupBtn").addEventListener("click", exportBackup);
+  $("restoreBtn").addEventListener("click", async () => {
+    const ok = window.confirm(
+      "Restore backup? First we'll download a safety backup of your current data, then you'll pick a JSON file to restore. This will replace your current Saved and custom items on this device."
+    );
+    if (!ok) return;
+    exportBackup();
+    await restoreBackup();
+  });
   $("monthFilter").addEventListener("change", (e) => setMonth(e.target.value));
   $("areaFilter").addEventListener("change", (e) => setArea(e.target.value));
   $("placeAreaFilter").addEventListener("change", (e) => setPlaceArea(e.target.value));
+  $("savedAreaFilter").addEventListener("change", (e) => setSavedArea(e.target.value));
   $("yearViewBtn").addEventListener("click", toggleYearView);
 
   // PWA/offline shell

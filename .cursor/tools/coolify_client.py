@@ -290,7 +290,7 @@ class CoolifyClient:
         ports_exposes: str,
         fqdn: str,
         server_uuid: str = "",
-        dockerfile_location: str = "./Dockerfile",
+        dockerfile_location: str = "Dockerfile",
         build_pack: str = "dockerfile",
     ) -> CoolifyApplication:
         """Create a public-repository application.

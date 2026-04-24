@@ -34,3 +34,4 @@ tests/e2e/screenshots/
 # GSE-One local state
 .gse/checkpoints/
 .gse/decisions-auto.log
+.gse/deploy.json

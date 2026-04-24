@@ -657,7 +657,15 @@ def deploy_app(
             "http_code": health.get("http_code"),
         }
     except CoolifyError as e:
-        return {"status": "error", "error": str(e), "http_status": e.status}
+        details = (e.body or "").strip()
+        if len(details) > 1200:
+            details = details[:1200] + "…"
+        return {
+            "status": "error",
+            "error": str(e),
+            "http_status": e.status,
+            "details": details,
+        }
 
 
 def _find_application(state: dict, name: str) -> Optional[dict]:

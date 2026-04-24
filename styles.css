@@ -100,6 +100,12 @@ a:hover{ color: #d2cbff; }
   letter-spacing: .2px;
 }
 
+.panel__actions{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
 .search input{
   width: min(280px, 44vw);
   border: 1px solid var(--line);
@@ -222,4 +228,80 @@ a:hover{ color: #d2cbff; }
 @media (min-width: 760px){
   .panel__content{ padding: 14px; }
   .list{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Modal */
+.modal{
+  width: min(720px, calc(100% - 28px));
+  border: none;
+  border-radius: var(--radius);
+  padding: 0;
+  background: transparent;
+}
+.modal::backdrop{
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(4px);
+}
+.modal__card{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(16,26,47,.96);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.modal__header{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.modal__title{
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.modal__body{
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+.field{
+  display:grid;
+  gap: 6px;
+}
+.field label{
+  color: rgba(255,255,255,.70);
+  font-size: 13px;
+}
+.field input, .field textarea, .field select{
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+  font-family: var(--font);
+  font-size: 14px;
+}
+.field textarea{ min-height: 92px; resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus{
+  border-color: rgba(124,92,255,.55);
+}
+.modal__actions{
+  padding: 14px;
+  border-top: 1px solid var(--line);
+  display:flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.modal__hint{
+  padding: 0 14px 14px;
+  color: rgba(255,255,255,.55);
+  font-size: 12px;
+}
+.error{
+  color: rgba(255,77,77,.95);
+  font-size: 13px;
 }

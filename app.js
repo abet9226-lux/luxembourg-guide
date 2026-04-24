@@ -1,9 +1,11 @@
 const STORAGE_KEY = "lux-guide:saved:v1";
+const CUSTOM_KEY = "lux-guide:custom:v1";
 
 const state = {
   tab: "events", // events | guide | saved
   query: "",
   seed: null,
+  custom: { events: [], categories: [], places: [] },
   selected: null, // { type: "event"|"place", id: string }
   guideCategoryId: null
 };
@@ -32,6 +34,44 @@ function loadSaved() {
 
 function saveSaved(next) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+}
+
+function loadCustom() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_KEY);
+    if (!raw) return { events: [], categories: [], places: [] };
+    const parsed = JSON.parse(raw);
+    return {
+      events: Array.isArray(parsed.events) ? parsed.events : [],
+      categories: Array.isArray(parsed.categories) ? parsed.categories : [],
+      places: Array.isArray(parsed.places) ? parsed.places : []
+    };
+  } catch {
+    return { events: [], categories: [], places: [] };
+  }
+}
+
+function saveCustom(next) {
+  localStorage.setItem(CUSTOM_KEY, JSON.stringify(next));
+  state.custom = next;
+}
+
+function mergedData() {
+  if (!state.seed) return null;
+  const seed = state.seed;
+  const custom = state.custom ?? { events: [], categories: [], places: [] };
+
+  const categories = [...seed.categories];
+  for (const c of custom.categories) {
+    if (!categories.some((x) => x.id === c.id)) categories.push(c);
+  }
+
+  return {
+    ...seed,
+    events: [...seed.events, ...custom.events],
+    categories,
+    places: [...seed.places, ...custom.places]
+  };
 }
 
 function isSaved(type, id) {
@@ -81,7 +121,15 @@ function setTab(tab) {
   $("panelTitle").textContent = title;
   $("searchInput").value = "";
 
+  setAddButtonVisibility();
   render();
+}
+
+function setAddButtonVisibility() {
+  const btn = $("addBtn");
+  if (!btn) return;
+  btn.style.display = state.tab === "saved" ? "none" : "inline-flex";
+  btn.textContent = state.tab === "events" ? "+ Add event" : "+ Add place";
 }
 
 function setQuery(q) {
@@ -113,9 +161,11 @@ function renderList() {
   list.innerHTML = "";
 
   if (!state.seed) return;
+  const data = mergedData();
+  if (!data) return;
 
   if (state.tab === "events") {
-    const events = state.seed.events
+    const events = data.events
       .filter((e) => matchesQuery(e.title, e.location, e.date))
       .map((e) => eventCard(e));
 
@@ -129,7 +179,7 @@ function renderList() {
 
   if (state.tab === "guide") {
     if (!state.guideCategoryId) {
-      const cats = state.seed.categories
+      const cats = data.categories
         .filter((c) => matchesQuery(c.name))
         .map((c) => categoryCard(c));
       if (cats.length === 0) {
@@ -140,8 +190,8 @@ function renderList() {
       return;
     }
 
-    const cat = state.seed.categories.find((c) => c.id === state.guideCategoryId);
-    const places = state.seed.places
+    const cat = data.categories.find((c) => c.id === state.guideCategoryId);
+    const places = data.places
       .filter((p) => p.categoryId === state.guideCategoryId)
       .filter((p) => matchesQuery(p.name, p.area, p.address))
       .map((p) => placeCard(p));
@@ -180,11 +230,11 @@ function renderList() {
   const items = [];
 
   for (const id of savedEventIds) {
-    const e = state.seed.events.find((x) => x.id === id);
+    const e = data.events.find((x) => x.id === id);
     if (e) items.push({ type: "event", item: e });
   }
   for (const id of savedPlaceIds) {
-    const p = state.seed.places.find((x) => x.id === id);
+    const p = data.places.find((x) => x.id === id);
     if (p) items.push({ type: "place", item: p });
   }
 
@@ -210,6 +260,8 @@ function renderDetail() {
   const body = $("detailBody");
 
   if (!state.seed || !state.selected) return;
+  const data = mergedData();
+  if (!data) return;
 
   listView.classList.add("is-hidden");
   detailView.classList.remove("is-hidden");
@@ -217,8 +269,8 @@ function renderDetail() {
   const { type, id } = state.selected;
   const isEvent = type === "event";
   const item = isEvent
-    ? state.seed.events.find((e) => e.id === id)
-    : state.seed.places.find((p) => p.id === id);
+    ? data.events.find((e) => e.id === id)
+    : data.places.find((p) => p.id === id);
 
   if (!item) {
     body.innerHTML = `<div class="detail__title">Not found</div>`;
@@ -372,6 +424,173 @@ function escapeAttr(str) {
   return escapeHtml(str).replaceAll("`", "&#096;");
 }
 
+function openAddModal() {
+  const modal = $("modal");
+  const title = $("modalTitle");
+  const body = $("modalBody");
+
+  if (!modal || !title || !body) return;
+
+  const data = mergedData();
+  if (!data) return;
+
+  const isEvents = state.tab === "events";
+  title.textContent = isEvents ? "Add event" : "Add place";
+
+  body.innerHTML = isEvents ? addEventForm() : addPlaceForm(data.categories);
+
+  const err = body.querySelector("#formError");
+  const form = $("modalForm");
+
+  // Remove any previous listener by replacing handler reference.
+  form.onsubmit = (ev) => {
+    const submitter = ev.submitter;
+    const isCancel = submitter && submitter.value === "cancel";
+    if (isCancel) return;
+
+    ev.preventDefault();
+
+    try {
+      if (isEvents) {
+        const payload = readEventForm();
+        const next = loadCustom();
+        next.events.push(payload);
+        saveCustom(next);
+      } else {
+        const payload = readPlaceForm();
+        const next = loadCustom();
+        // Ensure category exists in custom set if user chose it.
+        if (!data.categories.some((c) => c.id === payload.categoryId)) {
+          // shouldn't happen because select is built from categories
+        }
+        next.places.push(payload);
+        saveCustom(next);
+      }
+
+      modal.close();
+      render();
+    } catch (e) {
+      if (err) err.textContent = e instanceof Error ? e.message : "Invalid input.";
+    }
+  };
+
+  modal.showModal();
+}
+
+function addEventForm() {
+  return `
+    <div class="error" id="formError"></div>
+    <div class="field">
+      <label for="evTitle">Title *</label>
+      <input id="evTitle" name="title" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="evDate">Date *</label>
+      <input id="evDate" name="date" placeholder="e.g., 23 June 2026" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="evLocation">Location *</label>
+      <input id="evLocation" name="location" value="Luxembourg City" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="evDesc">Description</label>
+      <textarea id="evDesc" name="description" placeholder="Short, clear public info"></textarea>
+    </div>
+    <div class="field">
+      <label for="evSource">Source URL (optional)</label>
+      <input id="evSource" name="sourceUrl" placeholder="https://…" autocomplete="off" />
+    </div>
+  `;
+}
+
+function addPlaceForm(categories) {
+  const opts = categories
+    .map((c) => `<option value="${escapeAttr(c.id)}">${escapeHtml(c.name)}</option>`)
+    .join("");
+
+  return `
+    <div class="error" id="formError"></div>
+    <div class="field">
+      <label for="plName">Place name *</label>
+      <input id="plName" name="name" autocomplete="off" required />
+    </div>
+    <div class="field">
+      <label for="plCategory">Category *</label>
+      <select id="plCategory" name="categoryId" required>${opts}</select>
+    </div>
+    <div class="field">
+      <label for="plArea">Area</label>
+      <input id="plArea" name="area" value="Luxembourg City" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plAddress">Address</label>
+      <input id="plAddress" name="address" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plHours">Opening hours</label>
+      <input id="plHours" name="hours" placeholder="e.g., 10:00–18:00" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plDesc">Description</label>
+      <textarea id="plDesc" name="description" placeholder="Short, clear public info"></textarea>
+    </div>
+  `;
+}
+
+function makeId(prefix) {
+  const rand = Math.random().toString(16).slice(2);
+  return `${prefix}_${Date.now().toString(16)}_${rand}`;
+}
+
+function readEventForm() {
+  const title = $("evTitle")?.value?.trim();
+  const date = $("evDate")?.value?.trim();
+  const location = $("evLocation")?.value?.trim();
+  const description = $("evDesc")?.value?.trim() ?? "";
+  const sourceUrl = $("evSource")?.value?.trim() ?? "";
+
+  if (!title) throw new Error("Title is required.");
+  if (!date) throw new Error("Date is required.");
+  if (!location) throw new Error("Location is required.");
+  if (sourceUrl && !looksLikeUrl(sourceUrl)) throw new Error("Source URL must start with http:// or https://");
+
+  return {
+    id: makeId("evt_custom"),
+    title,
+    date,
+    location,
+    description,
+    sourceUrl
+  };
+}
+
+function readPlaceForm() {
+  const name = $("plName")?.value?.trim();
+  const categoryId = $("plCategory")?.value?.trim();
+  const area = $("plArea")?.value?.trim() ?? "";
+  const address = $("plAddress")?.value?.trim() ?? "";
+  const hours = $("plHours")?.value?.trim() ?? "";
+  const description = $("plDesc")?.value?.trim() ?? "";
+
+  if (!name) throw new Error("Place name is required.");
+  if (!categoryId) throw new Error("Category is required.");
+
+  return {
+    id: makeId("pl_custom"),
+    categoryId,
+    name,
+    area,
+    address,
+    hours,
+    description,
+    mapUrl: ""
+  };
+}
+
+function looksLikeUrl(url) {
+  return url.startsWith("http://") || url.startsWith("https://");
+}
+
 async function main() {
   setOnlinePill();
   window.addEventListener("online", setOnlinePill);
@@ -383,6 +602,7 @@ async function main() {
 
   $("searchInput").addEventListener("input", (e) => setQuery(e.target.value));
   $("backBtn").addEventListener("click", hideDetail);
+  $("addBtn").addEventListener("click", openAddModal);
 
   // PWA/offline shell
   if ("serviceWorker" in navigator) {
@@ -394,6 +614,8 @@ async function main() {
   }
 
   state.seed = await loadSeed();
+  state.custom = loadCustom();
+  setAddButtonVisibility();
   render();
 }
 

@@ -33,6 +33,11 @@ FALLBACK_VDL_LINKS: list[Link] = [
     Link("National Day (VDL page)", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/national-day"),
     Link("Schueberfouer (VDL page)", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/schueberfouer-old"),
     Link("Buergbrennen", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/buergbrennen"),
+    Link("Secret places", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/secret-places"),
+    Link("Stroossemaart", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/stroossemaart"),
+    Link("Summer an der Stad", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/summer-der-stad"),
+    Link("Concerts de midi", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/concerts-de-midi"),
+    Link("My Urban Piano", "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/my-urban-piano"),
 ]
 
 

@@ -58,6 +58,46 @@
       "location": "Luxembourg City",
       "description": "Official event page (open the source link for latest schedule and details).",
       "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/buergbrennen"
+    },
+    {
+      "id": "evt_official_secret_places",
+      "title": "Secret places",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/secret-places"
+    },
+    {
+      "id": "evt_official_stroossemaart",
+      "title": "Stroossemaart",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/stroossemaart"
+    },
+    {
+      "id": "evt_official_summer_an_der_stad",
+      "title": "Summer an der Stad",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/summer-der-stad"
+    },
+    {
+      "id": "evt_official_concerts_de_midi",
+      "title": "Concerts de midi",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/concerts-de-midi"
+    },
+    {
+      "id": "evt_official_my_urban_piano",
+      "title": "My Urban Piano",
+      "date": "See official link (dates vary)",
+      "location": "Luxembourg City",
+      "description": "Official event page (open the source link for latest schedule and details).",
+      "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/my-urban-piano"
     }
   ],
   "categories": [

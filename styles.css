@@ -106,6 +106,18 @@ a:hover{ color: #d2cbff; }
   gap: 10px;
 }
 
+.select select{
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 12px;
+  outline: none;
+  font-weight: 650;
+}
+
+.is-hidden{ display:none; }
+
 .search input{
   width: min(280px, 44vw);
   border: 1px solid var(--line);
@@ -164,7 +176,28 @@ a:hover{ color: #d2cbff; }
   border-radius: var(--radius2);
   padding: 12px;
 }
-.is-hidden{ display:none; }
+.media{
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.thumb{
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  object-fit: cover;
+}
+.hero{
+  width: 100%;
+  max-height: 220px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  margin: 10px 0 10px;
+}
 
 .btn{
   border: 1px solid var(--line);

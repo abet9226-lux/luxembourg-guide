@@ -5,6 +5,8 @@ const OFFICIAL_FILE = "./data/official.json";
 const state = {
   tab: "events", // events | guide | saved
   query: "",
+  month: "all",
+  yearView: false,
   seed: null,
   official: null,
   custom: { events: [], categories: [], places: [] },
@@ -162,6 +164,8 @@ function setTab(tab) {
   state.selected = null;
   state.guideCategoryId = null;
   state.query = "";
+  state.month = "all";
+  state.yearView = false;
 
   // update UI
   document.querySelectorAll(".tab").forEach((btn) => {
@@ -172,6 +176,7 @@ function setTab(tab) {
   $("panelTitle").textContent = title;
   $("searchInput").value = "";
 
+  setEventsControlsVisibility();
   setAddButtonVisibility();
   render();
 }
@@ -183,8 +188,32 @@ function setAddButtonVisibility() {
   btn.textContent = state.tab === "events" ? "+ Add event" : "+ Add place";
 }
 
+function setEventsControlsVisibility() {
+  const wrap = $("monthFilterWrap");
+  const yearBtn = $("yearViewBtn");
+  if (!wrap || !yearBtn) return;
+  const show = state.tab === "events";
+  wrap.classList.toggle("is-hidden", !show);
+  yearBtn.classList.toggle("is-hidden", !show);
+  yearBtn.textContent = state.yearView ? "List view" : "Year view";
+  if (show) {
+    $("monthFilter").value = state.month;
+  }
+}
+
 function setQuery(q) {
   state.query = (q ?? "").trim().toLowerCase();
+  renderList();
+}
+
+function setMonth(m) {
+  state.month = m;
+  renderList();
+}
+
+function toggleYearView() {
+  state.yearView = !state.yearView;
+  setEventsControlsVisibility();
   renderList();
 }
 
@@ -216,15 +245,18 @@ function renderList() {
   if (!data) return;
 
   if (state.tab === "events") {
-    const events = data.events
-      .filter((e) => matchesQuery(e.title, e.location, e.date))
-      .map((e) => eventCard(e));
+    const events = data.events.filter((e) => matchesQuery(e.title, e.location, e.date));
+    const filtered = filterByMonth(events, state.month);
 
-    if (events.length === 0) {
+    if (filtered.length === 0) {
       list.append(emptyCard("No events found."));
       return;
     }
-    events.forEach((el) => list.append(el));
+    if (state.yearView) {
+      renderEventsYearView(list, filtered);
+    } else {
+      filtered.map((e) => eventCard(e)).forEach((el) => list.append(el));
+    }
     return;
   }
 
@@ -388,12 +420,20 @@ function eventCard(e, opts = {}) {
   const el = document.createElement("div");
   el.className = "card";
   el.setAttribute("role", "listitem");
+  const img = e.imageUrl
+    ? `<img class="thumb" src="${escapeAttr(e.imageUrl)}" alt="" loading="lazy" />`
+    : `<div class="thumb" aria-hidden="true"></div>`;
   el.innerHTML = `
-    <div class="card__title">${escapeHtml(e.title)}</div>
-    <div class="card__meta">
-      <span>${escapeHtml(e.date)}</span>
-      <span class="dot">${escapeHtml(e.location)}</span>
-      ${opts.showSavedTag ? `<span class="dot">Saved</span>` : ""}
+    <div class="media">
+      ${img}
+      <div>
+        <div class="card__title">${escapeHtml(e.title)}</div>
+        <div class="card__meta">
+          <span>${escapeHtml(e.date)}</span>
+          <span class="dot">${escapeHtml(e.location)}</span>
+          ${opts.showSavedTag ? `<span class="dot">Saved</span>` : ""}
+        </div>
+      </div>
     </div>
   `;
   el.addEventListener("click", () => showDetail("event", e.id));
@@ -419,12 +459,20 @@ function placeCard(p, opts = {}) {
   const el = document.createElement("div");
   el.className = "card";
   el.setAttribute("role", "listitem");
+  const img = p.imageUrl
+    ? `<img class="thumb" src="${escapeAttr(p.imageUrl)}" alt="" loading="lazy" />`
+    : `<div class="thumb" aria-hidden="true"></div>`;
   el.innerHTML = `
-    <div class="card__title">${escapeHtml(p.name)}</div>
-    <div class="card__meta">
-      <span>${escapeHtml(p.area || "Luxembourg City")}</span>
-      ${p.address ? `<span class="dot">${escapeHtml(p.address)}</span>` : ""}
-      ${opts.showSavedTag ? `<span class="dot">Saved</span>` : ""}
+    <div class="media">
+      ${img}
+      <div>
+        <div class="card__title">${escapeHtml(p.name)}</div>
+        <div class="card__meta">
+          <span>${escapeHtml(p.area || "Luxembourg City")}</span>
+          ${p.address ? `<span class="dot">${escapeHtml(p.address)}</span>` : ""}
+          ${opts.showSavedTag ? `<span class="dot">Saved</span>` : ""}
+        </div>
+      </div>
     </div>
   `;
   el.addEventListener("click", () => showDetail("place", p.id));
@@ -449,6 +497,7 @@ function eventDetail(e, savedNow, opts = {}) {
 
   return `
     <div class="detail__title">${escapeHtml(e.title)}</div>
+    ${e.imageUrl ? `<img class="hero" src="${escapeAttr(e.imageUrl)}" alt="" loading="lazy" />` : ""}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Date</div><div>${escapeHtml(e.date)}</div></div>
       <div class="kv__row"><div class="kv__key">Location</div><div>${escapeHtml(e.location)}</div></div>
@@ -478,6 +527,7 @@ function placeDetail(p, savedNow, opts = {}) {
 
   return `
     <div class="detail__title">${escapeHtml(p.name)}</div>
+    ${p.imageUrl ? `<img class="hero" src="${escapeAttr(p.imageUrl)}" alt="" loading="lazy" />` : ""}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Area</div><div>${escapeHtml(p.area || "Luxembourg City")}</div></div>
       ${p.address ? `<div class="kv__row"><div class="kv__key">Address</div><div>${escapeHtml(p.address)}</div></div>` : ""}
@@ -621,6 +671,10 @@ function addEventForm() {
       <label for="evSource">Source URL (optional)</label>
       <input id="evSource" name="sourceUrl" placeholder="https://…" autocomplete="off" />
     </div>
+    <div class="field">
+      <label for="evImage">Image URL (optional)</label>
+      <input id="evImage" name="imageUrl" placeholder="https://…" autocomplete="off" />
+    </div>
   `;
 }
 
@@ -646,6 +700,10 @@ function editEventForm(e) {
     <div class="field">
       <label for="evE_sourceUrl">Source URL (optional)</label>
       <input id="evE_sourceUrl" value="${escapeAttr(e.sourceUrl ?? "")}" placeholder="https://…" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="evE_imageUrl">Image URL (optional)</label>
+      <input id="evE_imageUrl" value="${escapeAttr(e.imageUrl ?? "")}" placeholder="https://…" autocomplete="off" />
     </div>
   `;
 }
@@ -684,6 +742,10 @@ function addPlaceForm(categories) {
     <div class="field">
       <label for="plSource">Source URL (optional)</label>
       <input id="plSource" name="sourceUrl" placeholder="https://…" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="plImage">Image URL (optional)</label>
+      <input id="plImage" name="imageUrl" placeholder="https://…" autocomplete="off" />
     </div>
   `;
 }
@@ -726,6 +788,10 @@ function editPlaceForm(categories, p) {
       <label for="plE_sourceUrl">Source URL (optional)</label>
       <input id="plE_sourceUrl" value="${escapeAttr(p.sourceUrl ?? "")}" placeholder="https://…" autocomplete="off" />
     </div>
+    <div class="field">
+      <label for="plE_imageUrl">Image URL (optional)</label>
+      <input id="plE_imageUrl" value="${escapeAttr(p.imageUrl ?? "")}" placeholder="https://…" autocomplete="off" />
+    </div>
   `;
 }
 
@@ -741,18 +807,21 @@ function readEventForm(opts = {}) {
   const location = $(prefix ? `${prefix}location` : "evLocation")?.value?.trim();
   const description = $(prefix ? `${prefix}description` : "evDesc")?.value?.trim() ?? "";
   const sourceUrl = $(prefix ? `${prefix}sourceUrl` : "evSource")?.value?.trim() ?? "";
+  const imageUrl = $(prefix ? `${prefix}imageUrl` : "evImage")?.value?.trim() ?? "";
 
   if (!title) throw new Error("Title is required.");
   if (!date) throw new Error("Date is required.");
   if (!location) throw new Error("Location is required.");
   if (sourceUrl && !looksLikeUrl(sourceUrl)) throw new Error("Source URL must start with http:// or https://");
+  if (imageUrl && !looksLikeUrl(imageUrl)) throw new Error("Image URL must start with http:// or https://");
 
   return {
     title,
     date,
     location,
     description,
-    sourceUrl
+    sourceUrl,
+    imageUrl
   };
 }
 
@@ -765,10 +834,12 @@ function readPlaceForm(opts = {}) {
   const hours = $(prefix ? `${prefix}hours` : "plHours")?.value?.trim() ?? "";
   const description = $(prefix ? `${prefix}description` : "plDesc")?.value?.trim() ?? "";
   const sourceUrl = $(prefix ? `${prefix}sourceUrl` : "plSource")?.value?.trim() ?? "";
+  const imageUrl = $(prefix ? `${prefix}imageUrl` : "plImage")?.value?.trim() ?? "";
 
   if (!name) throw new Error("Place name is required.");
   if (!categoryId) throw new Error("Category is required.");
   if (sourceUrl && !looksLikeUrl(sourceUrl)) throw new Error("Source URL must start with http:// or https://");
+  if (imageUrl && !looksLikeUrl(imageUrl)) throw new Error("Image URL must start with http:// or https://");
 
   return {
     categoryId,
@@ -778,8 +849,57 @@ function readPlaceForm(opts = {}) {
     hours,
     description,
     mapUrl: "",
-    sourceUrl
+    sourceUrl,
+    imageUrl
   };
+}
+
+function monthName(m) {
+  const names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return names[m - 1] ?? "Unknown";
+}
+
+function monthFromEvent(e) {
+  if (typeof e.month === "number" && e.month >= 1 && e.month <= 12) return e.month;
+  const txt = `${e.date ?? ""} ${e.title ?? ""}`.toLowerCase();
+  const map = [
+    ["jan", 1], ["feb", 2], ["mar", 3], ["apr", 4], ["may", 5], ["jun", 6],
+    ["jul", 7], ["aug", 8], ["sep", 9], ["oct", 10], ["nov", 11], ["dec", 12]
+  ];
+  for (const [k, v] of map) if (txt.includes(k)) return v;
+  return null;
+}
+
+function filterByMonth(events, month) {
+  if (month === "all") return events;
+  const m = Number(month);
+  return events.filter((e) => monthFromEvent(e) === m);
+}
+
+function renderEventsYearView(list, events) {
+  const buckets = new Map();
+  for (const e of events) {
+    const m = monthFromEvent(e) ?? 0;
+    if (!buckets.has(m)) buckets.set(m, []);
+    buckets.get(m).push(e);
+  }
+
+  const order = [1,2,3,4,5,6,7,8,9,10,11,12,0];
+  for (const m of order) {
+    const items = buckets.get(m);
+    if (!items || items.length === 0) continue;
+
+    const header = document.createElement("div");
+    header.className = "card";
+    header.style.cursor = "default";
+    header.innerHTML = `
+      <div class="card__title">${m === 0 ? "Unknown month" : monthName(m)}</div>
+      <div class="card__meta"><span class="dot">${items.length} event(s)</span></div>
+    `;
+    list.append(header);
+
+    items.map((e) => eventCard(e)).forEach((el) => list.append(el));
+  }
 }
 
 function looksLikeUrl(url) {
@@ -799,6 +919,8 @@ async function main() {
   $("backBtn").addEventListener("click", hideDetail);
   $("addBtn").addEventListener("click", openAddModal);
   $("importBtn").addEventListener("click", showImportHelp);
+  $("monthFilter").addEventListener("change", (e) => setMonth(e.target.value));
+  $("yearViewBtn").addEventListener("click", toggleYearView);
 
   // PWA/offline shell
   if ("serviceWorker" in navigator) {
@@ -813,6 +935,7 @@ async function main() {
   state.official = await loadOfficialOptional();
   state.custom = loadCustom();
   setAddButtonVisibility();
+  setEventsControlsVisibility();
   render();
 }
 

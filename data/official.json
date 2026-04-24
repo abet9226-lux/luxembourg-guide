@@ -4,6 +4,10 @@
     {
       "name": "Ville de Luxembourg — Festivals, fairs and events",
       "url": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events"
+    },
+    {
+      "name": "Visit Luxembourg City — Sights & Tourist Attractions",
+      "url": "https://www.luxembourg-city.com/en/tours-activities/sights"
     }
   ],
   "events": [
@@ -56,6 +60,86 @@
       "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/buergbrennen"
     }
   ],
-  "categories": [],
-  "places": []
+  "categories": [
+    {
+      "id": "cat_official_landmarks",
+      "name": "Official: Landmarks"
+    },
+    {
+      "id": "cat_official_museums",
+      "name": "Official: Museums"
+    },
+    {
+      "id": "cat_official_views",
+      "name": "Official: Views & Walks"
+    }
+  ],
+  "places": [
+    {
+      "id": "pl_official_bock_casemates",
+      "categoryId": "cat_official_landmarks",
+      "name": "Bock Casemates",
+      "area": "Old Town",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for latest details and tickets if required).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/fortification/bock-casemates"
+    },
+    {
+      "id": "pl_official_grand_ducal_palace",
+      "categoryId": "cat_official_landmarks",
+      "name": "Grand Ducal Palace",
+      "area": "City Center",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for latest details).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/iconic-buildings/grand-ducal-palace"
+    },
+    {
+      "id": "pl_official_cathedral_notre_dame",
+      "categoryId": "cat_official_landmarks",
+      "name": "Cathedral Notre-Dame de Luxembourg",
+      "area": "City Center",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for latest details).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/church/cathedral-of-the-blessed-virgin"
+    },
+    {
+      "id": "pl_official_chemin_corniche",
+      "categoryId": "cat_official_views",
+      "name": "Chemin de la Corniche",
+      "area": "Old Town",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for route details and highlights).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/fortifications/chemin-de-la-corniche"
+    },
+    {
+      "id": "pl_official_pfaffenthal_lift",
+      "categoryId": "cat_official_views",
+      "name": "Panoramic Elevator of the Pfaffenthal",
+      "area": "Pfaffenthal",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for access info and hours).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/monument/panoramic-elevator-of-the-pfaffenthal"
+    },
+    {
+      "id": "pl_official_mudam",
+      "categoryId": "cat_official_museums",
+      "name": "MUDAM — Museum of Modern Art Grand-Duc Jean",
+      "area": "Kirchberg",
+      "address": "Luxembourg City",
+      "hours": "",
+      "description": "Official attraction page (open the source link for exhibitions and tickets).",
+      "mapUrl": "",
+      "sourceUrl": "https://www.luxembourg-city.com/en/place/museum/mudam-museum-of-modern-art-grand-duc-jean-a-luxembourg"
+    }
+  ]
 }

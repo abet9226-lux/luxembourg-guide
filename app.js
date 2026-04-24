@@ -420,12 +420,17 @@ function placeDetail(p, savedNow) {
     </div>
   `;
 
+  const source = p.sourceUrl
+    ? `<a href="${escapeAttr(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">Source</a>`
+    : `<span style="color: rgba(255,255,255,.55)">Source: (not set)</span>`;
+
   return `
     <div class="detail__title">${escapeHtml(p.name)}</div>
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Area</div><div>${escapeHtml(p.area || "Luxembourg City")}</div></div>
       ${p.address ? `<div class="kv__row"><div class="kv__key">Address</div><div>${escapeHtml(p.address)}</div></div>` : ""}
       ${p.hours ? `<div class="kv__row"><div class="kv__key">Hours</div><div>${escapeHtml(p.hours)}</div></div>` : ""}
+      <div class="kv__row"><div class="kv__key">Link</div><div>${source}</div></div>
     </div>
     <div class="detail__desc">${escapeHtml(p.description || "")}</div>
     ${actions}
@@ -555,6 +560,10 @@ function addPlaceForm(categories) {
       <label for="plDesc">Description</label>
       <textarea id="plDesc" name="description" placeholder="Short, clear public info"></textarea>
     </div>
+    <div class="field">
+      <label for="plSource">Source URL (optional)</label>
+      <input id="plSource" name="sourceUrl" placeholder="https://…" autocomplete="off" />
+    </div>
   `;
 }
 
@@ -592,9 +601,11 @@ function readPlaceForm() {
   const address = $("plAddress")?.value?.trim() ?? "";
   const hours = $("plHours")?.value?.trim() ?? "";
   const description = $("plDesc")?.value?.trim() ?? "";
+  const sourceUrl = $("plSource")?.value?.trim() ?? "";
 
   if (!name) throw new Error("Place name is required.");
   if (!categoryId) throw new Error("Category is required.");
+  if (sourceUrl && !looksLikeUrl(sourceUrl)) throw new Error("Source URL must start with http:// or https://");
 
   return {
     id: makeId("pl_custom"),
@@ -604,7 +615,8 @@ function readPlaceForm() {
     address,
     hours,
     description,
-    mapUrl: ""
+    mapUrl: "",
+    sourceUrl
   };
 }
 

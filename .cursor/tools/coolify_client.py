@@ -290,7 +290,7 @@ class CoolifyClient:
         ports_exposes: str,
         fqdn: str,
         server_uuid: str = "",
-        dockerfile_location: str = "Dockerfile",
+        dockerfile_location: str = "",
         build_pack: str = "dockerfile",
     ) -> CoolifyApplication:
         """Create a public-repository application.
@@ -307,8 +307,9 @@ class CoolifyClient:
             "build_pack": build_pack,
             "ports_exposes": ports_exposes,
             "domains": fqdn,
-            "dockerfile_location": dockerfile_location,
         }
+        if dockerfile_location:
+            payload["dockerfile_location"] = dockerfile_location
         if server_uuid:
             payload["server_uuid"] = server_uuid
         data = self._request("POST", "/applications/public", json_body=payload)

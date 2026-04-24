@@ -289,6 +289,7 @@ class CoolifyClient:
         git_branch: str,
         ports_exposes: str,
         fqdn: str,
+        server_uuid: str = "",
         dockerfile_location: str = "./Dockerfile",
         build_pack: str = "dockerfile",
     ) -> CoolifyApplication:
@@ -308,6 +309,8 @@ class CoolifyClient:
             "domains": fqdn,
             "dockerfile_location": dockerfile_location,
         }
+        if server_uuid:
+            payload["server_uuid"] = server_uuid
         data = self._request("POST", "/applications/public", json_body=payload)
         uuid = data.get("uuid") if isinstance(data, dict) else None
         if not uuid:

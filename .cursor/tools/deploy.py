@@ -593,6 +593,15 @@ def deploy_app(
         )
         # 3. Ensure environment
         env_obj = client.ensure_environment(project.uuid, "production")
+        # 3b. Find a usable server (Coolify v4 API requires server_uuid for app creation)
+        servers = client._request("GET", "/servers")
+        server_uuid = ""
+        if isinstance(servers, list):
+            for s in servers:
+                if isinstance(s, dict) and s.get("is_usable") is True:
+                    server_uuid = s.get("uuid", "") or ""
+                    if server_uuid:
+                        break
 
         # 4. Check for existing application in state
         state = load_state()
@@ -614,6 +623,7 @@ def deploy_app(
                 ports_exposes=str(port),
                 # Coolify expects bare domains (no scheme).
                 fqdn=subdomain,
+                server_uuid=server_uuid,
             )
             app_uuid = app.uuid
             client.trigger_deploy(app_uuid, force=False)

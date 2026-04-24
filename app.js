@@ -6,6 +6,8 @@ const state = {
   tab: "events", // events | guide | saved
   query: "",
   month: "all",
+  area: "all",
+  placeArea: "all",
   yearView: false,
   seed: null,
   official: null,
@@ -165,6 +167,8 @@ function setTab(tab) {
   state.guideCategoryId = null;
   state.query = "";
   state.month = "all";
+  state.area = "all";
+  state.placeArea = "all";
   state.yearView = false;
 
   // update UI
@@ -190,14 +194,25 @@ function setAddButtonVisibility() {
 
 function setEventsControlsVisibility() {
   const wrap = $("monthFilterWrap");
+  const areaWrap = $("areaFilterWrap");
+  const placeAreaWrap = $("placeAreaFilterWrap");
   const yearBtn = $("yearViewBtn");
-  if (!wrap || !yearBtn) return;
-  const show = state.tab === "events";
-  wrap.classList.toggle("is-hidden", !show);
-  yearBtn.classList.toggle("is-hidden", !show);
+  if (!wrap || !areaWrap || !placeAreaWrap || !yearBtn) return;
+
+  const showEvents = state.tab === "events";
+  wrap.classList.toggle("is-hidden", !showEvents);
+  areaWrap.classList.toggle("is-hidden", !showEvents);
+  yearBtn.classList.toggle("is-hidden", !showEvents);
   yearBtn.textContent = state.yearView ? "List view" : "Year view";
-  if (show) {
+  if (showEvents) {
     $("monthFilter").value = state.month;
+    $("areaFilter").value = state.area;
+  }
+
+  const showPlaceAreas = state.tab === "guide" && Boolean(state.guideCategoryId);
+  placeAreaWrap.classList.toggle("is-hidden", !showPlaceAreas);
+  if (showPlaceAreas) {
+    $("placeAreaFilter").value = state.placeArea;
   }
 }
 
@@ -208,6 +223,16 @@ function setQuery(q) {
 
 function setMonth(m) {
   state.month = m;
+  renderList();
+}
+
+function setArea(a) {
+  state.area = a;
+  renderList();
+}
+
+function setPlaceArea(a) {
+  state.placeArea = a;
   renderList();
 }
 
@@ -246,7 +271,7 @@ function renderList() {
 
   if (state.tab === "events") {
     const events = data.events.filter((e) => matchesQuery(e.title, e.location, e.date));
-    const filtered = filterByMonth(events, state.month);
+    const filtered = filterByArea(filterByMonth(events, state.month), state.area);
 
     if (filtered.length === 0) {
       list.append(emptyCard("No events found."));
@@ -262,6 +287,8 @@ function renderList() {
 
   if (state.tab === "guide") {
     if (!state.guideCategoryId) {
+      state.placeArea = "all";
+      setEventsControlsVisibility();
       const cats = data.categories
         .filter((c) => matchesQuery(c.name))
         .map((c) => categoryCard(c));
@@ -274,10 +301,14 @@ function renderList() {
     }
 
     const cat = data.categories.find((c) => c.id === state.guideCategoryId);
-    const places = data.places
+    const basePlaces = data.places
       .filter((p) => p.categoryId === state.guideCategoryId)
-      .filter((p) => matchesQuery(p.name, p.area, p.address))
-      .map((p) => placeCard(p));
+      .filter((p) => matchesQuery(p.name, p.area, p.address));
+
+    hydratePlaceAreaFilter(basePlaces);
+    setEventsControlsVisibility();
+
+    const places = filterPlacesByArea(basePlaces, state.placeArea).map((p) => placeCard(p));
 
     const header = document.createElement("div");
     header.className = "card";
@@ -294,6 +325,8 @@ function renderList() {
       state.guideCategoryId = null;
       $("searchInput").value = "";
       state.query = "";
+      state.placeArea = "all";
+      setEventsControlsVisibility();
       renderList();
     });
 
@@ -431,6 +464,7 @@ function eventCard(e, opts = {}) {
         <div class="card__meta">
           <span>${escapeHtml(e.date)}</span>
           <span class="dot">${escapeHtml(e.location)}</span>
+          ${e.area ? `<span class="dot">${escapeHtml(e.area)}</span>` : ""}
           ${opts.showSavedTag ? `<span class="dot">Saved</span>` : ""}
         </div>
       </div>
@@ -450,6 +484,8 @@ function categoryCard(c) {
   `;
   el.addEventListener("click", () => {
     state.guideCategoryId = c.id;
+    state.placeArea = "all";
+    setEventsControlsVisibility();
     renderList();
   });
   return el;
@@ -495,13 +531,15 @@ function eventDetail(e, savedNow, opts = {}) {
     ? `<a href="${escapeAttr(e.sourceUrl)}" target="_blank" rel="noopener noreferrer">Source</a>`
     : `<span style="color: rgba(255,255,255,.55)">Source: (not set)</span>`;
 
+  const area = e.area ? escapeHtml(e.area) : "Luxembourg City";
+
   return `
     <div class="detail__title">${escapeHtml(e.title)}</div>
     ${e.imageUrl ? `<img class="hero" src="${escapeAttr(e.imageUrl)}" alt="" loading="lazy" />` : ""}
     <div class="kv">
       <div class="kv__row"><div class="kv__key">Date</div><div>${escapeHtml(e.date)}</div></div>
       <div class="kv__row"><div class="kv__key">Location</div><div>${escapeHtml(e.location)}</div></div>
-      <div class="kv__row"><div class="kv__key">Area</div><div>Luxembourg City</div></div>
+      <div class="kv__row"><div class="kv__key">Area</div><div>${area}</div></div>
       <div class="kv__row"><div class="kv__key">Link</div><div>${source}</div></div>
     </div>
     <div class="detail__desc">${escapeHtml(e.description || "")}</div>
@@ -876,6 +914,63 @@ function filterByMonth(events, month) {
   return events.filter((e) => monthFromEvent(e) === m);
 }
 
+function filterByArea(events, area) {
+  if (area === "all") return events;
+  return events.filter((e) => (e.area ?? "").trim() === area);
+}
+
+function filterPlacesByArea(places, area) {
+  if (area === "all") return places;
+  return places.filter((p) => (p.area ?? "").trim() === area);
+}
+
+function getEventAreas(data) {
+  const seen = new Set();
+  for (const e of data.events ?? []) {
+    const a = (e.area ?? "").trim();
+    if (a) seen.add(a);
+  }
+  return [...seen].sort((a, b) => a.localeCompare(b));
+}
+
+function hydrateAreaFilter() {
+  const select = $("areaFilter");
+  if (!select) return;
+  const data = mergedData();
+  if (!data) return;
+
+  const areas = getEventAreas(data);
+  const cur = state.area;
+
+  select.innerHTML = `<option value="all">All areas</option>` + areas.map((a) => `<option value="${escapeAttr(a)}">${escapeHtml(a)}</option>`).join("");
+  select.value = areas.includes(cur) ? cur : "all";
+  state.area = select.value;
+}
+
+function getPlaceAreas(places) {
+  const seen = new Set();
+  for (const p of places ?? []) {
+    const a = (p.area ?? "").trim();
+    if (a) seen.add(a);
+  }
+  return [...seen].sort((a, b) => a.localeCompare(b));
+}
+
+function hydratePlaceAreaFilter(places) {
+  const select = $("placeAreaFilter");
+  if (!select) return;
+
+  const areas = getPlaceAreas(places);
+  const cur = state.placeArea;
+
+  select.innerHTML =
+    `<option value="all">All place areas</option>` +
+    areas.map((a) => `<option value="${escapeAttr(a)}">${escapeHtml(a)}</option>`).join("");
+
+  select.value = areas.includes(cur) ? cur : "all";
+  state.placeArea = select.value;
+}
+
 function renderEventsYearView(list, events) {
   const buckets = new Map();
   for (const e of events) {
@@ -920,6 +1015,8 @@ async function main() {
   $("addBtn").addEventListener("click", openAddModal);
   $("importBtn").addEventListener("click", showImportHelp);
   $("monthFilter").addEventListener("change", (e) => setMonth(e.target.value));
+  $("areaFilter").addEventListener("change", (e) => setArea(e.target.value));
+  $("placeAreaFilter").addEventListener("change", (e) => setPlaceArea(e.target.value));
   $("yearViewBtn").addEventListener("click", toggleYearView);
 
   // PWA/offline shell
@@ -936,6 +1033,7 @@ async function main() {
   state.custom = loadCustom();
   setAddButtonVisibility();
   setEventsControlsVisibility();
+  hydrateAreaFilter();
   render();
 }
 

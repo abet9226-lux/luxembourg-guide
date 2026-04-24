@@ -5,40 +5,55 @@
       "id": "evt_schueberfouer",
       "title": "Schueberfouer (Funfair)",
       "date": "21 Aug – 9 Sep 2026",
+      "month": 8,
+      "area": "Limpertsberg (Glacis)",
       "location": "Champ du Glacis (Parking Glacis), Luxembourg City",
       "description": "Luxembourg’s biggest annual funfair: rides, games, street food (including famous Gromperekichelcher), and a festive atmosphere in the city. Traditionally ends with discounted attractions and fireworks.",
+      "imageUrl": "https://www.vdl.lu/sites/default/files/styles/vdl_hero/public/media/image/2023-06/schueberfouer.jpg",
       "sourceUrl": "https://www.visitluxembourg.com/event/schueberfouer"
     },
     {
       "id": "evt_national_day",
       "title": "National Day celebrations",
       "date": "22–23 Jun 2026 (annual)",
+      "month": 6,
+      "area": "Ville Haute (city center)",
       "location": "Luxembourg City (Place de la Constitution and city center)",
       "description": "One of Luxembourg’s biggest traditions. Festivities begin on the eve (22 June) with a changing of the guard and a torchlight procession, plus concerts and an open-air party. On 23 June: official ceremony, military parade, and Te Deum at the cathedral.",
+      "imageUrl": "https://www.vdl.lu/sites/default/files/styles/vdl_hero/public/media/image/2020-06/fete-nationale.jpg",
       "sourceUrl": "https://www.visitluxembourg.com/event/national-holiday"
     },
     {
       "id": "evt_christmas_markets",
       "title": "Winterlights (Christmas markets & winter festival)",
       "date": "20 Nov 2026 – 3 Jan 2027",
+      "month": 11,
+      "area": "City Center squares",
       "location": "Luxembourg City (various squares)",
       "description": "Winter festival with Christmas markets across the city, lights, concerts, exhibitions, and workshops for kids—designed for all ages and a festive atmosphere.",
+      "imageUrl": "https://www.vdl.lu/sites/default/files/styles/vdl_hero/public/media/image/2023-10/winterlights.jpg",
       "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/winterlights-0"
     },
     {
       "id": "evt_eimaischen",
       "title": "Éimaischen (Easter Monday crafts market)",
       "date": "6 Apr 2026 (Easter Monday, annual)",
+      "month": 4,
+      "area": "Old Town (Marché aux Poissons area)",
       "location": "Old Town streets (around Marché aux Poissons, Rue du Marché aux Herbes, etc.)",
       "description": "Traditional crafts market (at least since 1827), famous for pottery and the small bird-shaped terracotta whistles called Péckvillercher—sold only at Éimaischen and different every year.",
+      "imageUrl": "https://www.vdl.lu/sites/default/files/styles/vdl_hero/public/media/image/2019-04/eimaischen.jpg",
       "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/eimaischen"
     },
     {
       "id": "evt_freijoer_gelle_fra",
       "title": "Fréijoer op der Gëlle Fra (spring programme)",
       "date": "22 May – 14 Jun 2026",
+      "month": 5,
+      "area": "Ville Haute (Place de la Constitution)",
       "location": "Place de la Constitution (Gëlle Fra), Luxembourg City",
       "description": "Spring entertainment programme with floral décor, seating, food stalls, and activities. Includes attractions like a panoramic tower and family-friendly rides.",
+      "imageUrl": "https://www.vdl.lu/sites/default/files/styles/vdl_hero/public/media/image/2024-04/freijoer.jpg",
       "sourceUrl": "https://www.vdl.lu/en/visiting/leisure-and-recreation/festivals-fairs-and-events/freijoer-op-der-gelle-fra"
     }
   ],
@@ -57,8 +72,9 @@
       "area": "Old Town",
       "address": "Montée de Clausen, Luxembourg City",
       "hours": "",
-      "description": "Underground tunnels carved into the rock as part of Luxembourg’s fortifications (UNESCO-listed old quarters and fortifications). A major historic site and one of the city’s most iconic visits.",
+      "description": "Underground tunnels carved into the rock as part of Luxembourg’s fortifications (UNESCO-listed old quarters and fortifications). Great for history + cool views over Grund and the Alzette valley.",
       "mapUrl": "",
+      "imageUrl": "https://www.luxembourg-city.com/sites/default/files/styles/hero/public/2022-09/bock-casemates-luxembourg.jpg",
       "sourceUrl": "https://www.luxembourg-city.com/en/place/fortification/bock-casemates"
     },
     {
@@ -101,8 +117,9 @@
       "area": "Kirchberg",
       "address": "3 Park Dräi Eechelen, Luxembourg City",
       "hours": "",
-      "description": "Museum of modern and contemporary art in Kirchberg, with rotating exhibitions and cultural events.",
+      "description": "Modern and contemporary art museum in Kirchberg (next to Fort Thüngen). Good choice if you want an indoor visit and a very modern part of the city.",
       "mapUrl": "",
+      "imageUrl": "https://www.luxembourg-city.com/sites/default/files/styles/hero/public/2022-09/mudam-luxembourg.jpg",
       "sourceUrl": "https://www.luxembourg-city.com/en/place/museum/mudam-museum-of-modern-art-grand-duc-jean-a-luxembourg"
     },
     {
@@ -123,8 +140,9 @@
       "area": "City Center",
       "address": "Avenue Monterey, Luxembourg City",
       "hours": "",
-      "description": "Central city park for walking and relaxing.",
+      "description": "Central park right by the city center—easy walk, benches, and green space. Nice break between sightseeing stops.",
       "mapUrl": "",
+      "imageUrl": "https://www.luxembourg-city.com/sites/default/files/styles/hero/public/2022-09/parc-municipal-luxembourg.jpg",
       "sourceUrl": ""
     },
     {
@@ -147,6 +165,7 @@
       "hours": "",
       "description": "Scenic walkway along the fortifications with famous panoramic views—often called “the most beautiful balcony in Europe”.",
       "mapUrl": "",
+      "imageUrl": "https://www.luxembourg-city.com/sites/default/files/styles/hero/public/2022-09/chemin-corniche-luxembourg.jpg",
       "sourceUrl": "https://www.luxembourg-city.com/en/place/fortifications/chemin-de-la-corniche"
     },
     {

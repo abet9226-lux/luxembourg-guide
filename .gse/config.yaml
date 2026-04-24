@@ -16,7 +16,7 @@ git:
   worktree_dir: .worktrees
 
 lifecycle:
-  mode: ""
+  mode: lightweight
   stale_sprint_sessions: 3
 
 dependency_audit: false

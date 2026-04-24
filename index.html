@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta
+      name="description"
+      content="Luxembourg City events calendar and tourist guide with offline saved items."
+    />
+    <title>Luxembourg City • Events & Guide</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__title">
+        <div class="topbar__brand">Luxembourg City</div>
+        <div class="topbar__sub">Annual Events & Tourist Guide</div>
+      </div>
+
+      <div class="topbar__status" aria-live="polite">
+        <span id="netStatus" class="pill pill--ok">Online</span>
+      </div>
+    </header>
+
+    <main class="app" id="app">
+      <nav class="tabs" aria-label="Primary">
+        <button class="tab is-active" data-tab="events" type="button">Events</button>
+        <button class="tab" data-tab="guide" type="button">Guide</button>
+        <button class="tab" data-tab="saved" type="button">Saved</button>
+      </nav>
+
+      <section class="panel">
+        <div class="panel__header">
+          <div class="panel__title" id="panelTitle">Events</div>
+          <div class="panel__actions">
+            <label class="search" aria-label="Search">
+              <input id="searchInput" type="search" placeholder="Search…" />
+            </label>
+          </div>
+        </div>
+
+        <div class="panel__content">
+          <div id="listView" class="list" role="list"></div>
+
+          <article id="detailView" class="detail is-hidden" aria-live="polite">
+            <button id="backBtn" class="btn btn--ghost" type="button">← Back</button>
+            <div id="detailBody"></div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__note">
+          Basic, clear public information only. No hidden/private data.
+        </div>
+      </footer>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
